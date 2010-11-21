@@ -1,3 +1,6 @@
+VS 2010 Solution Path for projectless applications:
+	C:\Users\Administrator\Documents\Visual Studio 2010\Projects\
+
 Ремонтна карата съдържа информация за:
 	- извършения ремонт
 	- вложени резервни части
