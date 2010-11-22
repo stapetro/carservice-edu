@@ -1,6 +1,14 @@
 VS 2010 Solution Path for projectless applications:
 	C:\Users\Administrator\Documents\Visual Studio 2010\Projects\
+	
+Creates asp membership in SQL Server DB:
+	C:\Windows\Microsoft.NET\Framework\v4.0.30319\aspnet_regsql.exe	
+	
+WSAT's files are available in the %WINDOWS%\Microsoft.NET\Framework\v2.0.50727\ASP.NETWebAdminFiles folder and can be deployed from there	
 
+User activation:
+	[carservicedb].[dbo].[aspnet_Membership].[IsApproved] = 1|0
+--------------------------------------------------------------------------------------------------------------------------------------------
 Ремонтна карата съдържа информация за:
 	- извършения ремонт
 	- вложени резервни части
