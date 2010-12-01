@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="carservicedbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="carservicedbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="carservicedbModelStoreContainer">
           <EntitySet Name="aspnet_Roles" EntityType="carservicedbModel.Store.aspnet_Roles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="aspnet_Users" EntityType="carservicedbModel.Store.aspnet_Users" store:Type="Tables" Schema="dbo" />
@@ -105,7 +105,7 @@
           <Key>
             <PropertyRef Name="CardId" />
           </Key>
-          <Property Name="CardId" Type="int" Nullable="false" />
+          <Property Name="CardId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="AutomobileId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="StartRepair" Type="date" Nullable="false" />
@@ -118,7 +118,7 @@
           <Key>
             <PropertyRef Name="PartId" />
           </Key>
-          <Property Name="PartId" Type="int" Nullable="false" />
+          <Property Name="PartId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="30" />
           <Property Name="Price" Type="money" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -195,8 +195,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="carservicedbModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
