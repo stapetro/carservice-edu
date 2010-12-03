@@ -63,7 +63,7 @@ public partial class _Default : System.Web.UI.Page
         {
             Vin = "PA6504",
             ChassisNumber = "XMCLRDA2A3F011227",
-            EngineNumber = "DGB 06 0081 U 0017 B"
+            EngineNumber = "DGB060081U0017B"
         };
         carServiceEntities.Automobiles.AddObject(automobile);
         carServiceEntities.SaveChanges();
@@ -84,5 +84,24 @@ public partial class _Default : System.Web.UI.Page
         //    };
         //    persister.CreateSparePart(sparePart);
         //}
+    }
+
+    private void CreateRepairCards()
+    {
+
+    }
+
+    private void CreateAutomobiles()
+    {
+        string[] vins = { "1M8GDM9", "AXKP04", "CX2788", "1G1FP22P", "XS2100001", "CA7972KK", "PK1234RT" };
+        string[] makes = { };
+        string[] models = { };
+        string[] chassisNumbers = { "XMCLRDA2A3F011227", "XABNRDA6A3F031227", "XMCLRDA2A3F011226", "XMCLRDA2A3F011225", "XMCLRDA2A3F011224", "XMCLRDA2A3F011223", "XMCLRDA2A3F011222" };
+        string[] engineNumbers = { "DGB060081U0017B", "DGB060081U0017C", "DGB060081U0017D", "DGB060081U0017F", "DGB060081U0016G", "DGB060081U0017H", "DGB060081U0018I" };
+        string[] colours = { };
+        int[] engineCubs = { };
+        string[] descriptions = { };
+        string[] owners = { };
+        string[] phoneNumbers = { };
     }
 }
