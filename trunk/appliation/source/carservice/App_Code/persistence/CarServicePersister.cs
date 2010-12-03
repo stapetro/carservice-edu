@@ -71,15 +71,46 @@ namespace persistence
             return repairCard;
         }
 
-        public void GetUnfinishedRepairCards(DateTime startRepair, string chassisNumber, string vin)
+        public IQueryable<RepairCard> GetUnfinishedRepairCards(DateTime startRepair)
         {
             IQueryable<RepairCard> unfinishedRepairCards =
                 from repairCard in this.carServiceEntities.RepairCards
-                where repairCard.FinishRepair == null &&
-                    repairCard.StartRepair == startRepair /*&&
-                    (repairCard.Automobile.Vin.IndexOf(vin) >= 0 || 
-                        repairCard.Automobile.ChassisNumber.IndexOf(chassisNumber) >= 0)*/
+                where (repairCard.StartRepair == startRepair &&
+                    repairCard.FinishRepair == null)                    
                 select repairCard;
+            return unfinishedRepairCards;
+        }
+
+        public IQueryable<RepairCard> GetUnfinishedRepairCardsByVin(DateTime startRepair, string vin)
+        {
+            IQueryable<RepairCard> unfinishedRepairCards =
+                from repairCard in this.carServiceEntities.RepairCards
+                where (repairCard.StartRepair == startRepair &&
+                    repairCard.FinishRepair == null && 
+                    (repairCard.Automobile.Vin.IndexOf(vin) >= 0))
+                select repairCard;
+            return unfinishedRepairCards;
+        }
+
+        public IQueryable<RepairCard> GetUnfinishedRepairCardsByChassisNumber(DateTime startRepair, string chassisNumber)
+        {
+            IQueryable<RepairCard> unfinishedRepairCards =
+                from repairCard in this.carServiceEntities.RepairCards
+                where (repairCard.StartRepair == startRepair &&
+                    repairCard.FinishRepair == null && 
+                    (repairCard.Automobile.ChassisNumber.IndexOf(chassisNumber) >= 0))
+                select repairCard;
+            return unfinishedRepairCards;
+        }
+
+        public IQueryable<RepairCard> GetFinishedRepairCards(DateTime fromFinishRepair, DateTime toFinishRepair)
+        {
+            IQueryable<RepairCard> unfinishedRepairCards =
+                from repairCard in this.carServiceEntities.RepairCards
+                where (repairCard.FinishRepair >= fromFinishRepair &&
+                    repairCard.FinishRepair <= toFinishRepair)
+                select repairCard;
+            return unfinishedRepairCards;
         }
 
         public void TestCreateRepairCard()
