@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Security;
 using System.Text;
+using System.Data.Objects.DataClasses;
 using persistence;
 
 public partial class _Default : System.Web.UI.Page
@@ -29,20 +30,18 @@ public partial class _Default : System.Web.UI.Page
             //    sb.Append(user.UserName + ", " + user.Email + "<br/>");
             //}
             //this.users.Text = sb.ToString();
+            CarServicePersister persister = new CarServicePersister();
             //using (persistence.Entities entities = new persistence.Entities())
             //{
-            //    Automobile automobile = new Automobile()
-            //    {
-            //        Vin = "PA6504",
-            //        ChassisNumber = "XMCLRDA2A3F011227",
-            //        EngineNumber = "DGB 06 0081 U 0017 B"
-            //    };
-            //    entities.Automobiles.AddObject(automobile);
-            //    entities.SaveChanges();
+                //    Automobile automobile = new Automobile()
+                //    {
+                //        Vin = "PA6504",
+                //        ChassisNumber = "XMCLRDA2A3F011227",
+                //        EngineNumber = "DGB 06 0081 U 0017 B"
+                //    };
+                //    entities.Automobiles.AddObject(automobile);
+                //    entities.SaveChanges();                                
             //}
-            CarServicePersister persister = new CarServicePersister();
-            //Automobile auto = persister.GetAutomobilById(2);
-            //auto.ChassisNumber = "XMCLRDA2A3F011227";
             //MembershipUser user = Membership.GetUser();
             //RepairCard repairCard = new RepairCard()
             //{
@@ -50,6 +49,9 @@ public partial class _Default : System.Web.UI.Page
             //    UserId = (System.Guid)user.ProviderUserKey,
             //    StartRepair = DateTime.Now
             //};            
+            persister.TestCreateRepairCard();
+            //RepairCard card = persister.GetRepairCardById(2);
+            //persister.DeleteRepairCard(card);
             persister.SaveChanges();
             persister.ReleaseConnection();
         }

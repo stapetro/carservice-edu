@@ -10,12 +10,7 @@
           <EntitySet Name="aspnet_Users" EntityType="carservicedbModel.Store.aspnet_Users" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="aspnet_UsersInRoles" EntityType="carservicedbModel.Store.aspnet_UsersInRoles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Automobile" EntityType="carservicedbModel.Store.Automobile" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="PartInCard" EntityType="carservicedbModel.Store.PartInCard" store:Type="Tables" store:Schema="dbo" store:Name="PartInCard">
-            <DefiningQuery>SELECT 
-      [PartInCard].[CardId] AS [CardId], 
-      [PartInCard].[PartId] AS [PartId]
-      FROM [dbo].[PartInCard] AS [PartInCard]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="PartInCard" EntityType="carservicedbModel.Store.PartInCard" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="RepairCard" EntityType="carservicedbModel.Store.RepairCard" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SparePart" EntityType="carservicedbModel.Store.SparePart" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK__aspnet_Us__RoleI__2CF2ADDF" Association="carservicedbModel.Store.FK__aspnet_Us__RoleI__2CF2ADDF">
@@ -90,9 +85,6 @@
           <Property Name="Owner" Type="nvarchar" MaxLength="50" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'carservicedb.dbo.PartInCard' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
         <EntityType Name="PartInCard">
           <Key>
             <PropertyRef Name="CardId" />
@@ -148,7 +140,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PartInCard_RepairCard">
-          <End Role="RepairCard" Type="carservicedbModel.Store.RepairCard" Multiplicity="1" />
+          <End Role="RepairCard" Type="carservicedbModel.Store.RepairCard" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="PartInCard" Type="carservicedbModel.Store.PartInCard" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RepairCard">

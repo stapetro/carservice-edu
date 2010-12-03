@@ -65,6 +65,12 @@ namespace persistence
             this.carServiceEntities.RepairCards.DeleteObject(repairCard);
         }
 
+        public RepairCard GetRepairCardById(int cardId)
+        {
+            RepairCard repairCard = this.carServiceEntities.RepairCards.FirstOrDefault(card => card.CardId == cardId);
+            return repairCard;
+        }
+
         public void GetUnfinishedRepairCards(DateTime startRepair, string chassisNumber, string vin)
         {
             IQueryable<RepairCard> unfinishedRepairCards =
@@ -74,6 +80,34 @@ namespace persistence
                     (repairCard.Automobile.Vin.IndexOf(vin) >= 0 || 
                         repairCard.Automobile.ChassisNumber.IndexOf(chassisNumber) >= 0)*/
                 select repairCard;
+        }
+
+        public void TestCreateRepairCard()
+        {
+            Automobile auto = GetAutomobilById(2);
+            MembershipUser user = Membership.GetUser("ScottBrown");
+            RepairCard card = new RepairCard()
+            {
+                Automobile = auto,
+                UserId = (System.Guid)user.ProviderUserKey,
+                StartRepair = DateTime.Now,
+            };
+            //RepairCard card = GetRepairCardById(2);
+            //SparePart part = GetSparePartById(2);
+            //card.SpareParts.Add(part);
+            //card.PartPrice = part.Price;
+            IQueryable<SparePart> spareParts =
+                from part in carServiceEntities.SpareParts
+                where part.Price <= 100m
+                select part;
+            decimal partsPrice = 0m;
+            foreach (SparePart sp in spareParts)
+            {
+                card.SpareParts.Add(sp);
+                partsPrice += sp.Price;
+            }
+            card.PartPrice = partsPrice;
+            card.CardPrice = partsPrice;
         }
 
         public void SaveChanges()
