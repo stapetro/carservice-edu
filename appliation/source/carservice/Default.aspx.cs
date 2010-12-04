@@ -16,11 +16,13 @@ public partial class _Default : System.Web.UI.Page
         if (IsPostBack == false)
         {
             //Creates new user
-            //MembershipUser createdUser = Membership.CreateUser("test1", "test1@test.test", "test1@test.test");
+            //MembershipUser createdUser = Membership.CreateUser("stanislav.petrov", "stanislav.petrov", "stanislav.petrov@aspnet.net");
             //ProfileCommon profileCommon = Profile.GetProfile(createdUser.UserName);
             //profileCommon.FirstName = "Stanislav";
             //profileCommon.LastName = "Petrov";
             //profileCommon.Save();
+            //Membership.DeleteUser("Test");
+            //Membership.DeleteUser("test1");
             //Deactivate user
             //createdUser.IsApproved = false;
             //StringBuilder sb = new StringBuilder();
@@ -49,14 +51,14 @@ public partial class _Default : System.Web.UI.Page
             //    UserId = (System.Guid)user.ProviderUserKey,
             //    StartRepair = DateTime.Now
             //};            
-            persister.TestCreateRepairCard();
-            //RepairCard card = persister.GetRepairCardById(2);
-            //persister.DeleteRepairCard(card);
-            persister.SaveChanges();
+            //persister.TestCreateRepairCard();           
+            //persister.SaveChanges();
+            //TestRepairCardQueries(persister);
             persister.ReleaseConnection();
         }
     }
 
+    //TODO: To be deleted
     private void CreateAutomobile(Entities carServiceEntities)
     {
         Automobile automobile = new Automobile()
@@ -69,6 +71,7 @@ public partial class _Default : System.Web.UI.Page
         carServiceEntities.SaveChanges();
     }
 
+    //TODO: To be deleted
     private void CreateSpareParts()
     {
         //string[] sparePartNames = { "Bumper", "Bonnet/Hood", "Cowl screen", "Fascia rear and support", 
@@ -86,22 +89,46 @@ public partial class _Default : System.Web.UI.Page
         //}
     }
 
-    private void CreateRepairCards()
+    //TODO: To be deleted
+    private void TestRepairCardQueries(CarServicePersister persister)
     {
-
-    }
-
-    private void CreateAutomobiles()
-    {
-        string[] vins = { "1M8GDM9", "AXKP04", "CX2788", "1G1FP22P", "XS2100001", "CA7972KK", "PK1234RT" };
-        string[] makes = { };
-        string[] models = { };
-        string[] chassisNumbers = { "XMCLRDA2A3F011227", "XABNRDA6A3F031227", "XMCLRDA2A3F011226", "XMCLRDA2A3F011225", "XMCLRDA2A3F011224", "XMCLRDA2A3F011223", "XMCLRDA2A3F011222" };
-        string[] engineNumbers = { "DGB060081U0017B", "DGB060081U0017C", "DGB060081U0017D", "DGB060081U0017F", "DGB060081U0016G", "DGB060081U0017H", "DGB060081U0018I" };
-        string[] colours = { };
-        int[] engineCubs = { };
-        string[] descriptions = { };
-        string[] owners = { };
-        string[] phoneNumbers = { };
+        StringBuilder output = new StringBuilder("Finished repair cards between 2010-12-01 and 2010-12-06<br/>");
+        IQueryable<RepairCard> foundRepairCards = persister.GetFinishedRepairCards(new DateTime(2010, 12, 1), new DateTime(2010, 12, 6));
+        foreach (RepairCard card in foundRepairCards)
+        {
+            output.Append(card.CardId + ", ");
+        }
+        output.Append("<br/>Unfinished repair cards for 2010-12-03<br/>");
+        foundRepairCards = persister.GetUnfinishedRepairCards(new DateTime(2010, 12, 3));
+        foreach (RepairCard card in foundRepairCards)
+        {
+            output.Append(card.CardId + ", ");
+        }
+        output.Append("<br/>Unfinished repair cards for 2010-12-03 by chassis number<br/>");
+        foundRepairCards = persister.GetUnfinishedRepairCardsByChassisNumber(new DateTime(2010, 12, 3), "XMCLRDA2A3F011227");
+        foreach (RepairCard card in foundRepairCards)
+        {
+            output.Append(card.CardId + ", ");
+        }
+        output.Append("<br/>Unfinished repair cards for 2010-12-03 by part of chassis number<br/>");
+        foundRepairCards = persister.GetUnfinishedRepairCardsByChassisNumber(new DateTime(2010, 12, 3), "RDA2A3F");
+        foreach (RepairCard card in foundRepairCards)
+        {
+            output.Append(card.CardId + ", ");
+        }
+        output.Append("<br/>Unfinished repair cards for 2010-12-03 by vin<br/>");
+        foundRepairCards = persister.GetUnfinishedRepairCardsByVin(new DateTime(2010, 12, 3), "PV2222");
+        foreach (RepairCard card in foundRepairCards)
+        {
+            output.Append(card.CardId + ", ");
+        }
+        output.Append("<br/>Unfinished repair cards for 2010-12-03 by part of vin<br/>");
+        foundRepairCards = persister.GetUnfinishedRepairCardsByVin(new DateTime(2010, 12, 3), "V22");
+        foreach (RepairCard card in foundRepairCards)
+        {
+            output.Append(card.CardId + ", ");
+        }
+        output.Append("<br/>");
+        this.users.Text = output.ToString();
     }
 }
