@@ -44,4 +44,7 @@ System.Data.SqlClient.SqlException: Cannot insert duplicate key row in object 'd
 --------------------------------------------------------------------------------------------------------------------------------------------
 CarService Web UI prototype requirements:
 --------------------------------------------------------------------------------------------------------------------------------------------
-
+- admin menu item - add/edit/delete user page, add/edit/delete spare part page
+- login page
+- cars menu item - add/edit pages
+- repair cards page - add/edit/finish, search/filter for repair cards, 
