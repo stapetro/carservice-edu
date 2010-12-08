@@ -1,0 +1,475 @@
+/*  
+Template Name: mlpdesign08 -- Fuchsia
+Author:webmasterneo, MLP Design
+Author URI: http://www.mlpdesign.net/
+*/
+
+/* Global Settings */
+body
+ { 	background-color:#000;
+	color:#555957;
+	font:normal 14px Verdana,Tahoma,sans-serif;
+	text-align:center;
+	padding:0;
+	margin:0;	}
+
+h1,h2,h3,p,li
+{	text-align:left;	}
+
+a
+{
+	background-color:inherit;
+	color:#000;
+	text-decoration:none;
+}
+
+a:hover
+{	text-decoration:underline; }	
+	
+img
+{	border:0;}
+
+blockquote
+{
+	background-color:inherit;
+	color:#000;
+	font:italic 15px "Times New Roman",serif;
+	border-left:5px solid #000;
+	padding:2px 15px;
+}
+
+/*Miscellaneous*/	
+
+.center
+{	text-align:center;
+	padding:5px 0;
+	margin:0 auto;	}
+	
+.clear
+{	clear:both;	}
+
+.hidden
+{	display:none;
+	margin:0;}
+	
+	
+/*Wrappers*/	
+#wrapper
+{	width:800px;
+	padding:0;
+	margin:15px auto;	}
+
+#body
+{
+	background:url(images/bg-header.jpg) 49% 0% no-repeat #ffffff;
+	color:inherit;
+	width:775px;
+	padding:10px 10px 2px 10px;
+	margin:0;
+}
+
+#container
+{	width:560px;
+	padding:0;
+	margin:0;
+	float:left; }
+
+/*Header Items*/
+#header
+{	width:555px;
+	height:205px;
+	text-align:left;
+	padding:0;
+	margin:0;	}
+	
+#header h1
+{
+	background-color:inherit;
+	color:#fff;
+	font:normal 36px Tahoma,sans-serif;
+	margin:0;
+	padding-top: 20px;
+	padding-right: 0;
+	padding-bottom: 0;
+	padding-left: 330px;
+}
+
+#header em
+{
+	background-color:inherit;
+	color:#cac9c9;
+	font:normal 36px Tahoma,sans-serif;
+}
+
+div#tagline
+{
+	background-color:inherit;
+	color:#cac9c9;
+	font:normal 14px Tahoma,sans-serif;
+	margin:0;
+	padding-top: 2px;
+	padding-right: 0;
+	padding-bottom: 0;
+	padding-left: 360px;
+}
+
+/* Tab Menu */
+ul#topnav
+{ 	
+	list-style:none;
+	padding:0;
+	margin:63px 0 20px 15px; 
+	font:normal 12px Tahoma,sans-serif;	
+	position:relative;	
+}	
+
+ul#topnav li
+{	padding:0;
+	margin:0;
+	display:inline; 
+}
+	
+ul#topnav li a
+{
+	background-color:inherit;
+	color:#000000;
+	text-decoration:none;
+	padding:7px 0;		
+}	
+
+ul#topnav li a span.left
+{	background:url(images/tab_off-left.jpg) top left no-repeat #333;
+	padding:7px 2px;}
+	
+ul#topnav li a span.right
+{	background:url(images/tab_off-right.jpg) top right no-repeat #333;
+	padding:7px 2px;}	
+
+ul#topnav li a span.menu
+{
+	background-color: #cac9c9;
+	padding:7px 2px;
+}	
+
+ul#topnav li a:hover
+{	background-color:inherit;
+	color:#fff;
+	text-decoration:none;
+}	
+	
+ul#topnav li a:hover span.left
+{
+	background:url(images/tab_on-left.jpg) top left no-repeat #000;
+	padding:7px 2px;
+}
+	
+ul#topnav li a:hover span.right
+{
+	background:url(images/tab_on-right.jpg) top right no-repeat #000;
+	padding:7px 2px;
+}	
+
+ul#topnav li a:hover span.menu
+{
+	background-color: #555957;
+	padding:7px 2px;
+}	
+
+ul#topnav li#active span.left
+{
+	background:url(images/tab-left.jpg) top left no-repeat #000;
+	padding:7px 2px;
+}
+	
+ul#topnav li#active span.right
+{
+	background:url(images/tab-right.jpg) top right no-repeat #000;
+	padding:7px 2px;
+}
+	
+ul#topnav li#active a
+{
+	background-color:#7c8782;
+	color:#fff;
+	padding:7px 2px;
+	text-decoration:none;
+}	
+
+
+/*Content Items*/
+#content
+{
+	background-color:#cac9c9;
+	width:555px;
+	text-align:left;
+	padding:5px 0 15px 0;
+	margin:10px 0px 0px 0px;
+	float:left;
+}
+
+#content h1
+{	font:normal 18px Arial,sans-serif;
+	padding:0;
+	color:#000000;}
+
+
+#content ul
+{	list-style:none;
+	width:500px;}
+
+#content ul li
+{	background:url(images/ico-bullet_content.jpg) 0 8px no-repeat;	
+	padding:2px 0 2px 10px;
+	margin:0; }	
+
+#content .item
+{	line-height:1.25em;
+	padding:10px 5px 8px 15px;
+	margin:0;	}
+
+#content .item span
+{
+	background-color:inherit;
+	color:#555957;
+	font-size:11px;
+}
+
+
+/*Sidebar Items */
+#sidebar
+{	background:url(images/bg-sidebar.jpg) no-repeat;
+	width:190px;
+	font-size:11px;
+	padding:15px 8px 15px 12px;
+	float:left; }
+
+#sidebar h2
+{
+	background-color:inherit;
+	color:#000;
+	font:normal 16px Arial,sans-serif;
+	border-bottom:2px solid #000;
+	padding:8px 0 5px 0;
+}
+
+
+#sidebar ul
+{	list-style:none;
+	padding:2px;
+	margin:0;}
+
+#sidebar ul li
+{	background:url(images/ico-bullet_sidebar.jpg) 0 8px no-repeat;	
+	padding:2px 0 2px 10px;
+	margin:0; }	
+
+#sidebar ul li a
+{	background-color:inherit;
+	color:#333;
+	text-decoration:none;
+	padding:3px 0 3px 5px;
+	display:block;	}
+
+#sidebar ul li a:hover
+{
+	background-color:#cac9c9;
+	color:#fff;
+}
+	
+/*Footer Items*/
+#footer
+{	background:url(images/bg-footer.jpg) 49% 0 no-repeat;
+	color:#eee;
+	width:795px;
+	height:60px;
+	font:normal 12px Arial,sans-serif;
+	padding:25px 0 0 0;
+	margin:0;
+	clear:both;	}
+
+#footer a
+{	background-color:inherit;
+	color:#fff; }
+
+#footer a:hover
+{
+	background-color:inherit;
+	color:#cac9c9;
+	text-decoration:none;
+}	
+
+#footer span.left
+{	text-align:left;
+	padding-left:15px;
+	float:left;	}
+	
+#footer span.right
+{	text-align:right;
+	padding-right:15px;
+	float:right;	}
+	
+#credits
+{
+	background-color:inherit;
+	color:#cac9c9;
+	width:780px;
+	font:normal 11px Arial,sans-serif;
+	text-align:right;
+	padding:0 5px 5px 10px;
+	margin:0;
+}
+	
+#credits a
+{	background-color:inherit;
+	color:#888; 
+	text-decoration:none;}
+	
+#credits a:hover
+{
+	background-color:inherit;
+	color:#fff;
+	text-decoration:none;
+}	
+
+.nav-path 
+{
+	margin: 0px 0px 0px 20px;
+	font:normal 11px Tahoma,sans-serif;
+}
+
+div.accountInfo
+{
+    width: 42%;
+}
+
+fieldset
+{
+    margin: 1em 5px 0px 20px;
+    padding: 1em;
+    border: 1px solid #fefefe;
+}
+
+fieldset p 
+{
+    margin: 2px 12px 10px 10px;
+}
+
+fieldset.login label, fieldset.register label, fieldset.changePassword label
+{
+    display: block;
+}
+
+fieldset.login
+{
+	width:210px;
+}
+
+fieldset label.inline 
+{
+    display: inline;
+}
+
+legend 
+{
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 2px 4px 8px 4px;
+}
+
+.submitButton
+{
+    text-align: right;
+    padding-right: 10px;
+}
+
+.loginSubmitButton
+{
+	padding-left:180px; text-align:left;
+}
+
+/*
+	#menu {
+		position:relative;
+		list-style-type:none;
+		margin:1em 0 2em 0; padding:0;
+		width:100%; height:1.4em;
+		font:100%/1 sans-serif;
+		}
+
+	.menuitem {
+		position:absolute; top:10px;
+		margin:0; padding:0;
+		width:10em; height:1.4em;
+		overflow:hidden;
+		}
+
+	#mi01 { left:0 }
+	#mi02 { left:10em }
+	#mi03 { left:20em }
+
+ 
+	.menuitem ul {
+		display:block;
+		margin: 0; padding:0;
+		list-style-type:none;
+		}
+	.menuitem li { margin:0; padding:0 }
+	.submenu li { position:relative }
+ 
+	
+	.submenu .subsubmenu {
+		position:absolute; top:0; left:10em;
+		width:10em;
+		display:none;
+		}
+ 
+	.menuitem:hover {
+		height:10em;
+		overflow:visible;
+		}
+	.submenu li:hover > .subsubmenu {
+		display:block;
+		}
+
+	#menu a {
+		display:block;
+		margin:0; padding: 0.2em 0.5em;
+		text-align:center;
+		text-decoration:none;
+		color:white;
+		border-top:1px solid white;
+		border-left:1px solid white;
+		}
+	#menu a:hover { background:black }
+	.menuitem a { background:red }
+	.menuitem ul a { background:green }
+	.menuitem ul ul a { background:blue }
+	.menuitem ul ul ul a { background:violet }
+	.menuitem ul ul ul ul a { background:orange }
+*/
+	.menuitem {
+		position:absolute;
+		margin:0; padding:0;
+		width:10em; height:1.4em;
+		overflow:hidden;
+		}
+		
+	.menuitem ul {
+		display:block;
+		margin: 0; padding:0;
+		list-style-type:none;
+		}
+	.menuitem li { margin:0; padding:0 }		
+	
+	.menuitem:hover {
+		height:10em;
+		overflow:visible;
+		}	
+
+	.submenu li { position:relative }
+		/* 2-class selector to have higher weight than ".menuitem ul" */
+	.submenu .subsubmenu {
+		position:absolute; top:0; left:10em;
+		width:10em;
+		display:none;
+		}
