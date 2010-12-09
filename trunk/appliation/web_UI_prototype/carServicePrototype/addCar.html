@@ -25,56 +25,21 @@
 			<h1>Car<em>Service</em></h1>
 			<div id="tagline">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
 		<ul id="topnav">
-				<li><a href="index.html"><span class="left">&nbsp;</span><span class="menu">Home</span><span class="right">&nbsp;</span></li>
-				<li><a href="cars.html"><span class="left">&nbsp;</span><span class="menu">Cars</span><span class="right">&nbsp;</span></a></li>
+				<li><a href="index.html"><span class="left">&nbsp;</span><span class="menu">Home</span><span class="right">&nbsp;</span></a></li>
+				<li id="active"><span class="left">&nbsp;</span><a>Cars</a><span class="right">&nbsp;</span></li>
 				<li><a href="repairCards.html"><span class="left">&nbsp;</span><span class="menu">Repair cards</span><span class="right">&nbsp;</span></a></li>
 				<li><a href="admin.html"><span class="left">&nbsp;</span><span class="menu">Admin</span><span class="right">&nbsp;</span></a></li>
 		</ul>
-			<span id="ctl00_adminSiteMapPath" class="nav-path"><a href="#ctl00_adminSiteMapPath_SkipLink"><img height="0" width="0" src="/ccmsadmin/WebResource.axd?d=ZM81FMAAiFBYpPuCzT7X3QNbo5uxPMNrPzzyZX5klO4_DT-URv5uXu9NuvwvWov5U7IcqwT3m6VSuMA3XzUryjipbE01&amp;t=634221356544328436" style="border-width:0px;" /></a><span><a title="Home" href="index.html">Home</a></span><span> &gt; </span><span>Login</span><a id="ctl00_adminSiteMapPath_SkipLink"></a></span>
+			<span id="ctl00_adminSiteMapPath" class="nav-path"><a href="#ctl00_adminSiteMapPath_SkipLink"><img height="0" width="0" src="/ccmsadmin/WebResource.axd?d=ZM81FMAAiFBYpPuCzT7X3QNbo5uxPMNrPzzyZX5klO4_DT-URv5uXu9NuvwvWov5U7IcqwT3m6VSuMA3XzUryjipbE01&amp;t=634221356544328436" style="border-width:0px;" /></a><span><a title="Home" href="index.html">Home</a></span><span> &gt; </span><span><a href="cars.html">Cars</a></span><span> &gt; </span><span>Add car</span><a id="ctl00_adminSiteMapPath_SkipLink"></a></span>
 		</div>
 		<!--end of header-->
 		
 		<!--start content-->
 		<div id="content">
-			<!--post item-->
-			<div class="accountinfo">
-                <fieldset class="login">
-
-                    <legend>Account Information</legend>
-
-                    <p>
-
-                        <label for="MainContent_LoginUser_UserName" id="MainContent_LoginUser_UserNameLabel">Username:</label>
-
-                        <input name="ctl00$MainContent$LoginUser$UserName" type="text" id="MainContent_LoginUser_UserName" class="textEntry" />
-
-                        <span id="MainContent_LoginUser_UserNameRequired" title="User Name is required." class="failureNotification" style="visibility:hidden;">*</span>
-
-                    </p>
-
-                    <p>
-
-                        <label for="MainContent_LoginUser_Password" id="MainContent_LoginUser_PasswordLabel">Password:</label>
-
-                        <input name="ctl00$MainContent$LoginUser$Password" type="password" id="MainContent_LoginUser_Password" class="passwordEntry" />
-
-                        <span id="MainContent_LoginUser_PasswordRequired" title="Password is required." class="failureNotification" style="visibility:hidden;">*</span>
-
-                    </p>
-
-                    <p>
-
-                        <input id="MainContent_LoginUser_RememberMe" type="checkbox" name="ctl00$MainContent$LoginUser$RememberMe" />
-
-                        <label for="MainContent_LoginUser_RememberMe" id="MainContent_LoginUser_RememberMeLabel" class="inline">Keep me logged in</label>
-
-                    </p>
-
-                </fieldset>
-                <p class="loginSubmitButton">
-                    <input type="submit" name="ctl00$MainContent$LoginUser$LoginButton" value="Log In" id="MainContent_LoginUser_LoginButton" />
-                </p>
-				
+			
+			<div id="cars">
+				<input type="submit" value="Cancel" />
+				<input type="submit" value="Save" />
 			</div>
 		</div>
 		<!--end of content-->
@@ -112,7 +77,7 @@
 -->		
 		<h2>Login to CarService</h2>
 		<ul>
-			<li><a href="#"><span>Click here to Login</span></a></li>
+			<li><a href="login.html"><span>Click here to Login</span></a></li>
 		</ul>		
 		<h2>Links</h2>
 		<ul>

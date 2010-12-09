@@ -473,3 +473,48 @@ legend
 		width:10em;
 		display:none;
 		}
+	
+
+table
+{
+	border-collapse:collapse;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	text-align: center;
+}	
+	
+table, th, td
+{
+	border: 1px solid black;
+	padding: 0px 3px 0px 3px;
+}
+
+th
+{
+	font-weight: bold;
+	background-color: #B7B67A;
+}
+	
+.nicetable
+{
+	
+}		
+
+.alternaterow
+{
+	background-color: #e6e6e6;
+}
+
+.addbutton
+{
+	background: url(images/inputButton_left.png);
+	padding: 5px 5px 5px 5px;
+	font-weight: bold;
+	margin: 10px 0px 0px 20px;
+}
+
+#cars
+{
+	margin-top: 10px;
+}
