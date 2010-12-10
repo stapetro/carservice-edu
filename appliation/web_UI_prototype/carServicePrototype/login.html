@@ -36,7 +36,7 @@
 		
 		<!--start content-->
 		<div id="content">
-			<!--post item-->
+			<form method="POST" action="loggedUser.html">
 			<div class="accountinfo">
                 <fieldset class="login">
 
@@ -46,7 +46,7 @@
 
                         <label for="MainContent_LoginUser_UserName" id="MainContent_LoginUser_UserNameLabel">Username:</label>
 
-                        <input name="ctl00$MainContent$LoginUser$UserName" type="text" id="MainContent_LoginUser_UserName" class="textEntry" />
+                        <input name="ctl00$MainContent$LoginUser$UserName" type="text" id="MainContent_LoginUser_UserName" class="textEntry" value="stanislav.petrov" />
 
                         <span id="MainContent_LoginUser_UserNameRequired" title="User Name is required." class="failureNotification" style="visibility:hidden;">*</span>
 
@@ -56,7 +56,7 @@
 
                         <label for="MainContent_LoginUser_Password" id="MainContent_LoginUser_PasswordLabel">Password:</label>
 
-                        <input name="ctl00$MainContent$LoginUser$Password" type="password" id="MainContent_LoginUser_Password" class="passwordEntry" />
+                        <input name="ctl00$MainContent$LoginUser$Password" type="password" id="MainContent_LoginUser_Password" class="passwordEntry" value="stas1234" />
 
                         <span id="MainContent_LoginUser_PasswordRequired" title="Password is required." class="failureNotification" style="visibility:hidden;">*</span>
 
@@ -69,13 +69,13 @@
                         <label for="MainContent_LoginUser_RememberMe" id="MainContent_LoginUser_RememberMeLabel" class="inline">Keep me logged in</label>
 
                     </p>
-
                 </fieldset>
-                <p class="loginSubmitButton">
-                    <input type="submit" name="ctl00$MainContent$LoginUser$LoginButton" value="Log In" id="MainContent_LoginUser_LoginButton" />
-                </p>
+					<p class="loginSubmitButton">
+						<input type="submit" name="ctl00$MainContent$LoginUser$LoginButton" value="Log In" id="MainContent_LoginUser_LoginButton" />
+					</p>
 				
 			</div>
+			</form>
 		</div>
 		<!--end of content-->
 
