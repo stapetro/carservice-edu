@@ -30,41 +30,44 @@
 				<li><a href="repairCards.html"><span class="left">&nbsp;</span><span class="menu">Repair cards</span><span class="right">&nbsp;</span></a></li>
 				<li><a href="admin.html"><span class="left">&nbsp;</span><span class="menu">Admin</span><span class="right">&nbsp;</span></a></li>
 		</ul>
-			<span id="ctl00_adminSiteMapPath" class="nav-path"><a href="#ctl00_adminSiteMapPath_SkipLink"><img height="0" width="0" src="/ccmsadmin/WebResource.axd?d=ZM81FMAAiFBYpPuCzT7X3QNbo5uxPMNrPzzyZX5klO4_DT-URv5uXu9NuvwvWov5U7IcqwT3m6VSuMA3XzUryjipbE01&amp;t=634221356544328436" style="border-width:0px;" /></a><span><a title="Home" href="index.html">Home</a></span><span> &gt; </span><span>Cars</span><a id="ctl00_adminSiteMapPath_SkipLink"></a></span>
+			<span id="ctl00_adminSiteMapPath" class="nav-path"><a href="#ctl00_adminSiteMapPath_SkipLink"><img height="0" width="0" src="/ccmsadmin/WebResource.axd?d=ZM81FMAAiFBYpPuCzT7X3QNbo5uxPMNrPzzyZX5klO4_DT-URv5uXu9NuvwvWov5U7IcqwT3m6VSuMA3XzUryjipbE01&amp;t=634221356544328436" style="border-width:0px;" /></a><span><a title="Home" href="index.html">Home</a></span><span> &gt; </span><span><a href="cars.html">Cars</a></span><span> &gt; </span><span>Add car</span><a id="ctl00_adminSiteMapPath_SkipLink"></a></span>
 		</div>
 		<!--end of header-->
 		
 		<!--start content-->
-		<div id="content">
-			
-			<div id="items">
-				<a href="addCar.html" class="addbutton" >Add car</a>
-				<table class="nicetable" >
-					<tbody>
-						<tr>
-							<th>Vin</th>
-							<th>Chassis</th>
-							<th>Make/Model</th>
-							<th>Owner</th>
-							<th>Actions</th>
-						</tr>
-						<tr>
-							<td>1M8GDM9</td>
-							<td>XMCLRDA2A3F011237</td>
-							<td>Audi/A4</td>
-							<td>Ivan Petrov</td>
-							<td><a href="addCar.html">edit</a></td>
-						</tr>
-						<tr class="alternaterow">
-							<td>AXKP04</td>
-							<td>XABNRDA6A3F031227</td>
-							<td>Audi/R8</td>
-							<td>Georgi Tutkanov</td>
-							<td><a href="addCar.html">edit</a></td>
-						</tr>						
-					</tbody>
-				</table>
-			</div>			
+		<div id="content">		
+			<form action="spareparts.html" method="POST">
+			<div class="accountInfo">
+				<fieldset class="register">
+					<legend>Spare part information</legend>
+					<p>
+						<span>Id:</span>
+						<input type="text" class="textEntry" value="XMCLRDA2A3F011237" />
+						<span title="Chassis number is required." class="failureNotification" style="visibility:hidden;">*</span>                               
+					</p>
+					<p>
+						<span>Name:</span>
+						<input type="text" class="textEntry" value="DGB060081U0017B" />
+						<span title="Enigne number is required." class="failureNotification" style="visibility:hidden;">*</span>                               
+					</p>					
+					<p>
+						<span>Price in &#36;:</span>
+						<input type="text" class="textEntry" value="500" />
+					</p>										
+					<p>
+						<span>Active:</span>
+						<select>
+							<option value="1">Yes</option>
+							<option value="0">No</option>
+						</select>
+					</p>												
+				</fieldset>
+				<p class="submitButton">
+					<input type="submit" value="Cancel" />
+					<input type="submit" value="Save" />
+				</p>
+			</div>				
+			</form>
 		</div>
 		<!--end of content-->
 

@@ -36,10 +36,41 @@
 		
 		<!--start content-->
 		<div id="content">
-			<p>This page is for prototype only. In the application dynamic menu will be implemented.</p>
-			<p><a href="/">Users</a></p>
-			<p><a href="/">Roles</a></p>
-			<p><a href="/">Spare parts</a></p>
+			<div id="items">
+				<a href="addSparePart.html" class="addbutton" >Add spare part</a>
+				<table class="nicetable" >
+					<tbody>
+						<tr>
+							<th>Id</th>
+							<th>Name</th>
+							<th>Price &#36;</th>
+							<th>Active</th>
+							<th>Actions</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>Bumper</td>
+							<td>99.90</td>
+							<td>Yes</td>
+							<td><a href="addSparePart.html">edit</a></td>
+						</tr>
+						<tr class="inactive">
+							<td>2</td>
+							<td>Bonnet/Hood</td>
+							<td>134.14</td>
+							<td>No</td>
+							<td><a href="addSparePart.html">edit</a></td>
+						</tr>						
+						<tr>
+							<td>3</td>
+							<td>Cowl screen</td>
+							<td>888.70</td>
+							<td>Yes</td>
+							<td><a href="addSparePart.html">edit</a></td>
+						</tr>						
+					</tbody>
+				</table>
+			</div>
 		</div>
 		<!--end of content-->
 
