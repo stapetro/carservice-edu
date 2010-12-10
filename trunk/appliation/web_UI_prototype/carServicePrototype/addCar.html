@@ -35,12 +35,67 @@
 		<!--end of header-->
 		
 		<!--start content-->
-		<div id="content">
-			
-			<div id="cars">
-				<input type="submit" value="Cancel" />
-				<input type="submit" value="Save" />
-			</div>
+		<div id="content">		
+			<form action="cars.html" method="POST">
+			<div class="accountInfo">
+				<fieldset class="register">
+					<legend>Car Information</legend>
+					<p>
+						<label for="MainContent_RegisterUser_CreateUserStepContainer_UserName">Vin:</label>
+						<input type="text" class="textEntry" value="1M8GDM9" />
+						<span title="Vin is required." class="failureNotification" style="visibility:hidden;">*</span>                               
+					</p>
+					<p>
+						<label>Chassis number:</label>
+						<input type="text" class="textEntry" value="XMCLRDA2A3F011237" />
+						<span title="Chassis number is required." class="failureNotification" style="visibility:hidden;">*</span>                               
+					</p>
+					<p>
+						<label>Enigne number:</label>
+						<input type="text" class="textEntry" value="DGB060081U0017B" />
+						<span title="Enigne number is required." class="failureNotification" style="visibility:hidden;">*</span>                               
+					</p>					
+					<p>
+						<label>Engine cub:</label>
+						<input type="text" class="textEntry" value="500" />
+					</p>										
+					<p>
+						<label>Make:</label>
+						<input type="text" class="textEntry" value="Audi" />
+					</p>					
+					<p>
+						<label>Model:</label>
+						<input type="text" class="textEntry" value="A4" />
+					</p>								
+					<p>
+						<label>Make year:</label>
+						<input type="text" class="textEntry" value="1995-06-01" />
+					</p>								
+					<p>
+						<label>Colour:</label>
+						<input type="text" class="textEntry" value="red" />
+					</p>													
+					<p>
+						<label>Description:</label>
+						<textarea name="comments" cols="40" rows="5" class="textEntry">
+							with big priority
+						</textarea><br>
+					</p>					
+					<p>
+						<label>Owner:</label>
+						<input type="text" class="textEntry" value="Ivan Petrov" />
+					</p>			
+					<p>
+						<label>Phone number:</label>
+						<input type="text" class="textEntry" value="111-222-333" />
+					</p>								
+				</fieldset>
+				<p class="submitButton">
+					<input type="submit" value="Cancel" />
+					<input type="submit" value="Save" />
+				</p>
+			</div>				
+			</form>
 		</div>
 		<!--end of content-->
 

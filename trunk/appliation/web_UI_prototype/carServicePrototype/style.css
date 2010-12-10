@@ -518,3 +518,9 @@ th
 {
 	margin-top: 10px;
 }
+
+input.textEntry 
+{
+    width: 320px;
+    border: 1px solid #ccc;
+}
