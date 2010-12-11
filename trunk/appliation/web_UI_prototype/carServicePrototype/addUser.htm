@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>
+	CarService Page
+</title>
+<link href="Site.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <h1>
+                    CarService
+                </h1>
+            </div>
+            <div class="loginDisplay">                
+				[ <a href="login.htm">Log In</a> ]                                            
+            </div>
+            <div class="clear hideSkiplink">
+				<div class="menu" id="NavigationMenu" style="float: left; ">
+					<ul style="position: relative; float: left; width: auto; ">
+						<li style="position: relative; float: left; "><a href="index.htm">Home</a></li>
+						<li style="position: relative; float: left; "><a href="cars.htm">Cars</a></li>						
+						<li style="position: relative; float: left; "><a href="repairCards.htm">Repair cards</a></li>
+						<li style="position: relative; float: left; "><a href="admin.htm">Admin</a></li>						
+					</ul>
+				</div>
+				<div style="clear: left; "></div><a id="NavigationMenu_SkipLink"></a>
+            </div>
+        </div>
+		<div class="nav-path">
+			<span><a href="index.htm">Home</a></span><span>&nbsp;&gt;&nbsp;</span><span><a href="admin.htm">Admin</a></span><span>&nbsp;&gt;&nbsp;</span><span>Users</span>
+		</div>						
+        <div class="main">            
+			<h2>
+				Create a New Account
+			</h2>
+			<p>
+				Use the form below to create a new account.
+			</p>
+			<p>
+				Passwords are required to be a minimum of 3 characters in length.
+			</p>
+			<form action="users.htm" method="POST">			
+				<div class="accountInfo">
+					<fieldset class="register">
+						<legend>Account Information</legend>
+						<p>
+							<label>User Name:</label>
+							<input type="text" class="textEntry" value="stanislav.petrov">
+						</p>
+						<p>
+							<label>E-mail:</label>
+							<input type="text" class="textEntry" value="stanislav.petrov@aspnet.net">
+						</p>
+						<p>
+							<label>Password:</label>
+							<input type="password" class="passwordEntry" value="stas1234">
+						</p>
+						<p>
+							<label>Confirm Password:</label>
+							<input type="password" class="passwordEntry" value="stas1234">
+						</p>
+						<p>
+							<label>First Name:</label>
+							<input type="text" class="textEntry" value="Stanislav">
+						</p>
+						<p>
+							<label>Last Name:</label>
+							<input type="text" class="textEntry" value="Petrov">
+						</p>
+						<p>
+							<span>Active:<span/>
+							<select>
+								<option value="1">Yes</option>
+								<option value="0">No</option>
+							</select>
+						</p>							
+					</fieldset>
+					<p class="submitButton">
+						<input type="submit" value="Cancel" />
+						<input type="submit" value="Save" />
+					</p>
+				</div>
+			</form>
+		</div>
+        <div class="clear">
+        </div>
+    </div>
+    <div id="footer">
+        <span>2010 &copy; Copyright <a href="http://www.fmi.uni-sofia.bg/">SU "St. Kliment Ohridski"</a>. All rights reserved.</span>
+		<span><a href="http://www.fmi.uni-sofia.bg/">Contact</a> | <a href="http://www.fmi.uni-sofia.bg/">Site Map</a></span>        
+    </div>
+</body>
+</html>

@@ -15,29 +15,59 @@
                 </h1>
             </div>
             <div class="loginDisplay">                
-				[ stanislav.petrov <a href="index.htm" id="HeadLoginView_HeadLoginStatus">Log Out</a> ]                                            
-            </div> 
+				[ <a href="login.htm" id="HeadLoginView_HeadLoginStatus">Log In</a> ]                                            
+            </div>
             <div class="clear hideSkiplink">
 				<div class="menu" id="NavigationMenu" style="float: left; ">
 					<ul style="position: relative; float: left; width: auto; ">
 						<li style="position: relative; float: left; "><a href="index.htm">Home</a></li>
 						<li style="position: relative; float: left; "><a href="cars.htm">Cars</a></li>						
 						<li style="position: relative; float: left; "><a href="repairCards.htm">Repair cards</a></li>
-						<li style="position: relative; float: left; "><a href="admin.htm">Admin</a></li>											
+						<li style="position: relative; float: left; "><a href="admin.htm">Admin</a></li>						
 					</ul>
 				</div>
 				<div style="clear: left; "></div><a id="NavigationMenu_SkipLink"></a>
             </div>
-        </div>	
+        </div>
 		<div class="nav-path">
-			<span>Home</span>
-		</div>		
+			<span><a href="index.htm">Home</a></span><span>&nbsp;&gt;&nbsp;</span><span><a href="admin.htm">Admin</a></span><span>&nbsp;&gt;&nbsp;</span><span>Users</span>
+		</div>				
         <div class="main">            
 			<h2>
-				Welcome to CarService!
+				User management
 			</h2>
 			<p>
-				
+				<a href="addUser.htm" class="addbutton" >Add user</a>
+			</p>
+			<p>
+				<table class="nicetable" >
+					<tbody>
+						<tr>
+							<th>Username</th>
+							<th>Email</th>
+							<th>First name</th>
+							<th>Last name</th>
+							<th>Active</th>
+							<th>Actions</th>
+						</tr>
+						<tr class="inactive">
+							<td>ScottBrown</td>
+							<td>scott@example.com</td>
+							<td>Scott</td>
+							<td>Brown</td>
+							<td>No</td>
+							<td><a href="addUser.htm">edit</a></td>
+						</tr>
+						<tr>
+							<td>stanislav.petrov</td>
+							<td>stanislav.petrov@aspnet.net</td>
+							<td>Stanislav</td>
+							<td>Petrov</td>
+							<td>Yes</td>
+							<td><a href="addUser.htm">edit</a></td>
+						</tr>												
+					</tbody>
+				</table>				
 			</p>
         </div>
         <div class="clear">

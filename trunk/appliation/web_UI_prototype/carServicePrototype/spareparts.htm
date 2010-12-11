@@ -6,7 +6,6 @@
 <link href="Site.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <form method="post" action="#">
     <div class="page">
         <div class="header">
             <div class="title">
@@ -15,8 +14,8 @@
                 </h1>
             </div>
             <div class="loginDisplay">                
-				[ stanislav.petrov <a href="index.htm" id="HeadLoginView_HeadLoginStatus">Log Out</a> ]                                            
-            </div> 
+				[ <a href="login.htm" id="HeadLoginView_HeadLoginStatus">Log In</a> ]                                            
+            </div>
             <div class="clear hideSkiplink">
 				<div class="menu" id="NavigationMenu" style="float: left; ">
 					<ul style="position: relative; float: left; width: auto; ">
@@ -28,18 +27,52 @@
 				</div>
 				<div style="clear: left; "></div><a id="NavigationMenu_SkipLink"></a>
             </div>
-        </div>	
+        </div>
 		<div class="nav-path">
-			<span>Home</span>
-		</div>		
+			<span><a href="index.htm">Home</a></span><span>&nbsp;&gt;&nbsp;</span><span><a href="admin.htm">Admin</a></span><span>&nbsp;&gt;&nbsp;</span><span>Spare parts</span>
+		</div>						
         <div class="main">            
 			<h2>
-				Welcome to CarService!
+				Spare parts management
 			</h2>
 			<p>
-				
+				<a href="addSparePart.htm" class="addbutton" >Add spare part</a>
 			</p>
-        </div>
+			<p>
+				<table class="nicetable" >
+					<tbody>
+						<tr>
+							<th>Id</th>
+							<th>Name</th>
+							<th>Price &#36;</th>
+							<th>Active</th>
+							<th>Actions</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>Bumper</td>
+							<td>99.90</td>
+							<td>Yes</td>
+							<td><a href="addSparePart.htm">edit</a></td>
+						</tr>
+						<tr class="inactive">
+							<td>2</td>
+							<td>Bonnet/Hood</td>
+							<td>134.14</td>
+							<td>No</td>
+							<td><a href="addSparePart.htm">edit</a></td>
+						</tr>						
+						<tr>
+							<td>3</td>
+							<td>Cowl screen</td>
+							<td>888.70</td>
+							<td>Yes</td>
+							<td><a href="addSparePart.htm">edit</a></td>
+						</tr>						
+					</tbody>
+				</table>			
+			</p>
+		</div>
         <div class="clear">
         </div>
     </div>

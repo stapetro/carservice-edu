@@ -20,14 +20,17 @@
 				<div class="menu" id="NavigationMenu" style="float: left; ">
 					<ul style="position: relative; float: left; width: auto; ">
 						<li style="position: relative; float: left; "><a href="index.htm">Home</a></li>
-						<li style="position: relative; float: left; "><a href="#">Cars</a></li>						
-						<li style="position: relative; float: left; "><a href="#">Repair cards</a></li>
-						<li style="position: relative; float: left; "><a href="#">Admin</a></li>						
+						<li style="position: relative; float: left; "><a href="cars.htm">Cars</a></li>						
+						<li style="position: relative; float: left; "><a href="repairCards.htm">Repair cards</a></li>
+						<li style="position: relative; float: left; "><a href="admin.htm">Admin</a></li>												
 					</ul>
 				</div>
 				<div style="clear: left; "></div><a id="NavigationMenu_SkipLink"></a>
             </div>
         </div>	
+		<div class="nav-path">
+			<span><a href="index.htm">Home</a></span><span>&nbsp;&gt;&nbsp;</span><span>Log In</span>
+		</div>				
         <div class="main">
             
     <h2>
@@ -48,22 +51,22 @@
                 <fieldset class="login">
                     <legend>Account Information</legend>
                     <p>
-                        <label for="MainContent_LoginUser_UserName" id="MainContent_LoginUser_UserNameLabel">Username:</label>
-                        <input name="ctl00$MainContent$LoginUser$UserName" type="text" id="MainContent_LoginUser_UserName" class="textEntry" value="stanislav.petrov">
-                        <span id="MainContent_LoginUser_UserNameRequired" title="User Name is required." class="failureNotification" style="visibility:hidden;">*</span>
+                        <label>Username:</label>
+                        <input type="text" id="MainContent_LoginUser_UserName" class="textEntry" value="stanislav.petrov">
+                        <span title="User Name is required." class="failureNotification" style="visibility:hidden;">*</span>
                     </p>
                     <p>
-                        <label for="MainContent_LoginUser_Password" id="MainContent_LoginUser_PasswordLabel">Password:</label>
-                        <input name="ctl00$MainContent$LoginUser$Password" type="password" id="MainContent_LoginUser_Password" class="passwordEntry" value="stas1234">
-                        <span id="MainContent_LoginUser_PasswordRequired" title="Password is required." class="failureNotification" style="visibility:hidden;">*</span>
+                        <label>Password:</label>
+                        <input type="password" class="passwordEntry" value="stas1234">
+                        <span title="Password is required." class="failureNotification" style="visibility:hidden;">*</span>
                     </p>
                     <p>
-                        <input id="MainContent_LoginUser_RememberMe" type="checkbox" name="ctl00$MainContent$LoginUser$RememberMe">
-                        <label for="MainContent_LoginUser_RememberMe" id="MainContent_LoginUser_RememberMeLabel" class="inline">Keep me logged in</label>
+                        <input type="checkbox">
+                        <label class="inline">Keep me logged in</label>
                     </p>
                 </fieldset>
                 <p class="submitButton">
-                    <input type="submit" name="ctl00$MainContent$LoginUser$LoginButton" value="Log In" id="MainContent_LoginUser_LoginButton">
+                    <input type="submit" value="Log In">
                 </p>
             </div>
         
@@ -72,8 +75,9 @@
         <div class="clear">
         </div>
     </div>
-    <div class="footer">
-        
+    <div id="footer">
+        <span>2010 &copy; Copyright <a href="http://www.fmi.uni-sofia.bg/">SU "St. Kliment Ohridski"</a>. All rights reserved.</span>
+		<span><a href="http://www.fmi.uni-sofia.bg/">Contact</a> | <a href="http://www.fmi.uni-sofia.bg/">Site Map</a></span>        
     </div>
     
 </form>

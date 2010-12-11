@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>
+	CarService Page
+</title>
+<link href="Site.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <h1>
+                    CarService
+                </h1>
+            </div>
+            <div class="loginDisplay">                
+				[ <a href="login.htm" id="HeadLoginView_HeadLoginStatus">Log In</a> ]                                            
+            </div>
+            <div class="clear hideSkiplink">
+				<div class="menu" id="NavigationMenu" style="float: left; ">
+					<ul style="position: relative; float: left; width: auto; ">
+						<li style="position: relative; float: left; "><a href="index.htm">Home</a></li>
+						<li style="position: relative; float: left; "><a href="cars.htm">Cars</a></li>						
+						<li style="position: relative; float: left; "><a href="repairCards.htm">Repair cards</a></li>
+						<li style="position: relative; float: left; "><a href="admin.htm">Admin</a></li>												
+					</ul>
+				</div>
+				<div style="clear: left; "></div><a id="NavigationMenu_SkipLink"></a>
+            </div>
+        </div>
+		<div class="nav-path">
+			<span><a href="index.htm">Home</a></span><span>&nbsp;&gt;&nbsp;</span><span>Repair cards</span>
+		</div>			
+        <div class="main">            
+			<h2>
+				Repair Cards Management
+			</h2>
+			<p>
+				<a href="addRepairCard.htm" class="addbutton">Add repair card</a>
+			</p>
+			<p>
+				<form action="#" method="POST">
+				<div class="filterInfo">
+				<fieldset class="register">			
+					<legend>Filter</legend>				
+					<p>
+						<select>
+							<option value="1">Finished</option>
+							<option value="0">Unfinished</option>
+						</select>					
+					</p>
+					<p>
+						<span>Start date&nbsp;&nbsp;&nbsp;</span><input type="text" value="2010-12-12" />
+					</p>
+					<p>
+						<span>From&nbsp;&nbsp;&nbsp;</span><input type="text" value="2010-12-12" />
+						<span>&nbsp;To&nbsp;&nbsp;&nbsp;</span><input type="text" value="2010-12-12" />						
+					</p>
+					<p>
+						<select>
+							<option value="1">Vin</option>
+							<option value="0">Chassis</option>
+						</select>				
+						<input type="text" value="PA1234SX" />
+					</p>
+				</fieldset>
+				<p class="submitButton">
+					<input type="submit" value="Filter" />
+				</p>
+				</div>							
+				</form>				
+			</p>
+			<p>
+				<table class="nicetable" >
+					<tbody>
+						<tr>
+							<th>Id</th>
+							<th>Vin/Chassis</th>
+							<th>Start date</th>
+							<th>Finish date</th>
+							<th>Repair price &#36;</th>
+							<th>Actions</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>1M8GDM9/XMCLRDA2A3F011237</td>
+							<td>2010-11-30</td>
+							<td>2010-12-05</td>
+							<td>233.34</td>
+							<td><a href="addRepairCard.htm">edit</a> | <a href="#">finish</a></td>
+						</tr>
+						<tr class="alternaterow">
+							<td>2</td>
+							<td>AXKP04/XABNRDA6A3F031227</td>
+							<td>2010-12-25</td>							
+							<td></td>
+							<td>816.34</td>
+							<td><a href="addRepairCard.htm">edit</a> | <a href="#">finish</a></td>
+						</tr>											
+					</tbody>
+				</table>			
+			</p>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div id="footer">
+        <span>2010 &copy; Copyright <a href="http://www.fmi.uni-sofia.bg/">SU "St. Kliment Ohridski"</a>. All rights reserved.</span>
+		<span><a href="http://www.fmi.uni-sofia.bg/">Contact</a> | <a href="http://www.fmi.uni-sofia.bg/">Site Map</a></span>        
+    </div>
+</body>
+</html>
