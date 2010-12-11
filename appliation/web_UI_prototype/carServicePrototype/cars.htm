@@ -15,8 +15,8 @@
                 </h1>
             </div>
             <div class="loginDisplay">                
-				[ stanislav.petrov <a href="index.htm" id="HeadLoginView_HeadLoginStatus">Log Out</a> ]                                            
-            </div> 
+				[ <a href="login.htm" id="HeadLoginView_HeadLoginStatus">Log In</a> ]                                            
+            </div>
             <div class="clear hideSkiplink">
 				<div class="menu" id="NavigationMenu" style="float: left; ">
 					<ul style="position: relative; float: left; width: auto; ">
@@ -28,24 +28,51 @@
 				</div>
 				<div style="clear: left; "></div><a id="NavigationMenu_SkipLink"></a>
             </div>
-        </div>	
+        </div>
 		<div class="nav-path">
-			<span>Home</span>
+			<span><a href="index.htm">Home</a></span><span>&nbsp;&gt;&nbsp;</span><span>Cars</span>
 		</div>		
         <div class="main">            
 			<h2>
-				Welcome to CarService!
+				Cars management
 			</h2>
 			<p>
-				
+				<a href="addCar.htm" class="addbutton" >Add car</a>
+			</p>
+			<p>
+				<table class="nicetable" >
+					<tbody>
+						<tr>
+							<th>Vin</th>
+							<th>Chassis</th>
+							<th>Make/Model</th>
+							<th>Owner</th>
+							<th>Actions</th>
+						</tr>
+						<tr>
+							<td>1M8GDM9</td>
+							<td>XMCLRDA2A3F011237</td>
+							<td>Audi/A4</td>
+							<td>Ivan Petrov</td>
+							<td><a href="addCar.htm">edit</a></td>
+						</tr>
+						<tr class="alternaterow">
+							<td>AXKP04</td>
+							<td>XABNRDA6A3F031227</td>
+							<td>Audi/R8</td>
+							<td>Georgi Tutkanov</td>
+							<td><a href="addCar.htm">edit</a></td>
+						</tr>						
+					</tbody>
+				</table>			
 			</p>
         </div>
         <div class="clear">
         </div>
     </div>
     <div id="footer">
-        <span>2010 &copy; Copyright <a href="http://www.fmi.uni-sofia.bg/">SU "St. Kliment Ohridski"</a>. All rights reserved.</span>
-		<span><a href="http://www.fmi.uni-sofia.bg/">Contact</a> | <a href="http://www.fmi.uni-sofia.bg/">Site Map</a></span>        
+		<span>2010 &copy; Copyright <a href="http://www.fmi.uni-sofia.bg/">SU "St. Kliment Ohridski"</a>. All rights reserved.</span>
+		<span><a href="http://www.fmi.uni-sofia.bg/">Contact</a> | <a href="http://www.fmi.uni-sofia.bg/">Site Map</a></span>
     </div>
 </body>
 </html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>
+	CarService Page
+</title>
+<link href="Site.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <h1>
+                    CarService
+                </h1>
+            </div>
+            <div class="loginDisplay">                
+				[ <a href="login.htm" id="HeadLoginView_HeadLoginStatus">Log In</a> ]                                            
+            </div>
+            <div class="clear hideSkiplink">
+				<div class="menu" id="NavigationMenu" style="float: left; ">
+					<ul style="position: relative; float: left; width: auto; ">
+						<li style="position: relative; float: left; "><a href="index.htm">Home</a></li>
+						<li style="position: relative; float: left; "><a href="cars.htm">Cars</a></li>						
+						<li style="position: relative; float: left; "><a href="repairCards.htm">Repair cards</a></li>
+						<li style="position: relative; float: left; "><a href="admin.htm">Admin</a></li>												
+					</ul>
+				</div>
+				<div style="clear: left; "></div><a id="NavigationMenu_SkipLink"></a>
+            </div>
+        </div>
+		<div class="nav-path">
+			<span><a href="index.htm">Home</a></span><span>&nbsp;&gt;&nbsp;</span><span>Repair cards</span>
+		</div>			
+        <div class="main">            
+			<h2>
+				Create Repair Card
+			</h2>
+			<p>
+				Use the form below to create repair card.
+			</p>
+			<form action="repairCards.htm" method="POST">			
+				<div class="repairCardInfo">			
+				<fieldset class="register">
+					<legend>Repair card information</legend>
+					<p>					
+					<div class="table-row">
+						<div class="left-container2"><p class="text"> 
+							<label>Id:</label>
+							<input type="text" class="textEntry" value="1" disabled /><label></label>
+						<span>Operator:</span>
+						<select>
+							<option value="1">stanislav.petrov</option>
+							<option value="0">ScottBrown</option>
+						</select>							
+						</p></div> 
+						<div class="right-container2"><p class="text"> 
+							<label>Car:</label><input type="text" class="textEntry" value="Audi A4" disabled /><label></label>
+							<select>
+								<option value="1">Vin</option>
+								<option value="0">Chassis</option>
+							</select>
+							<input type="text" value="" /><input type="submit" value="Search" />
+						</p></div>						
+					</div>
+
+					<div class="table-row">
+						<div class="left-container2"><p class="text"> 							
+							<label>Start date:</label>
+							<input type="text" class="textEntry" value="2010-12-20" disabled />
+						</p></div> 
+						<div class="right-container2"><p class="text"> 
+							<label>Finish date:</label>
+							<input type="text" class="textEntry" value="" disabled /><label></label>	
+						</p></div>						
+					</div>	
+
+					</p>					
+
+					<p>										
+					<h4 class="table-caption"> 
+						Please select which spare parts will be used
+					</h4> 					
+					<div class="table-row">
+						<div class="left-container2"><p class="text"> 
+							<label>Spare parts:</label>						
+							<select multiple size=5>							
+								<option value="0">Bonnet/Hood</option>
+								<option value="1">Bumper</option>							
+								<option value="1">Cowl screen</option>							
+								<option value="1">Fascia rear and support</option>							
+								<option value="1">Fender (wing or mudguard)</option>							
+								<option value="1">Spoiler</option>							
+							</select>	
+							<input type="button" value="Select" />
+						</p></div> 
+						<div class="right-container2"><p class="text"> 
+							<label>Selected:</label>
+							<select multiple size=5>
+								<option value="1">Trim package</option>
+								<option value="2">Glass</option>
+							</select>	
+							<input type="button" value="Remove" />
+						</p></div> 					
+					</div>
+					<div class="space-line"></div> 						
+					<div class="space-line"></div> 						
+					<div class="table-row">
+						<div class="left-container2"><p class="text"> 
+							<label>Spare parts price &#36;:</label>
+							<input type="text" class="textEntry" value="500" />
+						</p></div> 
+						<div class="right-container2"><p class="text"> 
+							<label>Repair price &#36;:</label>
+							<input type="text" class="textEntry" value="570" />
+						</p></div> 					
+					</div>
+					<div class="space-line"></div>														
+					<div class="table-row">
+						<div class="left-container2"><p class="text"> 							
+							<label>Description:</label>
+							<textarea class="textentry" rows=5 col=100>
+								Enter description here...
+							</textarea><label></label>
+						</p></div> 						
+					</div>						
+					<div class="space-line"></div>																			
+					</p>					
+				</fieldset>	
+				<p class="submitButton">
+					<input type="submit" value="Cancel" />
+					<input type="submit" value="Save" />
+				</p>				
+				</div>
+			</form>
+        <div class="clear">
+        </div>
+    </div>
+    <div id="footer">
+        <span>2010 &copy; Copyright <a href="http://www.fmi.uni-sofia.bg/">SU "St. Kliment Ohridski"</a>. All rights reserved.</span>
+		<span><a href="http://www.fmi.uni-sofia.bg/">Contact</a> | <a href="http://www.fmi.uni-sofia.bg/">Site Map</a></span>        
+    </div>
+</body>
+</html>

@@ -129,13 +129,26 @@ first child of the left and right table columns */
     min-height: 200px;
 }
 
-.footer
+#footer
 {
     color: #4e5766;
     padding: 8px 0px 0px 0px;
-    margin: 0px auto;
+    margin: 0px 0px 20px 0px;
     text-align: center;
     line-height: normal;
+}
+#footer span.left
+{	
+	text-align:left;
+	padding-left:15px;
+	float:left;	
+}
+	
+#footer span.right
+{	
+	text-align:right;
+	padding-right:15px;
+	float:right;	
 }
 
 
@@ -291,4 +304,61 @@ div.accountInfo
 {
     text-align: right;
     padding-right: 10px;
+}
+
+/* Stanislav styles
+---------------------------------------*/
+.alternaterow
+{
+	background-color: #e6e6e6;
+}
+
+.inactive
+{	
+	background-color: #FF9787;
+}
+
+.nav-path 
+{
+	margin: 10px 20px 0px 20px;
+	font:normal 11px Tahoma,sans-serif;
+}
+
+table, th, td
+{
+	border: 1px solid black;
+	padding: 0px 3px;
+	color: black;
+	text-align: center;
+}
+
+th
+{
+	background-color: #B7B67A;
+	font-weight: bold;
+}
+
+h4.table-caption {
+  background: transparent; 
+  /*color: #3333cc; */
+  font-family: sans-serif;
+  font-size: 1em; font-style: italic; font-weight: bold; margin: 0;
+  padding: 0.3em; text-align: center; width: auto;
+}
+
+DIV.table-row {
+  background: none #ffffcc; 
+  /*border: solid #000000 1px; color: #000000;*/
+  margin-top: 0; margin-right: auto; margin-bottom: 0; margin-left: auto;
+  padding: 0; 
+  text-align: left; 
+  width: 96%;
+}
+
+DIV.left-container2 {
+  border: none; float: left; margin: 0; padding: 0; width: 50%;
+}
+
+DIV.right-container2 {
+  border: none; float: right; margin: 0; padding: 0; width: 50%;
 }

@@ -6,7 +6,6 @@
 <link href="Site.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <form method="post" action="#">
     <div class="page">
         <div class="header">
             <div class="title">
@@ -15,8 +14,8 @@
                 </h1>
             </div>
             <div class="loginDisplay">                
-				[ stanislav.petrov <a href="index.htm" id="HeadLoginView_HeadLoginStatus">Log Out</a> ]                                            
-            </div> 
+				[ <a href="login.htm" id="HeadLoginView_HeadLoginStatus">Log In</a> ]                                            
+            </div>
             <div class="clear hideSkiplink">
 				<div class="menu" id="NavigationMenu" style="float: left; ">
 					<ul style="position: relative; float: left; width: auto; ">
@@ -28,18 +27,50 @@
 				</div>
 				<div style="clear: left; "></div><a id="NavigationMenu_SkipLink"></a>
             </div>
-        </div>	
+        </div>
 		<div class="nav-path">
-			<span>Home</span>
-		</div>		
+			<span><a href="index.htm">Home</a></span><span>&nbsp;&gt;&nbsp;</span><span><a href="admin.htm">Admin</a></span><span>&nbsp;&gt;&nbsp;</span><span>Spare parts</span>
+		</div>			
         <div class="main">            
 			<h2>
-				Welcome to CarService!
+				Create a Spare Part
 			</h2>
 			<p>
-				
+				Use the form below to create a spare part.
 			</p>
-        </div>
+			<form action="spareparts.htm" method="POST">			
+				<div class="accountInfo">
+					<fieldset class="register">
+						<legend>Spare part information</legend>
+						<p>
+							<span>Id:</span>
+							<input type="text" class="textEntry" value="XMCLRDA2A3F011237" />
+							<span title="Chassis number is required." class="failureNotification" style="visibility:hidden;">*</span>                               
+						</p>
+						<p>
+							<span>Name:</span>
+							<input type="text" class="textEntry" value="DGB060081U0017B" />
+							<span title="Enigne number is required." class="failureNotification" style="visibility:hidden;">*</span>                               
+						</p>					
+						<p>
+							<span>Price in &#36;:</span>
+							<input type="text" class="textEntry" value="500" />
+						</p>										
+						<p>
+							<span>Active:</span>
+							<select>
+								<option value="1">Yes</option>
+								<option value="0">No</option>
+							</select>
+						</p>												
+					</fieldset>
+					<p class="submitButton">
+						<input type="submit" value="Cancel" />
+						<input type="submit" value="Save" />
+					</p>
+				</div>	
+			</form>
+		</div>
         <div class="clear">
         </div>
     </div>
