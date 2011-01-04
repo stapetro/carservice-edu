@@ -129,6 +129,6 @@ public partial class _Default : System.Web.UI.Page
             output.Append(card.CardId + ", ");
         }
         output.Append("<br/>");
-        this.users.Text = output.ToString();
+        //this.users.Text = output.ToString();
     }
 }

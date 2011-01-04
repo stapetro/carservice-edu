@@ -1,0 +1,58 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="Site" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>
+        <asp:ContentPlaceHolder ID="pageTitle" runat="server"></asp:ContentPlaceHolder>
+    </title>
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <h1>
+                    CarService
+                </h1>
+            </div>
+            <div class="loginDisplay">                
+				[ <a href="~/Login.aspx" ID="HeadLoginStatus" runat="server">Log In</a> ]                                            
+            </div>       
+            <div class="clear hideSkiplink">
+
+			    <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal">
+                    <Items>
+                        <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Home" />
+                        <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Cars"/>
+                        <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Repair Cards" />
+                        <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Admin" Value="Members only">
+                            <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Users" />
+                            <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Spare Parts" />
+                        </asp:MenuItem>
+                    </Items>
+                </asp:Menu>
+            </div>
+        </div>
+        <div class="nav-path">			
+            <asp:SiteMapPath ID="carServiceSiteMap" runat="server" />            
+		</div>        
+
+        <div class="main">
+            <asp:ContentPlaceHolder id="pageBody" runat="server">
+                
+            </asp:ContentPlaceHolder>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div id="footer">
+        <span>&copy; 2010 - 2011 Copyright <a href="http://www.fmi.uni-sofia.bg/">SU "St. Kliment Ohridski"</a>. All rights reserved.</span>
+		<span><a href="http://www.fmi.uni-sofia.bg/">Contact</a> | <a href="http://www.fmi.uni-sofia.bg/">Site Map</a></span>
+    </div>
+    </form>
+</body>
+</html>
