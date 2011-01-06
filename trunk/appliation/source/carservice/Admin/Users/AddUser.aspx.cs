@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Security;
+using businesslogic.utils;
+using constants;
 
 
 namespace presentation
@@ -14,12 +16,19 @@ namespace presentation
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            /* *** Resetting user password without knowing old password ***
+            MembershipUser user = Membership.GetUser("ScottBrown");
+            user.ChangePassword(user.ResetPassword(), "ScottBrown");*/
         }
 
         protected void RegisterUser_CreatedUser(object sender, EventArgs e)
         {
             FormsAuthentication.SetAuthCookie(RegisterUser.UserName, false /* createPersistentCookie */);
+            if(UserRolesUtility.IsOperatorRoleExists() == false)
+            {
+                Roles.CreateRole(CarServiceConstants.OPERATOR_ROLE_NAME);
+            }
+            Roles.AddUserToRole(RegisterUser.UserName, CarServiceConstants.OPERATOR_ROLE_NAME);
             ProfileCommon profileCommon = Profile.GetProfile(RegisterUser.UserName);
             TextBox firstName = (TextBox)RegisterUserWizardStep.ContentTemplateContainer.FindControl("FirstName");
             if (firstName != null)
@@ -35,7 +44,7 @@ namespace presentation
             string continueUrl = RegisterUser.ContinueDestinationPageUrl;
             if (String.IsNullOrEmpty(continueUrl))
             {
-                continueUrl = "~/";
+                continueUrl = "~/Admin/Users/Users.aspx";
             }
             Response.Redirect(continueUrl);
         }

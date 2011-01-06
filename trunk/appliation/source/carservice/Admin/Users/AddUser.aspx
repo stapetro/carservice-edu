@@ -4,7 +4,7 @@
 
 <asp:Content ID="addUserBody" runat="server" ContentPlaceHolderID="pageBody">
     <div class="accountInfo">
-    <asp:CreateUserWizard ID="RegisterUser" runat="server" EnableViewState="false" OnCreatedUser="RegisterUser_CreatedUser" DuplicateUserNameErrorMessage="User name already exists." CancelDestinationPageUrl="~/Admin/Users/Users.aspx">
+    <asp:CreateUserWizard ID="RegisterUser" runat="server" EnableViewState="false" OnCreatedUser="RegisterUser_CreatedUser" DuplicateUserNameErrorMessage="User name already exists." CancelDestinationPageUrl="~/Admin/Users/Users.aspx" LoginCreatedUser="false">
         <LayoutTemplate>
             <asp:PlaceHolder ID="wizardStepPlaceholder" runat="server"></asp:PlaceHolder>
             <asp:PlaceHolder ID="navigationPlaceholder" runat="server"></asp:PlaceHolder>
@@ -66,10 +66,16 @@
                             <p>
                                 <asp:Label ID="FirstNameLabel" runat="server">First Name:</asp:Label>
                                 <asp:TextBox ID="FirstName" runat="server" CssClass="textEntry"></asp:TextBox>
+                                <asp:RequiredFieldValidator ControlToValidate="FirstName" CssClass="failureNotification" Display="Dynamic" 
+                                     ErrorMessage="First name is required." ID="FirstNameRequired" runat="server" 
+                                     ToolTip="First name is required." ValidationGroup="RegisterUserValidationGroup">*</asp:RequiredFieldValidator>
                             </p>
                             <p>
                                 <asp:Label ID="LastNameLabel" runat="server">Last Name:</asp:Label>
                                 <asp:TextBox ID="LastName" runat="server" CssClass="textEntry"></asp:TextBox>
+                                <asp:RequiredFieldValidator ControlToValidate="LastName" CssClass="failureNotification" Display="Dynamic" 
+                                     ErrorMessage="Last name is required." ID="LastNameRequired" runat="server" 
+                                     ToolTip="Last name is required." ValidationGroup="RegisterUserValidationGroup">*</asp:RequiredFieldValidator>
                             </p>
                         </fieldset>
                         <p class="submitButton">

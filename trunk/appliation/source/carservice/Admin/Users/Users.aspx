@@ -8,6 +8,17 @@
 	    <asp:HyperLink NavigateUrl="~/Admin/Users/AddUser.aspx" runat="server">Add user</asp:HyperLink>			
     </p>
     <p>
+        <asp:GridView ID="carServiceUsers" AllowPaging="true" AutoGenerateColumns="false" CssClass="nicetable" runat="server" OnRowCreated="CarServiceUsersGridView_RowCreated">
+            <Columns>
+                <asp:BoundField HeaderText="User Name" DataField="UserName" />
+                <asp:BoundField HeaderText="Email" DataField="Email" />
+                <asp:BoundField HeaderText="First Name" DataField="FirstName" />
+                <asp:BoundField HeaderText="Last Name" DataField="LastName" />
+                <asp:BoundField HeaderText="Active" DataField="IsActive" />
+                <asp:CommandField ShowEditButton="true" />
+            </Columns>
+        </asp:GridView>
+<!--
 	    <table class="nicetable" >
 		    <tbody>
 			    <tr>
@@ -36,5 +47,6 @@
 			    </tr>												
 		    </tbody>
 	    </table>	    
+-->
     </p>
 </asp:Content>
