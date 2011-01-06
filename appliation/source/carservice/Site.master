@@ -12,7 +12,9 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
+
     <form id="form1" runat="server">
+
     <div class="page">
         <div class="header">
             <div class="title">
@@ -21,18 +23,26 @@
                 </h1>
             </div>
             <div class="loginDisplay">                
-				[ <a href="~/Login.aspx" ID="HeadLoginStatus" runat="server">Log In</a> ]                                            
+                <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
+                    <AnonymousTemplate>
+                        [ <a href="~/Login.aspx" ID="HeadLoginStatus" runat="server">Log In</a> ]                        
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                        Welcome <span class="bold"><asp:LoginName ID="HeadLoginName" runat="server" /></span>!
+                        [ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Log Out" LogoutPageUrl="~/"/> ]                        
+                    </LoggedInTemplate>
+                </asp:LoginView>                                          
             </div>       
             <div class="clear hideSkiplink">
 
 			    <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal">
                     <Items>
                         <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Home" />
-                        <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Cars"/>
-                        <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Repair Cards" />
-                        <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Admin" Value="Members only">
-                            <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Users" />
-                            <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Spare Parts" />
+                        <asp:MenuItem NavigateUrl="~/Members/Cars/Cars.aspx" Text="Cars"/>
+                        <asp:MenuItem NavigateUrl="~/Members/RepairCards/RepairCards.aspx" Text="Repair Cards" />
+                        <asp:MenuItem Text="Admin">
+                            <asp:MenuItem NavigateUrl="~/Admin/Users/Users.aspx" Text="Users" />
+                            <asp:MenuItem NavigateUrl="~/Admin/SpareParts/SpareParts.aspx" Text="Spare Parts" />
                         </asp:MenuItem>
                     </Items>
                 </asp:Menu>
@@ -53,6 +63,8 @@
         <span>&copy; 2010 - 2011 Copyright <a href="http://www.fmi.uni-sofia.bg/">SU "St. Kliment Ohridski"</a>. All rights reserved.</span>
 		<span><a href="http://www.fmi.uni-sofia.bg/">Contact</a> | <a href="http://www.fmi.uni-sofia.bg/">Site Map</a></span>
     </div>
+
     </form>
+
 </body>
 </html>
