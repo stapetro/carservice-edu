@@ -48,3 +48,12 @@ CarService Web UI prototype requirements:
 - login page
 - cars menu item - add/edit pages
 - repair cards page - add/edit/finish, search/filter for repair cards, 
+
+Security
+
+Users:
+operators:
+test / test
+
+admin:
+

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace persistence{
+namespace persistence
+{
     /// <summary>
     /// Car service persistence facade which gives access to the persistence layer.
     /// </summary>
