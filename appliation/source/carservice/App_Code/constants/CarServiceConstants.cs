@@ -11,6 +11,8 @@ namespace constants
     public class CarServiceConstants
     {
         public const string OPERATOR_ROLE_NAME = "operator";
+        public const string USER_NAME_REQUEST_PARAM_NAME = "userName";
+        public const string EMAIL_REQUEST_PARAM_NAME = "email";
 
         public CarServiceConstants()
         {

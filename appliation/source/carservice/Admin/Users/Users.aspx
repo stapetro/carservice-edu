@@ -8,7 +8,8 @@
 	    <asp:HyperLink NavigateUrl="~/Admin/Users/AddUser.aspx" runat="server">Add user</asp:HyperLink>			
     </p>
     <p>
-        <asp:GridView ID="carServiceUsers" AllowPaging="true" AutoGenerateColumns="false" CssClass="nicetable" runat="server" OnRowCreated="CarServiceUsersGridView_RowCreated">
+        <asp:GridView ID="carServiceUsers" AllowPaging="true" AutoGenerateColumns="false" 
+            CssClass="nicetable" runat="server" OnRowCreated="CarServiceUsersGridView_RowCreated" OnRowEditing="EditUserEventHandler_RowEditing">
             <Columns>
                 <asp:BoundField HeaderText="User Name" DataField="UserName" />
                 <asp:BoundField HeaderText="Email" DataField="Email" />

@@ -16,9 +16,7 @@ namespace presentation
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            /* *** Resetting user password without knowing old password ***
-            MembershipUser user = Membership.GetUser("ScottBrown");
-            user.ChangePassword(user.ResetPassword(), "ScottBrown");*/
+
         }
 
         protected void RegisterUser_CreatedUser(object sender, EventArgs e)
@@ -41,6 +39,19 @@ namespace presentation
                 profileCommon.LastName = lastName.Text;
             }
             profileCommon.Save();
+            DropDownList userActive = (DropDownList)RegisterUserWizardStep.ContentTemplateContainer.FindControl("UserActive");
+            if (userActive != null)
+            {
+                int selectedValue;
+                if(Int32.TryParse(userActive.SelectedValue, out selectedValue) && selectedValue == 0)
+                {
+                    MembershipUser createdUser = Membership.GetUser(RegisterUser.UserName);
+                    if (createdUser != null)
+                    {
+                        createdUser.IsApproved = false;
+                    }
+                }
+            }
             string continueUrl = RegisterUser.ContinueDestinationPageUrl;
             if (String.IsNullOrEmpty(continueUrl))
             {

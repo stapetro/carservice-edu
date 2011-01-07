@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="AddUser.aspx.cs" Inherits="presentation.AdminAddUser" %>
 
-<asp:Content ID="carServiceTitle" runat="server" ContentPlaceHolderID="pageTitle">Car Service - Add User</asp:Content>
+<asp:Content ID="addUserTitle" runat="server" ContentPlaceHolderID="pageTitle">Car Service - Add User</asp:Content>
 
 <asp:Content ID="addUserBody" runat="server" ContentPlaceHolderID="pageBody">
     <div class="accountInfo">
@@ -76,6 +76,15 @@
                                 <asp:RequiredFieldValidator ControlToValidate="LastName" CssClass="failureNotification" Display="Dynamic" 
                                      ErrorMessage="Last name is required." ID="LastNameRequired" runat="server" 
                                      ToolTip="Last name is required." ValidationGroup="RegisterUserValidationGroup">*</asp:RequiredFieldValidator>
+                            </p>
+                            <p>
+                                <span>
+                                    <asp:Label ID="UserActiveLabel" runat="server">Active</asp:Label>
+                                    <asp:DropDownList ID="UserActive" runat="server">
+                                        <asp:ListItem Value="1" Text="Yes" Selected="True" />
+                                        <asp:ListItem Value="0" Text="No" />
+                                    </asp:DropDownList>
+                                </span>
                             </p>
                         </fieldset>
                         <p class="submitButton">
