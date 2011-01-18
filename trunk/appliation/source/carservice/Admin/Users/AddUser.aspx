@@ -36,7 +36,7 @@
                                      CssClass="failureNotification" ErrorMessage="User Name is required." ToolTip="User Name is required." 
                                      ValidationGroup="RegisterUserValidationGroup">*</asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator ID="UserNameRegEx" runat="server" ControlToValidate="UserName" ValidationExpression="^[a-zA-Z0-9]+$"
-                                    CssClass="failureNotification" ErrorMessage="User Name regex validation failed" ToolTip="ala bala."
+                                    CssClass="failureNotification" ErrorMessage="User Name regex validation failed" ToolTip="User Name regex validation failed"
                                     ValidationGroup="RegisterUserValidationGroup" />
                             </p>
                             <p>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Objects;
 
 namespace persistence
 {
@@ -16,6 +17,8 @@ namespace persistence
 
         void CreateSparePart(SparePart sparePart);
         SparePart GetSparePartById(int sparePartId);
+        int GetSparePartMaxId();
+        ObjectSet<SparePart> GetSpareParts();
         void DeleteSparePart(SparePart sparePart);
 
         void CreateRepairCard(RepairCard repairCard);
