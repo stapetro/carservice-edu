@@ -49,6 +49,7 @@ namespace presentation
                     if (createdUser != null)
                     {
                         createdUser.IsApproved = false;
+                        Membership.UpdateUser(createdUser);
                     }
                 }
             }

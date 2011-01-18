@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Security;
 using System.Text;
+using System.Data.Objects;
 
 namespace persistence
 {
@@ -50,6 +51,17 @@ namespace persistence
         {
             SparePart sparePart = this.carServiceEntities.SpareParts.FirstOrDefault(part => part.PartId == sparePartId);
             return sparePart;
+        }
+
+        public ObjectSet<SparePart> GetSpareParts()
+        {
+            return this.carServiceEntities.SpareParts;
+        }
+
+        public int GetSparePartMaxId()
+        {
+            int partId = this.carServiceEntities.SpareParts.Max(sp => sp.PartId);
+            return partId;
         }
 
         public void DeleteSparePart(SparePart sparePart)
