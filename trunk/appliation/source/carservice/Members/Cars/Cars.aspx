@@ -4,9 +4,22 @@
 
 <asp:Content ID="carsBody" runat="server" ContentPlaceHolderID="pageBody">
     <h2>
-	    Cars list here
+	    Cars Management
     </h2>
     <p>
-				
+        <asp:HyperLink ID="addCar" NavigateUrl="~/Members/Cars/AddCar.aspx" runat="server">Add car</asp:HyperLink>	 	
+    </p>
+    <p>
+        <asp:GridView ID="automobilesGrid" AllowPaging="true" AutoGenerateColumns="false" 
+            CssClass="nicetable" runat="server" OnRowEditing="EditAutomobileEventHandler_RowEditing">
+            <Columns>
+                <asp:BoundField HeaderText="Id" DataField="AutomobileId" />
+                <asp:BoundField HeaderText="Vin" DataField="Vin" />
+                <asp:BoundField HeaderText="Chassis" DataField="ChassisNumber" />
+                <asp:BoundField HeaderText="Make/Model" DataField="Make" />
+                <asp:BoundField HeaderText="Owner" DataField="Owner" />
+                <asp:CommandField ShowEditButton="true" />
+            </Columns>
+        </asp:GridView>				        
     </p>
 </asp:Content>

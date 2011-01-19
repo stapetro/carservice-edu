@@ -324,6 +324,17 @@ div.accountInfo
 	font:normal 11px Tahoma,sans-serif;
 }
 
+.positiveMsg
+{
+    color: Green;
+}
+
+.negativeMsg
+{
+    color:Red;
+}
+
+
 table, th, td
 {
 	border: 1px solid black;
