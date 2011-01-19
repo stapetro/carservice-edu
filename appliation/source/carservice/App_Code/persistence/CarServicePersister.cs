@@ -37,6 +37,11 @@ namespace persistence
             return foundAutomobile;
         }
 
+        public ObjectSet<Automobile> GetAutomobiles()
+        {
+            return this.carServiceEntities.Automobiles;
+        }
+
         public void DeleteAutomobile(Automobile automobile)
         {
             this.carServiceEntities.Automobiles.DeleteObject(automobile);

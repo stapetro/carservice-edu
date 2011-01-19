@@ -37,7 +37,7 @@ namespace presentation
                     bool isApproved = (bool)isApprovedObject;
                     if (isApproved == false)
                     {
-                        e.Row.CssClass = CarServiceConstants.INACTIVE_CLASS_NAME;
+                        e.Row.CssClass = CarServiceConstants.INACTIVE_CSS_CLASS_NAME;
                     }
                 }
             }
@@ -49,7 +49,7 @@ namespace presentation
             string partId = CarServicePresentationUtility.GetGridCellContent(this.sparePartsGrid, rowIndex, 0);
             if (string.IsNullOrEmpty(partId) == false)
             {
-                string editUserPageUrl = "~/Admin/SpareParts/EditSparePart.aspx?"
+                string editUserPageUrl = "~/Admin/SpareParts/AddSparePart.aspx?"
                     + CarServiceConstants.SPARE_PART_ID_REQUEST_PARAM_NAME + "=" + partId;
                 Response.Redirect(editUserPageUrl, false);
             }

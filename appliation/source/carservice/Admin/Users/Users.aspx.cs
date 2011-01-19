@@ -31,7 +31,7 @@ namespace presentation
                     bool isApproved = (bool)isApprovedObject;
                     if (isApproved == false)
                     {
-                        e.Row.CssClass = CarServiceConstants.INACTIVE_CLASS_NAME;
+                        e.Row.CssClass = CarServiceConstants.INACTIVE_CSS_CLASS_NAME;
                     }
                 }
             }

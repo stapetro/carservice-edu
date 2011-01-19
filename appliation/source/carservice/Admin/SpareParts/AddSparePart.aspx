@@ -4,11 +4,12 @@
 
 <asp:Content ID="sparePartsBody" runat="server" ContentPlaceHolderID="pageBody">
     <h2>
-	    Add spare part
+	    Spare Part Management
     </h2>
     <p>
-		Use the form below to create a spare part.		
+		Use the form below to create or edit a spare part.		
     </p>
+    <asp:Label ID="notificationMsg" runat="server" Visible="false" />
     <asp:ValidationSummary ID="AddSparePartValidationSummary" runat="server" CssClass="failureNotification" 
             ValidationGroup="AddSparePartValidationGroup"/>
 	<div class="accountInfo">
@@ -45,7 +46,7 @@
 		</fieldset>
         <p class="submitButton">
             <asp:Button ID="CancelUserButton" runat="server" Text="Cancel" OnClick="CancelPart_OnClick" />
-            <asp:Button ID="CreateUserButton" runat="server" Text="Add Part" OnClick="AddPart_OnClick"
+            <asp:Button ID="CreateUserButton" runat="server" Text="Save Part" OnClick="AddPart_OnClick"
                     ValidationGroup="AddSparePartValidationGroup"/>
         </p>
 	</div>	

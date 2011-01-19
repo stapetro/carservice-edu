@@ -14,8 +14,11 @@ namespace constants
         public const string USER_NAME_REQUEST_PARAM_NAME = "userName";
         public const string EMAIL_REQUEST_PARAM_NAME = "email";
         public const string SPARE_PART_ID_REQUEST_PARAM_NAME = "sparePartId";
+        public const string AUTOMOBILE_ID_REQUEST_PARAM_NAME = "automobileId";
 
-        public const string INACTIVE_CLASS_NAME = "inactive";
+        public const string INACTIVE_CSS_CLASS_NAME = "inactive";
+        public const string POSITIVE_CSS_CLASS_NAME = "positiveMsg";
+        public const string NEGATIVE_CSS_CLASS_NAME = "negativeMsg";
 
         public CarServiceConstants()
         {

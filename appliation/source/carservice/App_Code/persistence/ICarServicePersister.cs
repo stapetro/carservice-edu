@@ -13,6 +13,7 @@ namespace persistence
     {
         void CreateAutomobile(Automobile automobile);
         Automobile GetAutomobilById(int automobileId);
+        ObjectSet<Automobile> GetAutomobiles();
         void DeleteAutomobile(Automobile automobile);
 
         void CreateSparePart(SparePart sparePart);
