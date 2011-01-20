@@ -10,8 +10,9 @@
         <asp:HyperLink ID="addCar" NavigateUrl="~/Members/Cars/AddCar.aspx" runat="server">Add car</asp:HyperLink>	 	
     </p>
     <p>
-        <asp:GridView ID="automobilesGrid" AllowPaging="true" AutoGenerateColumns="false" 
-            CssClass="nicetable" runat="server" OnRowEditing="EditAutomobileEventHandler_RowEditing">
+        <asp:GridView ID="automobilesGrid" AllowPaging="true" AutoGenerateColumns="false"
+            CssClass="nicetable" runat="server" OnRowEditing="EditAutomobileEventHandler_RowEditing"
+            OnPageIndexChanging="AutomobilesGridView_PageIndexChanging">
             <Columns>
                 <asp:BoundField HeaderText="Id" DataField="AutomobileId" />
                 <asp:BoundField HeaderText="Vin" DataField="Vin" />

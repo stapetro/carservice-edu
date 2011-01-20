@@ -47,6 +47,32 @@ namespace persistence
             this.carServiceEntities.Automobiles.DeleteObject(automobile);
         }
 
+        public bool IsChassisNumberExists(string chasshisNumber)
+        {
+            try
+            {
+                Automobile auto = this.carServiceEntities.Automobiles.Where(currAuto => currAuto.ChassisNumber.Equals(chasshisNumber)).First();
+            }
+            catch
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsVinExists(string vin)
+        {
+            try
+            {
+                Automobile auto = this.carServiceEntities.Automobiles.Where(currAuto => currAuto.Vin.Equals(vin)).First();
+            }
+            catch
+            {
+                return true;
+            }
+            return false;
+        }
+
         public void CreateSparePart(SparePart sparePart)
         {
             this.carServiceEntities.SpareParts.AddObject(sparePart);

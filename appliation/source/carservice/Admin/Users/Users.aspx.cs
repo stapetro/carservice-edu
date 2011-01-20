@@ -67,6 +67,12 @@ namespace presentation
             BindUsersGrid();
         }
 
+        protected void UsersGridView_PageIndexChanging(Object sender, GridViewPageEventArgs e)
+        {
+            this.carServiceUsers.PageIndex = e.NewPageIndex;
+            BindUsersGrid();
+        }
+
         private void BindUsersGrid()
         {
             List<CarServiceUser> carServiceUsers = GetUsers();
