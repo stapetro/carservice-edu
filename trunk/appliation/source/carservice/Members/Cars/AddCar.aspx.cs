@@ -54,7 +54,7 @@ namespace presentation
             string engineCubTxt = this.AutoEngineCub.Text;
             string make = this.AutoMake.Text;
             string model = this.AutoModel.Text;
-            string makeYearTxt = this.AutoMakeYear.Text;
+            string makeYearTxt = string.Empty;
             string owner = this.AutoOwner.Text;
             string phoneNumber = this.AutoPhoneNumber.Text;
             string colour = this.AutoColour.Text;
@@ -107,7 +107,7 @@ namespace presentation
             {
                 makeYearTxt = makeYear.Value.ToString("d", cultureInfo);
             }
-            this.AutoMakeYear.Text = makeYearTxt;
+            //this.AutoMakeYear.Text = string.Empty;
             this.AutoColour.Text = auto.Colour;
             this.AutoDescription.Text = auto.Description;
             this.AutoOwner.Text = auto.Owner;

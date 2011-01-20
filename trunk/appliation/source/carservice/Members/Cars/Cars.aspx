@@ -16,7 +16,11 @@
                 <asp:BoundField HeaderText="Id" DataField="AutomobileId" />
                 <asp:BoundField HeaderText="Vin" DataField="Vin" />
                 <asp:BoundField HeaderText="Chassis" DataField="ChassisNumber" />
-                <asp:BoundField HeaderText="Make/Model" DataField="Make" />
+                <asp:TemplateField HeaderText="Make/Model">
+                    <ItemTemplate>
+                        <%# Eval("Make")%>&nbsp;/&nbsp;<%# Eval("Model")%>
+                    </ItemTemplate>
+                </asp:TemplateField>
                 <asp:BoundField HeaderText="Owner" DataField="Owner" />
                 <asp:CommandField ShowEditButton="true" />
             </Columns>

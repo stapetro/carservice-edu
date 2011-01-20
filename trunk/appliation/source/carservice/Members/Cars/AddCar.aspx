@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="AddCar.aspx.cs" Inherits="presentation.MembersAddCar" %>
+<%@ Register Src="~/CustomControls/CalendarUserControl.ascx" TagName="CalendarUserControl" TagPrefix="ucCal" %>
 
 <asp:Content ID="addCarTitle" runat="server" ContentPlaceHolderID="pageTitle">Car Service - Add Car</asp:Content>
 
@@ -50,7 +51,7 @@
 			</p>										
 			<p>
 				<span>Make year:</span>
-                <asp:TextBox ID="AutoMakeYear" runat="server" CssClass="textEntry"></asp:TextBox>
+                <ucCal:CalendarUserControl ID="AutoMakeYearCalendar" runat="server" />                
 			</p>
 			<p>
 				<span>Colour:</span>

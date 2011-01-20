@@ -334,6 +334,12 @@ div.accountInfo
     color:Red;
 }
 
+.calendar
+{
+    height: 16px;
+    margin-top: -1px;
+}
+
 
 table, th, td
 {
