@@ -56,4 +56,6 @@ operators:
 test / test
 
 admin:
+testAdmin / testAdmin
+stanislav.petrov / stanislav.petrov
 

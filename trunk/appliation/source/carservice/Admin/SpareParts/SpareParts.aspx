@@ -11,7 +11,9 @@
     </p>
     <p>
         <asp:GridView ID="sparePartsGrid" AllowPaging="true" AutoGenerateColumns="false" 
-            CssClass="nicetable" runat="server" OnRowCreated="SparePartsGridView_RowCreated" OnRowEditing="EditSparePartventHandler_RowEditing" OnRowDeleting="DeactivateSparePartEventHandler_RowDeliting">
+            CssClass="nicetable" runat="server" OnRowCreated="SparePartsGridView_RowCreated" 
+            OnRowEditing="EditSparePartventHandler_RowEditing" OnRowDeleting="DeactivateSparePartEventHandler_RowDeliting"
+            OnPageIndexChanging="SparePartsGridView_PageIndexChanging">
             <Columns>
                 <asp:BoundField HeaderText="Id" DataField="PartId" />
                 <asp:BoundField HeaderText="Name" DataField="Name" />

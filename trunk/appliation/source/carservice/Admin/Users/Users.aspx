@@ -9,7 +9,9 @@
     </p>
     <p>
         <asp:GridView ID="carServiceUsers" AllowPaging="true" AutoGenerateColumns="false" 
-            CssClass="nicetable" runat="server" OnRowCreated="CarServiceUsersGridView_RowCreated" OnRowEditing="EditUserEventHandler_RowEditing" OnRowDeleting="DeactivateUserEventHandler_RowDeliting">
+            CssClass="nicetable" runat="server" OnRowCreated="CarServiceUsersGridView_RowCreated" 
+            OnRowEditing="EditUserEventHandler_RowEditing" OnRowDeleting="DeactivateUserEventHandler_RowDeliting"
+            OnPageIndexChanging="UsersGridView_PageIndexChanging">
             <Columns>
                 <asp:BoundField HeaderText="User Name" DataField="UserName" />
                 <asp:BoundField HeaderText="Email" DataField="Email" />

@@ -23,6 +23,7 @@ namespace presentation
             }
             if (IsPostBack == false)
             {
+                Session[CarServiceConstants.AUTOMOBILE_ID_REQUEST_PARAM_NAME] = null;
                 BindAutomobilesGrid();
             }
         }
@@ -33,10 +34,16 @@ namespace presentation
             string autoId = CarServicePresentationUtility.GetGridCellContent(this.automobilesGrid, rowIndex, 0);
             if (string.IsNullOrEmpty(autoId) == false)
             {
-                string editAutomobilePageUrl = "~/Members/Cars/AddCar.aspx?"
-                    + CarServiceConstants.AUTOMOBILE_ID_REQUEST_PARAM_NAME + "=" + autoId;
+                Session[CarServiceConstants.AUTOMOBILE_ID_REQUEST_PARAM_NAME] = autoId;
+                string editAutomobilePageUrl = "~/Members/Cars/AddCar.aspx";
                 Response.Redirect(editAutomobilePageUrl);
             }
+        }
+
+        protected void AutomobilesGridView_PageIndexChanging(Object sender, GridViewPageEventArgs e)
+        {
+            this.automobilesGrid.PageIndex = e.NewPageIndex;
+            BindAutomobilesGrid();
         }
 
         private void BindAutomobilesGrid()

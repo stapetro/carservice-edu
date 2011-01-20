@@ -15,6 +15,8 @@ namespace persistence
         Automobile GetAutomobilById(int automobileId);
         ObjectSet<Automobile> GetAutomobiles();
         void DeleteAutomobile(Automobile automobile);
+        bool IsChassisNumberExists(string chasshisNumber);
+        bool IsVinExists(string vin);
 
         void CreateSparePart(SparePart sparePart);
         SparePart GetSparePartById(int sparePartId);

@@ -20,6 +20,10 @@ namespace constants
         public const string POSITIVE_CSS_CLASS_NAME = "positiveMsg";
         public const string NEGATIVE_CSS_CLASS_NAME = "negativeMsg";
 
+        public const string DATE_FORMAT = "dd MMMM yyyy";
+
+        public const string ENGLISH_CULTURE_INFO = "en-US";
+
         public CarServiceConstants()
         {
             //

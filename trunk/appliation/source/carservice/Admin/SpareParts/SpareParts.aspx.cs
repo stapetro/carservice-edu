@@ -75,6 +75,12 @@ namespace presentation
             BindSparePartsGrid();
         }
 
+        protected void SparePartsGridView_PageIndexChanging(Object sender, GridViewPageEventArgs e)
+        {
+            this.sparePartsGrid.PageIndex = e.NewPageIndex;
+            BindSparePartsGrid();
+        }
+
         private void BindSparePartsGrid()
         {
             ObjectSet<SparePart> spareParts = this.persister.GetSpareParts();
