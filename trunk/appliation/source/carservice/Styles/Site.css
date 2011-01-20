@@ -340,6 +340,14 @@ div.accountInfo
     margin-top: -1px;
 }
 
+.ajax__calendar_container td {
+    padding:0;
+    border:0;
+}
+
+.ajax__calendar_container table {
+    border:0;
+}
 
 table, th, td
 {
