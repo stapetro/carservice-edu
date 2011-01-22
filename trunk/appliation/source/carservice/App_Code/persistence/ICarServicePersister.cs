@@ -14,6 +14,7 @@ namespace persistence
         void CreateAutomobile(Automobile automobile);
         Automobile GetAutomobilById(int automobileId);
         ObjectSet<Automobile> GetAutomobiles();
+        IQueryable<Automobile> GetAutomobilesByVinChassis(string vinChassis);
         void DeleteAutomobile(Automobile automobile);
         bool IsChassisNumberExists(string chasshisNumber);
         bool IsVinExists(string vin);
@@ -27,6 +28,7 @@ namespace persistence
         void CreateRepairCard(RepairCard repairCard);
         void DeleteRepairCard(RepairCard repairCard);
         RepairCard GetRepairCardById(int cardId);
+        int GetRepairCardMaxId();
         ObjectSet<RepairCard> GetRepairCards();
         IQueryable<RepairCard> GetUnfinishedRepairCards(DateTime? startRepair, string vinChassis);
         IQueryable<RepairCard> GetFinishedRepairCards(DateTime? fromFinishRepair, DateTime? toFinishRepair);

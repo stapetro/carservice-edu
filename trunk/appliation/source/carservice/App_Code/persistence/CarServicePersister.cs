@@ -42,6 +42,16 @@ namespace persistence
             return this.carServiceEntities.Automobiles;
         }
 
+        public IQueryable<Automobile> GetAutomobilesByVinChassis(string vinChassis)
+        {
+            IQueryable<Automobile> automobiles =
+                from automobile in this.carServiceEntities.Automobiles
+                where ((automobile.ChassisNumber.IndexOf(vinChassis) >= 0) ||
+                        (automobile.Vin.IndexOf(vinChassis) >= 0))
+                select automobile;
+            return automobiles;
+        }
+
         public void DeleteAutomobile(Automobile automobile)
         {
             this.carServiceEntities.Automobiles.DeleteObject(automobile);
@@ -108,6 +118,12 @@ namespace persistence
         public void DeleteRepairCard(RepairCard repairCard)
         {
             this.carServiceEntities.RepairCards.DeleteObject(repairCard);
+        }
+
+        public int GetRepairCardMaxId()
+        {
+            int repairCardId = this.carServiceEntities.RepairCards.Max(repairCard => repairCard.CardId);
+            return repairCardId;
         }
 
         public RepairCard GetRepairCardById(int cardId)
