@@ -27,10 +27,9 @@ namespace persistence
         void CreateRepairCard(RepairCard repairCard);
         void DeleteRepairCard(RepairCard repairCard);
         RepairCard GetRepairCardById(int cardId);
-        IQueryable<RepairCard> GetUnfinishedRepairCards(DateTime startRepair);
-        IQueryable<RepairCard> GetUnfinishedRepairCardsByVin(DateTime startRepair, string vin);
-        IQueryable<RepairCard> GetUnfinishedRepairCardsByChassisNumber(DateTime startRepair, string chassisNumber);
-        IQueryable<RepairCard> GetFinishedRepairCards(DateTime fromFinishRepair, DateTime toFinishRepair);
+        ObjectSet<RepairCard> GetRepairCards();
+        IQueryable<RepairCard> GetUnfinishedRepairCards(DateTime? startRepair, string vinChassis);
+        IQueryable<RepairCard> GetFinishedRepairCards(DateTime? fromFinishRepair, DateTime? toFinishRepair);
 
         void SaveChanges();
         void ReleaseConnection();

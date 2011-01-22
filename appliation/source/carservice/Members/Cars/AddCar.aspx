@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="AddCar.aspx.cs" Inherits="presentation.MembersAddCar" %>
 
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="aspe" %>
 <%@ Register Src="~/CustomControls/CalendarUserControl.ascx" TagName="CalendarUserControl" TagPrefix="ucCal" %>
 
 <asp:Content ID="addCarTitle" runat="server" ContentPlaceHolderID="pageTitle">Car Service - Add Car</asp:Content>
@@ -11,6 +12,7 @@
     <p>
         Use the form below to create or edit a car.						
     </p>
+    <aspe:ToolkitScriptManager ID="toolScriptMgr" runat="server" />
     <asp:Label ID="notificationMsg" runat="server" Visible="false" />
     <asp:ValidationSummary ID="AddAutomobileValidationSummary" runat="server" CssClass="failureNotification" 
             ValidationGroup="AddAutomobileValidationGroup"/>

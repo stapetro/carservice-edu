@@ -116,45 +116,68 @@ namespace persistence
             return repairCard;
         }
 
-        public IQueryable<RepairCard> GetUnfinishedRepairCards(DateTime startRepair)
+        public ObjectSet<RepairCard> GetRepairCards()
         {
-            IQueryable<RepairCard> unfinishedRepairCards =
-                from repairCard in this.carServiceEntities.RepairCards
-                where (repairCard.StartRepair == startRepair &&
-                    repairCard.FinishRepair == null)
-                select repairCard;
+            return this.carServiceEntities.RepairCards;
+        }
+
+        public IQueryable<RepairCard> GetUnfinishedRepairCards(DateTime? startRepair, string vinChassis)
+        {
+            IQueryable<RepairCard> unfinishedRepairCards = null;
+            if (startRepair.HasValue == true && string.IsNullOrEmpty(vinChassis) == false)
+            {
+                unfinishedRepairCards = GetUnfinishedRepairCardsByVinChassisStartDate(startRepair.Value, vinChassis);
+            }
+            else if (startRepair.HasValue == true && string.IsNullOrEmpty(vinChassis) == true)
+            {
+                unfinishedRepairCards = GetUnfinishedRepairCards(startRepair.Value);
+            }
+            else if (startRepair.HasValue == false && string.IsNullOrEmpty(vinChassis) == false)
+            {
+                unfinishedRepairCards = GetUnfinishedRepairCardsByVinChassis(vinChassis);
+            }
+            else if (startRepair.HasValue == false && string.IsNullOrEmpty(vinChassis) == true)
+            {
+                unfinishedRepairCards = GetUnfinishedRepairCards();
+            }
             return unfinishedRepairCards;
         }
 
-        public IQueryable<RepairCard> GetUnfinishedRepairCardsByVin(DateTime startRepair, string vin)
+        public IQueryable<RepairCard> GetFinishedRepairCards(DateTime? fromFinishRepair, DateTime? toFinishRepair)
         {
-            IQueryable<RepairCard> unfinishedRepairCards =
+            IQueryable<RepairCard> unfinishedRepairCards = null;
+            if (fromFinishRepair.HasValue == false && toFinishRepair.HasValue == false)
+            {
+                unfinishedRepairCards =
                 from repairCard in this.carServiceEntities.RepairCards
-                where (repairCard.StartRepair == startRepair &&
-                    repairCard.FinishRepair == null &&
-                    (repairCard.Automobile.Vin.IndexOf(vin) >= 0))
+                where (repairCard.FinishRepair != null)
                 select repairCard;
-            return unfinishedRepairCards;
-        }
-
-        public IQueryable<RepairCard> GetUnfinishedRepairCardsByChassisNumber(DateTime startRepair, string chassisNumber)
-        {
-            IQueryable<RepairCard> unfinishedRepairCards =
+            }
+            else if (fromFinishRepair.HasValue == false && toFinishRepair.HasValue == true)
+            {
+                unfinishedRepairCards =
                 from repairCard in this.carServiceEntities.RepairCards
-                where (repairCard.StartRepair == startRepair &&
-                    repairCard.FinishRepair == null &&
-                    (repairCard.Automobile.ChassisNumber.IndexOf(chassisNumber) >= 0))
-                select repairCard;
-            return unfinishedRepairCards;
-        }
-
-        public IQueryable<RepairCard> GetFinishedRepairCards(DateTime fromFinishRepair, DateTime toFinishRepair)
-        {
-            IQueryable<RepairCard> unfinishedRepairCards =
-                from repairCard in this.carServiceEntities.RepairCards
-                where (repairCard.FinishRepair >= fromFinishRepair &&
+                where (repairCard.FinishRepair != null && 
                     repairCard.FinishRepair <= toFinishRepair)
                 select repairCard;
+            }
+            else if (fromFinishRepair.HasValue == true && toFinishRepair.HasValue == false)
+            {
+                unfinishedRepairCards =
+                from repairCard in this.carServiceEntities.RepairCards
+                where (repairCard.FinishRepair != null && 
+                    repairCard.FinishRepair >= fromFinishRepair)
+                select repairCard;
+            }
+            else if (fromFinishRepair.HasValue == true && toFinishRepair.HasValue == true)
+            {
+                unfinishedRepairCards =
+                from repairCard in this.carServiceEntities.RepairCards
+                where (repairCard.FinishRepair != null &&
+                    repairCard.FinishRepair >= fromFinishRepair &&
+                    repairCard.FinishRepair <= toFinishRepair)
+                select repairCard;
+            }            
             return unfinishedRepairCards;
         }
 
@@ -169,6 +192,48 @@ namespace persistence
             {
                 this.carServiceEntities.Dispose();
             }
+        }
+
+        private IQueryable<RepairCard> GetUnfinishedRepairCards()
+        {
+            IQueryable<RepairCard> unfinishedRepairCards =
+                from repairCard in this.carServiceEntities.RepairCards
+                where (repairCard.FinishRepair == null)
+                select repairCard;
+            return unfinishedRepairCards;
+        }
+
+        private IQueryable<RepairCard> GetUnfinishedRepairCards(DateTime startRepair)
+        {
+            IQueryable<RepairCard> unfinishedRepairCards =
+                from repairCard in this.carServiceEntities.RepairCards
+                where (repairCard.StartRepair == startRepair &&
+                    repairCard.FinishRepair == null)
+                select repairCard;
+            return unfinishedRepairCards;
+        }
+
+        private IQueryable<RepairCard> GetUnfinishedRepairCardsByVinChassis(string vinChassis)
+        {
+            IQueryable<RepairCard> unfinishedRepairCards =
+                from repairCard in this.carServiceEntities.RepairCards
+                where (repairCard.FinishRepair == null &&
+                    ((repairCard.Automobile.ChassisNumber.IndexOf(vinChassis) >= 0) ||
+                        (repairCard.Automobile.Vin.IndexOf(vinChassis) >= 0)))
+                select repairCard;
+            return unfinishedRepairCards;
+        }
+
+        private IQueryable<RepairCard> GetUnfinishedRepairCardsByVinChassisStartDate(DateTime startRepair, string vinChassis)
+        {
+            IQueryable<RepairCard>  unfinishedRepairCards =
+                from repairCard in this.carServiceEntities.RepairCards
+                where (repairCard.StartRepair == startRepair &&
+                    repairCard.FinishRepair == null &&
+                    ((repairCard.Automobile.ChassisNumber.IndexOf(vinChassis) >= 0) ||
+                    (repairCard.Automobile.Vin.IndexOf(vinChassis) >= 0)))
+                select repairCard;
+            return unfinishedRepairCards;
         }
 
         #region Testing methods only
