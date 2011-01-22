@@ -1,12 +1,103 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AddRepairCard.aspx.cs" Inherits="presentation.MembersAddRepairCard" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="AddRepairCard.aspx.cs" Inherits="presentation.MembersAddRepairCard" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="aspe" %>
+<%@ Register Src="~/CustomControls/CalendarUserControl.ascx" TagName="CalendarUserControl" TagPrefix="ucCal" %>
 
 <asp:Content ID="addRepairCardTitle" runat="server" ContentPlaceHolderID="pageTitle">Car Service - Add Repair Card</asp:Content>
 
 <asp:Content ID="repairCardsBody" runat="server" ContentPlaceHolderID="pageBody">
     <h2>
-        Add repair card here	    
+        Repair Card Management  
     </h2>
     <p>
-				
+	    Use the form below to create repair card.			
     </p>
+    <aspe:ToolkitScriptManager ID="toolScriptMgr" runat="server" />
+    <asp:Label ID="notificationMsg" runat="server" Visible="false" />
+    <asp:ValidationSummary ID="AddRepairCardValidationSummary" runat="server" CssClass="failureNotification" 
+            ValidationGroup="AddRepairCardValidationGroup"/>
+	<div class="repairCardInfo">			
+	<fieldset class="register">
+		<legend>Repair card information</legend>
+		<p>					
+		<div class="table-row">
+			<div class="left-container2"><p class="text"> 
+				<label>Id:</label>
+                <asp:TextBox ID="repairCardIdTxt" runat="server" CssClass="textEntry" Enabled="false" />
+                <label></label>
+
+			<span>Operator:</span>
+            <asp:Label ID="operatorLbl" runat="server" />
+			</p></div> 
+			<div class="right-container2"><p class="text"> 
+				<label>Car:</label>
+                <asp:DropDownList ID="automobileDropDown" runat="server" DataValueField="AutomobileId"  DataTextField="AutomobileRepresentation" >
+                    <asp:ListItem Value="-1">Search car by vin/chassis</asp:ListItem>
+                </asp:DropDownList>
+                <label></label>
+                <span>Vin / Chassis</span>
+                <asp:TextBox ID="VinChassisTxt" runat="server" />
+                <asp:Button ID="searchVinChassisBtn" runat="server" Text="Search" OnClick="SearchAutomobile_OnClick" />
+			</p></div>						
+		</div>
+
+		<div class="table-row">
+			<div class="left-container2"><p class="text"> 							
+				<label>Start date:</label>
+                <ucCal:CalendarUserControl ID="startRepairDate" runat="server" />
+			</p></div> 
+			<div class="right-container2"><p class="text">
+				<label>Finish date:</label>
+				<input type="text" class="textEntry" value="" disabled="disabled" /><label></label>	
+			</p></div>						
+		</div>	
+
+		</p>					
+
+		<p>										
+		<h4 class="table-caption"> 
+			Please select which spare parts will be used
+		</h4> 					
+		<div class="table-row">
+			<div class="left-container2"><p class="text"> 
+				<label>Spare parts:</label>						
+                <asp:ListBox ID="unselectedSpareParts" Rows="5" SelectionMode="Multiple" runat="server" DataValueField="PartId" DataTextField="PartName">
+                </asp:ListBox>
+                <asp:Button ID="selectSparePartsBtn" Text="Select" runat="server" OnClick="SelectSpareParts_OnClick" />
+			</p></div> 
+			<div class="right-container2"><p class="text"> 
+				<label>Selected:</label>
+                <asp:ListBox ID="selectedSpareParts" Rows="5" SelectionMode="Multiple" runat="server" DataValueField="PartId" DataTextField="PartName">                    
+                </asp:ListBox>
+                <asp:Button ID="removeSparePartsBtn" Text="Remove" runat="server" OnClick="UnselectSpareParts_OnClick" />
+			</p></div> 					
+		</div>
+		<div class="space-line"></div> 						
+		<div class="space-line"></div> 						
+		<div class="table-row">
+			<div class="left-container2"><p class="text"> 
+				<label>Spare parts price &#36;:</label>
+                <asp:Label ID="sparePartsPrice" runat="server" />
+			</p></div> 
+			<div class="right-container2"><p class="text"> 
+				<label>Repair price &#36;:</label>
+                <asp:TextBox ID="repairPrice" runat="server" CssClass="textEntry" />
+			</p></div> 					
+		</div>
+		<div class="space-line"></div>														
+		<div class="table-row">
+			<div class="left-container2"><p class="text"> 							
+				<label>Description:</label>
+                <asp:TextBox ID="repairCardDescription" runat="server" TextMode="MultiLine" />
+			</p></div> 						
+		</div>						
+		<div class="space-line"></div>																			
+		</p>					
+	</fieldset>	
+	<p class="submitButton">
+            <asp:Button ID="CancelAutoButton" runat="server" Text="Cancel" OnClick="CancelRepairCard_OnClick" />
+            <asp:Button ID="CreateAutoButton" runat="server" Text="Save" OnClick="SaveRepairCard_OnClick"
+                    ValidationGroup="AddRepairCardValidationGroup"/>
+	</p>				
+	</div>
 </asp:Content>
