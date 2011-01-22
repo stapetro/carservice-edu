@@ -60,8 +60,8 @@
         <div class="clear"></div>
     </div>
     <div id="footer">
-        <span>&copy; 2010 - 2011 Copyright <a href="http://www.fmi.uni-sofia.bg/">SU "St. Kliment Ohridski"</a>. All rights reserved.</span>
-		<span><a href="http://www.fmi.uni-sofia.bg/">Contact</a> | <a href="http://www.fmi.uni-sofia.bg/">Site Map</a></span>
+        <span>&copy; 2010 - 2011 Copyright <a href="http://www.fmi.uni-sofia.bg/" target="_blank">SU "St. Kliment Ohridski"</a>. All rights reserved.</span>
+		<span><a href="#_self">Contact</a> | <a href="#_self">Site Map</a></span>
     </div>
 
     </form>
