@@ -89,46 +89,4 @@ public partial class _Default : System.Web.UI.Page
         //}
     }
 
-    //TODO: To be deleted
-    private void TestRepairCardQueries(CarServicePersister persister)
-    {
-        StringBuilder output = new StringBuilder("Finished repair cards between 2010-12-01 and 2010-12-06<br/>");
-        IQueryable<RepairCard> foundRepairCards = persister.GetFinishedRepairCards(new DateTime(2010, 12, 1), new DateTime(2010, 12, 6));
-        foreach (RepairCard card in foundRepairCards)
-        {
-            output.Append(card.CardId + ", ");
-        }
-        output.Append("<br/>Unfinished repair cards for 2010-12-03<br/>");
-        foundRepairCards = persister.GetUnfinishedRepairCards(new DateTime(2010, 12, 3));
-        foreach (RepairCard card in foundRepairCards)
-        {
-            output.Append(card.CardId + ", ");
-        }
-        output.Append("<br/>Unfinished repair cards for 2010-12-03 by chassis number<br/>");
-        foundRepairCards = persister.GetUnfinishedRepairCardsByChassisNumber(new DateTime(2010, 12, 3), "XMCLRDA2A3F011227");
-        foreach (RepairCard card in foundRepairCards)
-        {
-            output.Append(card.CardId + ", ");
-        }
-        output.Append("<br/>Unfinished repair cards for 2010-12-03 by part of chassis number<br/>");
-        foundRepairCards = persister.GetUnfinishedRepairCardsByChassisNumber(new DateTime(2010, 12, 3), "RDA2A3F");
-        foreach (RepairCard card in foundRepairCards)
-        {
-            output.Append(card.CardId + ", ");
-        }
-        output.Append("<br/>Unfinished repair cards for 2010-12-03 by vin<br/>");
-        foundRepairCards = persister.GetUnfinishedRepairCardsByVin(new DateTime(2010, 12, 3), "PV2222");
-        foreach (RepairCard card in foundRepairCards)
-        {
-            output.Append(card.CardId + ", ");
-        }
-        output.Append("<br/>Unfinished repair cards for 2010-12-03 by part of vin<br/>");
-        foundRepairCards = persister.GetUnfinishedRepairCardsByVin(new DateTime(2010, 12, 3), "V22");
-        foreach (RepairCard card in foundRepairCards)
-        {
-            output.Append(card.CardId + ", ");
-        }
-        output.Append("<br/>");
-        //this.users.Text = output.ToString();
-    }
 }
