@@ -5,7 +5,10 @@
       <siteMapNode url="~/Members/Cars/Cars.aspx" title="Cars"  description="Cars" >
         <siteMapNode url="~/Members/Cars/AddCar.aspx" title="Add Car"  description="Add Car" />
       </siteMapNode>
-      <siteMapNode url="~/Members/RepairCards/RepairCards.aspx" title="Repair Cards"  description="Repair Cards" />
+      <siteMapNode url="~/Members/RepairCards/RepairCards.aspx" title="Repair Cards"  description="Repair Cards" >
+        <siteMapNode url="~/Members/RepairCards/AddRepairCard.aspx" title="Add Repair Card"  description="Add Repair Card" />
+        <siteMapNode url="~/Members/RepairCards/EditRepairCard.aspx" title="Edit Repair Card"  description="Edit Repair Card" />        
+      </siteMapNode>
       <siteMapNode title="Admin"  description="Admin" >
         <siteMapNode url="~/Admin/Users/Users.aspx" title="Users"  description="Users" >
           <siteMapNode url="~/Admin/Users/AddUser.aspx" title="Add User"  description="Add User" />

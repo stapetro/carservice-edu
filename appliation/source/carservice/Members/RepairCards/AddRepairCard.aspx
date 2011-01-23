@@ -16,6 +16,7 @@
     <asp:Label ID="notificationMsg" runat="server" Visible="false" />
     <asp:ValidationSummary ID="AddRepairCardValidationSummary" runat="server" CssClass="failureNotification" 
             ValidationGroup="AddRepairCardValidationGroup"/>
+    <asp:BulletedList ID="notificationMsgList" runat="server" CssClass="failureNotification" Visible="false" />
 	<div class="repairCardInfo">			
 	<fieldset class="register">
 		<legend>Repair card information</legend>
@@ -23,21 +24,32 @@
 		<div class="table-row">
 			<div class="left-container2"><p class="text"> 
 				<label>Id:</label>
-                <asp:TextBox ID="repairCardIdTxt" runat="server" CssClass="textEntry" Enabled="false" />
+                <asp:Label ID="repairCardIdLbl" runat="server" />
                 <label></label>
 
 			<span>Operator:</span>
             <asp:Label ID="operatorLbl" runat="server" />
 			</p></div> 
 			<div class="right-container2"><p class="text"> 
-				<label>Car:</label>
+                <%-- Search car control --%>
+                <asp:ValidationSummary ID="SearchCarValidationSummary" runat="server" CssClass="failureNotification" 
+                        ValidationGroup="SearchCarValidationGroup"/>             
+                <label>Car:</label>
                 <asp:DropDownList ID="automobileDropDown" runat="server" DataValueField="AutomobileId"  DataTextField="AutomobileRepresentation" >
                     <asp:ListItem Value="-1">Search car by vin/chassis</asp:ListItem>
                 </asp:DropDownList>
+                <asp:CustomValidator ID="automobileValidator" runat="server" ControlToValidate="automobileDropDown" CssClass="failureNotification"
+                    ErrorMessage="Please select valid car." ToolTip="Please select valid car." ValidationGroup="AddRepairCardValidationGroup"
+                    OnServerValidate="Automobile_ServerValidate">X</asp:CustomValidator>
                 <label></label>
                 <span>Vin / Chassis</span>
                 <asp:TextBox ID="VinChassisTxt" runat="server" />
-                <asp:Button ID="searchVinChassisBtn" runat="server" Text="Search" OnClick="SearchAutomobile_OnClick" />
+                <asp:RequiredFieldValidator ID="vinChassisRequired" runat="server" ControlToValidate="VinChassisTxt" 
+                        CssClass="failureNotification" ErrorMessage="Vin/Chassis number is required." ToolTip="Vin/Chassis number is required." 
+                        ValidationGroup="SearchCarValidationGroup">*</asp:RequiredFieldValidator>
+                <asp:Button ID="searchVinChassisBtn" runat="server" Text="Search" OnClick="SearchAutomobile_OnClick" 
+                    ValidationGroup="SearchCarValidationGroup" />
+                <%-- Search car control --%>
 			</p></div>						
 		</div>
 
@@ -55,6 +67,7 @@
 		</p>					
 
 		<p>										
+		<p>			
 		<h4 class="table-caption"> 
 			Please select which spare parts will be used
 		</h4> 					
@@ -82,17 +95,25 @@
 			<div class="right-container2"><p class="text"> 
 				<label>Repair price &#36;:</label>
                 <asp:TextBox ID="repairPrice" runat="server" CssClass="textEntry" />
+                <asp:RequiredFieldValidator ID="RepairPriceRequiredValidator" runat="server" ControlToValidate="repairPrice" 
+                        CssClass="failureNotification" ErrorMessage="Repair price is required." ToolTip="Repair price is required." 
+                        ValidationGroup="AddRepairCardValidationGroup">*</asp:RequiredFieldValidator>
+                <asp:CustomValidator ID="RepairPriceValidator" runat="server" ControlToValidate="repairPrice" CssClass="failureNotification"
+                    ErrorMessage="Repair price is not valid." ToolTip="Repair price is not valid." ValidationGroup="AddRepairCardValidationGroup"
+                    OnServerValidate="Price_ServerValidate">X</asp:CustomValidator>
 			</p></div> 					
 		</div>
 		<div class="space-line"></div>														
+		</p>					
+        <p>
 		<div class="table-row">
 			<div class="left-container2"><p class="text"> 							
 				<label>Description:</label>
                 <asp:TextBox ID="repairCardDescription" runat="server" TextMode="MultiLine" />
 			</p></div> 						
 		</div>						
-		<div class="space-line"></div>																			
-		</p>					
+		<div class="space-line"></div>																			        
+        </p>		
 	</fieldset>	
 	<p class="submitButton">
             <asp:Button ID="CancelAutoButton" runat="server" Text="Cancel" OnClick="CancelRepairCard_OnClick" />

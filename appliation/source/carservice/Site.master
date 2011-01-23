@@ -38,8 +38,12 @@
 			    <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal">
                     <Items>
                         <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Home" />
-                        <asp:MenuItem NavigateUrl="~/Members/Cars/Cars.aspx" Text="Cars"/>
-                        <asp:MenuItem NavigateUrl="~/Members/RepairCards/RepairCards.aspx" Text="Repair Cards" />
+                        <asp:MenuItem NavigateUrl="~/Members/Cars/Cars.aspx" Text="Cars">
+                            <asp:MenuItem NavigateUrl="~/Members/Cars/AddCar.aspx" Text="Add Car" />
+                        </asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/Members/RepairCards/RepairCards.aspx" Text="Repair Cards" >
+                            <asp:MenuItem NavigateUrl="~/Members/RepairCards/AddRepairCard.aspx" Text="Add Repair Card" />
+                        </asp:MenuItem>
                         <asp:MenuItem Text="Admin">
                             <asp:MenuItem NavigateUrl="~/Admin/Users/Users.aspx" Text="Users" />
                             <asp:MenuItem NavigateUrl="~/Admin/SpareParts/SpareParts.aspx" Text="Spare Parts" />
