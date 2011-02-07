@@ -12,6 +12,8 @@ using System.Web.Security;
 using businesslogic.utils;
 using System.Text;
 using presentation.utils;
+using System.Data.Objects.DataClasses;
+using System.Data.Objects;
 
 namespace presentation
 {
@@ -27,17 +29,45 @@ namespace presentation
             }
             if (IsPostBack == false)
             {
-                IQueryable<SparePart> spareParts = this.persister.GetSpareParts();
-                object customSpareParts = CarServicePresentationUtility.GetSparePartsFormatForListBox(spareParts);
-                CarServicePresentationUtility.BindListBox(this.unselectedSpareParts, customSpareParts);
-                //int repairCardId = this.persister.GetRepairCardMaxId() + 1;
-                //this.repairCardIdLbl.Text = repairCardId.ToString();
-                this.startRepairDate.SelectedDate = 
-                    DateTime.Now.ToString(CarServiceConstants.DATE_FORMAT, new CultureInfo(CarServiceConstants.ENGLISH_CULTURE_INFO));
-                this.operatorLbl.Text = this.User.Identity.Name;
+                this.finishRepairDate.SelectedDateTxt.Enabled = false;
+
+                object repairCardIdObject = Session[CarServiceConstants.REPAIR_CARD_ID_PARAM_NAME];
+                if (repairCardIdObject != null)
+                {
+                    int repairCardId;
+                    if (Int32.TryParse(repairCardIdObject.ToString(), out repairCardId))
+                    {
+                        RepairCard repairCard = this.persister.GetRepairCardById(repairCardId);
+                        LoadRepairCardInfo(repairCard);
+
+                        Guid creatorUserId = repairCard.UserId;
+                        MembershipUser currentUser = Membership.GetUser();
+                        Guid currentUserId = (Guid)currentUser.ProviderUserKey;
+                        if (currentUserId.Equals(creatorUserId) == false)
+                        {
+                            DisableAllInputControls();
+                        }
+                        else
+                        {                            
+                            this.startRepairDate.Enabled = false;
+                        }
+                    }
+                }
+                else
+                {
+                    IQueryable<SparePart> spareParts = this.persister.GetSpareParts();
+                    object customSpareParts = CarServicePresentationUtility.GetSparePartsFormatForListBox(spareParts);
+                    CarServicePresentationUtility.BindListBox(this.unselectedSpareParts, customSpareParts);
+                    //int repairCardId = this.persister.GetRepairCardMaxId() + 1;
+                    //this.repairCardIdLbl.Text = repairCardId.ToString();
+                    this.startRepairDate.SelectedDate =
+                        DateTime.Now.ToString(CarServiceConstants.DATE_FORMAT, new CultureInfo(CarServiceConstants.ENGLISH_CULTURE_INFO));
+                    this.finishRepairDate.Enabled = false;
+                    this.operatorLbl.Text = this.User.Identity.Name;
+                }
             }
             CarServicePresentationUtility.HideNotificationMsgList(this.notificationMsgList);
-        }
+        }        
 
         protected void SearchAutomobile_OnClick(object sender, EventArgs e)
         {
@@ -106,10 +136,38 @@ namespace presentation
                 (validStartRepairDate && startRepairDate.HasValue))
             {
                 string description = this.repairCardDescription.Text;
-                SaveRepairCard(automobile, startRepairDate.Value, description,
-                    sparePartsPrice, repairPrice, selectedSparePartItems);
-                CarServicePresentationUtility.AppendNotificationMsg("Repair card is saved successfully", this.notificationMsgList);
-                this.notificationMsgList.CssClass = CarServiceConstants.POSITIVE_CSS_CLASS_NAME;
+
+                object repairCardIdObject = Session[CarServiceConstants.REPAIR_CARD_ID_PARAM_NAME];
+                if (repairCardIdObject != null)
+                {
+                    int repairCardId;
+                    if (Int32.TryParse(repairCardIdObject.ToString(), out repairCardId))
+                    {
+                        DateTime? finishRepairDate = null;
+                        string finishRepairDateTxt = this.finishRepairDate.SelectedDate;
+                        bool validFinishRepairDate = CarServicePresentationUtility.ProcessFinishRepairDate(finishRepairDateTxt,
+                            this.notificationMsgList, out finishRepairDate);
+                        if (validFinishRepairDate == true)
+                        {
+                            RepairCard repairCard = this.persister.GetRepairCardById(repairCardId);
+                            UpdateRepairCard(repairCard, automobile, finishRepairDate, description,
+                                sparePartsPrice, repairPrice, selectedSparePartItems);
+                            CarServicePresentationUtility.AppendNotificationMsg("Repair card is updated successfully", this.notificationMsgList);
+                            this.notificationMsgList.CssClass = CarServiceConstants.POSITIVE_CSS_CLASS_NAME;
+                        }
+                        else
+                        {
+                            this.notificationMsgList.CssClass = CarServiceConstants.NEGATIVE_CSS_CLASS_NAME;
+                        }
+                    }
+                }
+                else
+                {
+                    SaveRepairCard(automobile, startRepairDate.Value, description,
+                        sparePartsPrice, repairPrice, selectedSparePartItems);
+                    CarServicePresentationUtility.AppendNotificationMsg("Repair card is saved successfully", this.notificationMsgList);
+                    this.notificationMsgList.CssClass = CarServiceConstants.POSITIVE_CSS_CLASS_NAME;
+                }
             }
             else
             {
@@ -134,8 +192,72 @@ namespace presentation
 
         #region Private methods
 
-        private void SaveRepairCard(Automobile automobile, DateTime startRepairDate, string description, decimal sparePartsPrice, 
-            decimal repairPrice, ListItemCollection sparePartItems)
+        private void LoadRepairCardInfo(RepairCard repairCard)
+        {
+            this.repairCardIdLbl.Text = repairCard.CardId.ToString();
+            this.operatorLbl.Text = repairCard.aspnet_Users.UserName;
+            List<Automobile> automobiles = new List<Automobile>();
+            automobiles.Add(repairCard.Automobile);
+            var customAutomobileFormat =
+                from auto in automobiles
+                select new
+                {
+                    AutomobileId = auto.AutomobileId,
+                    AutomobileRepresentation = auto.Vin + " / " + auto.ChassisNumber
+                };
+            this.automobileDropDown.DataSource = customAutomobileFormat;
+            this.automobileDropDown.DataBind();
+
+            this.sparePartsPrice.Text = repairCard.PartPrice.ToString();
+            this.repairPrice.Text = repairCard.CardPrice.ToString();
+
+            CultureInfo englishCultureInfo = new CultureInfo(CarServiceConstants.ENGLISH_CULTURE_INFO);
+
+            this.startRepairDate.SelectedDate = repairCard.StartRepair.ToString(CarServiceConstants.DATE_FORMAT, englishCultureInfo);
+            DateTime? finishRepairDate = repairCard.FinishRepair;
+            if (finishRepairDate.HasValue)
+            {
+                this.finishRepairDate.SelectedDate = finishRepairDate.Value.ToString(CarServiceConstants.DATE_FORMAT, englishCultureInfo);
+            }
+            else
+            {
+                this.finishRepairDate.SelectedDateTxt.Enabled = true;
+            }
+            EntityCollection<SparePart> selectedParts = repairCard.SpareParts;
+            List<SparePart> unselectedParts = new List<SparePart>();
+            ObjectSet<SparePart> allSpareParts = this.persister.GetSpareParts();
+            foreach (SparePart part in allSpareParts)
+            {
+                if (selectedParts.Contains(part) == false)                
+                {
+                    unselectedParts.Add(part);
+                }
+            }
+            object customUnselectedSpareParts = CarServicePresentationUtility.GetSparePartsFormatForListBox(unselectedParts);
+            object customSelectedSpareParts = CarServicePresentationUtility.GetSparePartsFormatForListBox(selectedParts);
+            CarServicePresentationUtility.BindListBox(this.unselectedSpareParts, customUnselectedSpareParts);
+            CarServicePresentationUtility.BindListBox(this.selectedSpareParts, customSelectedSpareParts);
+            this.repairCardDescription.Text = repairCard.Description;
+        }
+
+        private void DisableAllInputControls()
+        {
+            this.automobileDropDown.Enabled = false;
+            this.startRepairDate.Enabled = false;
+            this.finishRepairDate.Enabled = false;
+            this.unselectedSpareParts.Enabled = false;
+            this.selectedSpareParts.Enabled = false;
+            this.selectSparePartsBtn.Enabled = false;
+            this.removeSparePartsBtn.Enabled = false;
+            this.repairPrice.Enabled = false;
+            this.CreateAutoButton.Enabled = false;
+            this.repairCardDescription.Enabled = false;
+            this.VinChassisTxt.Enabled = false;
+            this.searchVinChassisBtn.Enabled = false;
+        }
+
+        private void SaveRepairCard(Automobile automobile, DateTime startRepairDate, string description, 
+            decimal sparePartsPrice, decimal repairPrice, ListItemCollection sparePartItems)
         {
             MembershipUser currentUser = Membership.GetUser();
             RepairCard newRepairCard = new RepairCard()
@@ -149,6 +271,18 @@ namespace presentation
             };
             CarServicePresentationUtility.AddSpareParts(newRepairCard, sparePartItems, this.persister);
             this.persister.CreateRepairCard(newRepairCard);
+            this.persister.SaveChanges();
+        }
+
+        private void UpdateRepairCard(RepairCard repairCard, Automobile automobile, DateTime? finishRepairDate, 
+            string description, decimal sparePartsPrice, decimal repairPrice, ListItemCollection sparePartItems)
+        {
+            repairCard.Automobile = automobile;
+            repairCard.Description = (string.IsNullOrEmpty(description) ? null : description);
+            repairCard.FinishRepair = finishRepairDate;
+            repairCard.PartPrice = sparePartsPrice;
+            repairCard.CardPrice = repairPrice;
+            CarServicePresentationUtility.AddSpareParts(repairCard, sparePartItems, this.persister);
             this.persister.SaveChanges();
         }
 

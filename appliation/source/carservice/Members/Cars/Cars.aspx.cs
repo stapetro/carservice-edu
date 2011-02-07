@@ -8,6 +8,7 @@ using persistence;
 using System.Data.Objects;
 using presentation.utils;
 using constants;
+using businesslogic.utils;
 
 namespace presentation
 {
@@ -23,7 +24,7 @@ namespace presentation
             }
             if (IsPostBack == false)
             {
-                Session[CarServiceConstants.AUTOMOBILE_ID_REQUEST_PARAM_NAME] = null;
+                CarServiceUtility.ClearSessionAttributes(Session);
                 BindAutomobilesGrid();
             }
         }

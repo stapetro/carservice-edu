@@ -137,6 +137,11 @@ namespace persistence
             return this.carServiceEntities.RepairCards;
         }
 
+        public IQueryable<RepairCard> GetRepairCards(string vinChassis)
+        {
+            return GetRepairCardsByVinChassis(vinChassis);
+        }
+
         public IQueryable<RepairCard> GetUnfinishedRepairCards(DateTime? startRepair, string vinChassis)
         {
             IQueryable<RepairCard> unfinishedRepairCards = null;
@@ -208,6 +213,16 @@ namespace persistence
             {
                 this.carServiceEntities.Dispose();
             }
+        }
+
+        private IQueryable<RepairCard> GetRepairCardsByVinChassis(string vinChassis)
+        {
+            IQueryable<RepairCard> repairCards =
+                from repairCard in this.carServiceEntities.RepairCards
+                where ((repairCard.Automobile.ChassisNumber.IndexOf(vinChassis) >= 0) ||
+                    (repairCard.Automobile.Vin.IndexOf(vinChassis) >= 0))
+                select repairCard;
+            return repairCards;
         }
 
         private IQueryable<RepairCard> GetUnfinishedRepairCards()
