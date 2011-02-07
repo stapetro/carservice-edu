@@ -30,6 +30,12 @@ namespace persistence
         RepairCard GetRepairCardById(int cardId);
         int GetRepairCardMaxId();
         ObjectSet<RepairCard> GetRepairCards();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vinChassis">Vin or Chassis number to be specified</param>
+        /// <returns></returns>
+        IQueryable<RepairCard> GetRepairCards(string vinChassis);
         IQueryable<RepairCard> GetUnfinishedRepairCards(DateTime? startRepair, string vinChassis);
         IQueryable<RepairCard> GetFinishedRepairCards(DateTime? fromFinishRepair, DateTime? toFinishRepair);
 

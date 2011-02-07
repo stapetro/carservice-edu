@@ -60,7 +60,7 @@
 			</p></div> 
 			<div class="right-container2"><p class="text">
 				<label>Finish date:</label>
-				<input type="text" class="textEntry" value="" disabled="disabled" /><label></label>	
+                <ucCal:CalendarUserControl ID="finishRepairDate" runat="server" /><label></label>	
 			</p></div>						
 		</div>	
 

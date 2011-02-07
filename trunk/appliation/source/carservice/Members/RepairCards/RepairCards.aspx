@@ -18,6 +18,8 @@
             ValidationGroup="FinishedRepairCardsFilterValidationGroup"/>
     <asp:ValidationSummary ID="UnfinishedRepairCardsFilterValidationSummary" runat="server" CssClass="failureNotification" 
             ValidationGroup="UnfinishedRepairCardsFilterValidationGroup"/>
+    <asp:ValidationSummary ID="AllRepairCardsFilterValidationSummary" runat="server" CssClass="failureNotification" 
+            ValidationGroup="AllRepairCardsFilterValidationGroup"/>
     <asp:Label ID="notificationMsg" CssClass="negativeMsg" runat="server" Visible="false" />
     <p>
 	    <div class="filterInfo">
@@ -25,11 +27,18 @@
 		    <legend>Filter</legend>				
 		    <p>
                 <asp:DropDownList ID="repairCardsFilterType" AutoPostBack="true" OnSelectedIndexChanged="ReportType_IndexChanged" runat="server">
-                    <asp:ListItem Value="0" Text="Unfinished" Selected="True" />
-                    <asp:ListItem Value="1" Text="Finished"  />
+                    <asp:ListItem Value="0" Text="All" Selected="True" />                    
+                    <asp:ListItem Value="1" Text="Unfinished" />
+                    <asp:ListItem Value="2" Text="Finished"  />
                 </asp:DropDownList>		
 		    </p>
-            <asp:Panel ID="unfinishedRepairCardsFilter" runat="server">
+            <asp:Panel ID="allRepairCardsFilter" runat="server">
+		    <p>                
+                <span>Vin / Chassis</span>
+                <asp:TextBox ID="VinChassisAllRepairCardsTxt" runat="server" CssClass="textEntry" />
+		    </p>
+            </asp:Panel>
+            <asp:Panel ID="unfinishedRepairCardsFilter" Visible="false" runat="server">
 		    <p>                
 			    <span>Start repair&nbsp;&nbsp;&nbsp;</span>
                 <ucCal:CalendarUserControl ID="startRepairDate" runat="server" />
@@ -47,7 +56,7 @@
 	    </fieldset>
         <p class="submitButton">
             <asp:Button ID="filterButton" runat="server" Text="Filter" OnClick="FilterRepairCards_OnClick" 
-                ValidationGroup="UnfinishedRepairCardsFilterValidationGroup" />
+                ValidationGroup="AllRepairCardsFilterValidationGroup" />
         </p>
 	    </div>							    
     </p>
@@ -55,14 +64,12 @@
         <asp:GridView ID="repairCardsGrid" AllowPaging="true" AutoGenerateColumns="false"
             CssClass="nicetable" AlternatingRowStyle-CssClass="alternaterow" runat="server" 
             OnRowEditing="EditRepairCardEventHandler_RowEditing"
-            OnPageIndexChanging="RepairCardsGridView_PageIndexChanging">
+            OnPageIndexChanging="RepairCardsGridView_PageIndexChanging" OnSorting="RepairCardsGridView_Sorting" AllowSorting="true">
             <Columns>
-                <asp:BoundField HeaderText="Id" DataField="CardId" />
-                <asp:TemplateField HeaderText="Vin/Chassis">
-                    <ItemTemplate>
-                        <%# Eval("Vin")%>&nbsp;/&nbsp;<%# Eval("ChassisNumber")%>
-                    </ItemTemplate>
-                </asp:TemplateField>
+                <asp:BoundField HeaderText="Id" DataField="CardId" SortExpression="CardId" />
+                <asp:BoundField HeaderText="Vin" DataField="Vin" SortExpression="Vin" />
+                <asp:BoundField HeaderText="Chassis" DataField="ChassisNumber" SortExpression="ChassisNumber" />
+                
                 <asp:BoundField HeaderText="Start date" DataField="StartRepair" DataFormatString="{0:yyyy-MM-dd}" />
                 <asp:BoundField HeaderText="Finish date" DataField="FinishRepair" DataFormatString="{0:yyyy-MM-dd}" />
                 <asp:BoundField HeaderText="Repair price &#36;" DataField="CardPrice" />

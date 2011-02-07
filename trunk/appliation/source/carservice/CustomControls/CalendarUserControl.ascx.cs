@@ -28,5 +28,26 @@ namespace presentation.controls
                 }
             }
         }
+
+        public TextBox SelectedDateTxt
+        {
+            get 
+            {
+                return this.selectedDateTxt;
+            }
+        }
+
+        public bool Enabled
+        {
+            get
+            {
+                return (this.selectedDateTxt.Enabled && this.calendarBtn.Enabled);
+            }
+            set
+            {
+                this.selectedDateTxt.Enabled = value;
+                this.calendarBtn.Enabled = value;
+            }
+        }
     }
 }

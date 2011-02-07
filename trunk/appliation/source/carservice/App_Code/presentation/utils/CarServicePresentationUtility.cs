@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI.WebControls;
 using persistence;
 using businesslogic.utils;
+using System.Data.Objects.DataClasses;
 
 namespace presentation.utils
 {
@@ -70,6 +71,7 @@ namespace presentation.utils
         public static void AddSpareParts(RepairCard repairCard, ListItemCollection selectedSparePartItems, 
             ICarServicePersister persister)
         {
+            repairCard.SpareParts.Clear();
             foreach (ListItem item in selectedSparePartItems)
             {
                 int sparePartId;
@@ -107,6 +109,27 @@ namespace presentation.utils
                 }
             }
             return validStartRepairDate;
+        }
+
+        public static bool ProcessFinishRepairDate(string repairDateTxt, BulletedList notificationMsgList,
+            out DateTime? repairDate)
+        {
+            repairDate = null;
+            bool validRepairDate = true;
+            if (string.IsNullOrEmpty(repairDateTxt) == false)
+            {
+                DateTime startRepairDateValue = DateTime.Now;
+                validRepairDate = CarServiceUtility.IsValidDate(repairDateTxt, out startRepairDateValue);
+                if (validRepairDate == true)
+                {
+                    repairDate = startRepairDateValue;
+                }
+                else
+                {
+                    CarServicePresentationUtility.AppendNotificationMsg("Finish repair date is not in valid format", notificationMsgList);
+                }
+            }
+            return validRepairDate;
         }
 
         public static bool ProcessRepairPrices(string sparePartsPriceTxt, string repairPriceTxt,
@@ -167,6 +190,18 @@ namespace presentation.utils
         }
 
         public static object GetSparePartsFormatForListBox(List<SparePart> spareParts)
+        {
+            var customSpareParts =
+                from sp in spareParts
+                select new
+                {
+                    PartId = sp.PartId,
+                    PartName = sp.Name
+                };
+            return customSpareParts;
+        }
+
+        public static object GetSparePartsFormatForListBox(EntityCollection<SparePart> spareParts)
         {
             var customSpareParts =
                 from sp in spareParts

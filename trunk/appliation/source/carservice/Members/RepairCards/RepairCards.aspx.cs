@@ -10,6 +10,8 @@ using presentation.utils;
 using constants;
 using System.Globalization;
 using businesslogic.utils;
+using System.Data;
+using businesslogic;
 
 namespace presentation
 {
@@ -25,7 +27,7 @@ namespace presentation
             }
             if (IsPostBack == false)
             {
-                Session[CarServiceConstants.REPAIR_CARDS_FILTERED_SESSION_ATTR_NAME] = null;
+                CarServiceUtility.ClearSessionAttributes(Session);
                 BindRepairCardsGrid();
             }
             this.notificationMsg.Visible = false;
@@ -38,7 +40,7 @@ namespace presentation
             string repairCardId = CarServicePresentationUtility.GetGridCellContent(this.repairCardsGrid, rowIndex, 0);
             if (string.IsNullOrEmpty(repairCardId) == false)
             {
-                //Session[CarServiceConstants.AUTOMOBILE_ID_REQUEST_PARAM_NAME] = repairCardId;
+                Session[CarServiceConstants.REPAIR_CARD_ID_PARAM_NAME] = repairCardId;
                 string editAutomobilePageUrl = "~/Members/RepairCards/AddRepairCard.aspx";
                 Response.Redirect(editAutomobilePageUrl);
             }
@@ -63,7 +65,16 @@ namespace presentation
         {
             object customRepairCards = null;
             int filterType = this.repairCardsFilterType.SelectedIndex;
-            if (filterType == CarServiceConstants.FINISHED_REPAIR_CARDS_FILTER_TYPE)
+            // TODO To be implemented with filter object.
+            /*            
+            string vinChassis = this.VinChassisAllRepairCardsTxt.Text;
+            RepairCardFilter filter = new RepairCardFilter(filterType);
+            */
+            if (filterType == CarServiceConstants.ALL_REPAIR_CARDS_FILTER_TYPE)
+            {
+                customRepairCards = FilterRepairCards(customRepairCards);
+            }
+            else if (filterType == CarServiceConstants.FINISHED_REPAIR_CARDS_FILTER_TYPE)
             {
                 customRepairCards = FilterFinishedRepairCards(customRepairCards);
             }
@@ -75,8 +86,71 @@ namespace presentation
             BindRepairCardsGrid(customRepairCards);
         }
 
+
+        protected void ReportType_IndexChanged(object sender, EventArgs e)
+        {
+            int filterType = this.repairCardsFilterType.SelectedIndex;
+            string filterBtnValidationGroupName = string.Empty;
+            if (filterType == CarServiceConstants.ALL_REPAIR_CARDS_FILTER_TYPE)
+            {
+                this.allRepairCardsFilter.Visible = true;
+                this.finishedRepairCardsFilter.Visible = false;
+                this.unfinishedRepairCardsFilter.Visible = false;
+                filterBtnValidationGroupName = "AllRepairCardsFilterValidationGroup";
+            }
+            else if (filterType == CarServiceConstants.FINISHED_REPAIR_CARDS_FILTER_TYPE)
+            {
+                this.finishedRepairCardsFilter.Visible = true;
+                this.allRepairCardsFilter.Visible = false;
+                this.unfinishedRepairCardsFilter.Visible = false;
+                filterBtnValidationGroupName = "UnfinishedRepairCardsFilterValidationGroup";
+            }
+            else if (filterType == CarServiceConstants.UNFINISHED_REPAIR_CARDS_FILTER_TYPE)
+            {
+                this.unfinishedRepairCardsFilter.Visible = true;
+                this.finishedRepairCardsFilter.Visible = false;
+                this.allRepairCardsFilter.Visible = false;
+                filterBtnValidationGroupName = "FinishedRepairCardsFilterValidationGroup";
+            }
+            this.filterButton.ValidationGroup = filterBtnValidationGroupName;
+        }
+
+        protected void RepairCardsGridView_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            SortDirection newSortDirection = SortDirection.Descending;
+            object currentSortDirectionObject = ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR];
+            if (currentSortDirectionObject != null)
+            {
+                SortDirection currentSortDirection = (SortDirection)currentSortDirectionObject;
+                newSortDirection = (currentSortDirection.Equals(SortDirection.Ascending)) ? SortDirection.Descending : SortDirection.Ascending;
+            }
+            ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR] = newSortDirection;
+            ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR] = e.SortExpression;            
+            ObjectSet<RepairCard> repairCards = this.persister.GetRepairCards();
+            IQueryable<RepairCard> sortedCards = 
+                CarServiceUtility.SortRepairCards(repairCards, e.SortExpression, newSortDirection);
+            this.repairCardsGrid.DataSource = GetRepairCardsFormatForGrid(sortedCards);            
+            this.repairCardsGrid.DataBind();
+        }
+
+        private object FilterRepairCards(object customRepairCards)
+        {
+            string vinChassis = this.VinChassisAllRepairCardsTxt.Text;
+            if (string.IsNullOrEmpty(vinChassis))
+            {
+                ObjectSet<RepairCard> allRepairCards = this.persister.GetRepairCards();
+                customRepairCards = GetRepairCardsFormatForGrid(allRepairCards);
+            }
+            else
+            {
+                IQueryable<RepairCard> filteredRepairCards = this.persister.GetRepairCards(vinChassis);
+                customRepairCards = GetRepairCardsFormatForGrid(filteredRepairCards);
+            }
+            return customRepairCards;
+        }
+
         private object FilterUnfinishedRepairCards(object customRepairCards)
-        {                       
+        {
             DateTime? startRepairDate = null;
             bool validDate = true;
             string startRepairDateTxt = this.startRepairDate.SelectedDate;
@@ -151,28 +225,52 @@ namespace presentation
             return customRepairCards;
         }
 
-
-        protected void ReportType_IndexChanged(object sender, EventArgs e)
-        {
-            int filterType = this.repairCardsFilterType.SelectedIndex;
-            string filterBtnValidationGroupName = string.Empty;
-            if (filterType == CarServiceConstants.FINISHED_REPAIR_CARDS_FILTER_TYPE)
-            {
-                this.finishedRepairCardsFilter.Visible = true;
-                this.unfinishedRepairCardsFilter.Visible = false;
-                filterBtnValidationGroupName = "UnfinishedRepairCardsFilterValidationGroup";
-            }
-            else if (filterType == CarServiceConstants.UNFINISHED_REPAIR_CARDS_FILTER_TYPE)
-            {
-                this.finishedRepairCardsFilter.Visible = false;
-                this.unfinishedRepairCardsFilter.Visible = true;
-                filterBtnValidationGroupName = "FinishedRepairCardsFilterValidationGroup";
-            }
-            this.filterButton.ValidationGroup = filterBtnValidationGroupName;
+        //TODO To be moved to presentaiton utility
+        private object GetRepairCardsFormatForGrid(IQueryable<RepairCard> repairCards)
+        {            
+            var customRepairCards =
+                from repairCard in repairCards
+                select new
+                {
+                    repairCard.CardId,
+                    repairCard.Automobile.Vin,
+                    repairCard.Automobile.ChassisNumber,
+                    repairCard.StartRepair,
+                    repairCard.FinishRepair,
+                    repairCard.CardPrice
+                };
+            return customRepairCards;
         }
 
-        private object GetRepairCardsFormatForGrid(IQueryable<RepairCard> repairCards)
-        {
+        //TODO To be moved to presentaiton utility
+        private object GetRepairCardsFormatForGrid(ObjectSet<RepairCard> repairCards)
+        {            
+            /*
+            DataTable dataTable = new DataTable("repairCards");
+            dataTable.Columns.Add("CardId", Type.GetType("System.String"), "CardId");
+            dataTable.Columns.Add("Vin", Type.GetType("System.String"), "Vin");
+            dataTable.Columns.Add("ChassisNumber", Type.GetType("System.String"), "ChassisNumber");
+            dataTable.Columns.Add("StartRepair", Type.GetType("System.DateTime"), "StartRepair");
+            dataTable.Columns.Add("FinishRepair", Type.GetType("System.DateTime"), "FinishRepair");
+            dataTable.Columns.Add("CardPrice", Type.GetType("System.Decimal"), "FinishRepair");
+
+            foreach (RepairCard card in repairCards)
+            {
+                DataRow dataRow = dataTable.NewRow();
+
+                dataRow["CardId"] = card.CardId;
+                dataRow["Vin"] = card.Automobile.Vin;
+                dataRow["Chassis"] = card.Automobile.ChassisNumber;
+                dataRow["StartRepair"] = card.StartRepair;
+                dataRow["FinishRepair"] = card.FinishRepair;
+                dataRow["CardPrice"] = card.CardPrice;
+
+                dataTable.Rows.Add(dataRow);
+            }
+
+            return dataTable;
+             */ 
+            
             var customRepairCards =
                 from repairCard in repairCards
                 select new
