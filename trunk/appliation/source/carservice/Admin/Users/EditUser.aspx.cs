@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using constants;
 using System.Web.Security;
+using businesslogic.utils;
 
 namespace presentation
 {
@@ -15,15 +16,21 @@ namespace presentation
         {
             if (IsPostBack == false)
             {
-                string userName = Request.QueryString[CarServiceConstants.USER_NAME_REQUEST_PARAM_NAME];                
-                this.UserName.Text = userName;
-                MembershipUser user =  Membership.GetUser(userName);
-                this.UserName.Text = user.UserName;
-                this.Email.Text = user.Email;
-                this.UserActive.SelectedValue = (user.IsApproved ? 1.ToString() : 0.ToString());
-                ProfileCommon userProfile = Profile.GetProfile(user.UserName);
-                this.FirstName.Text = userProfile.FirstName;
-                this.LastName.Text = userProfile.LastName;
+                string userId = Request.QueryString[CarServiceConstants.USER_ID_REQUEST_PARAM_NAME];
+                Guid userProviderKey;
+                if (CarServiceUtility.GuidTryParse(userId, out userProviderKey) == true)
+                {
+                    MembershipUser user = Membership.GetUser(userProviderKey);
+                    if (user != null)
+                    {
+                        this.UserName.Text = user.UserName;
+                        this.Email.Text = user.Email;
+                        this.UserActive.SelectedValue = (user.IsApproved ? 1.ToString() : 0.ToString());
+                        ProfileCommon userProfile = Profile.GetProfile(user.UserName);
+                        this.FirstName.Text = userProfile.FirstName;
+                        this.LastName.Text = userProfile.LastName;
+                    }
+                }
             }
         }
 

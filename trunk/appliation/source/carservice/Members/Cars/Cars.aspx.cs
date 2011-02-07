@@ -47,9 +47,38 @@ namespace presentation
             BindAutomobilesGrid();
         }
 
+        protected void CarsGridView_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            SortDirection sortDirection = CarServicePresentationUtility.GetSortDirection(ViewState);
+            ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR] = sortDirection;
+            ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR] = e.SortExpression;
+            IQueryable<Automobile> automobiles = this.persister.GetAutomobiles();
+            IQueryable<Automobile> sortedAutomobiles = CarServiceUtility.SortAutomobiles(automobiles, e.SortExpression, sortDirection);
+            BindAutomobilesGrid(sortedAutomobiles);
+        }
+
         private void BindAutomobilesGrid()
         {
+            object sortDirectionObj = ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR];
+            object sortExpressionObj = ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR];
             ObjectSet<Automobile> automobiles = this.persister.GetAutomobiles();
+            IQueryable<Automobile> sortedAutomobiles;
+            if (sortDirectionObj != null && sortExpressionObj != null)
+            {
+                sortedAutomobiles = CarServiceUtility.SortAutomobiles(automobiles, sortExpressionObj.ToString(),
+                    (SortDirection)sortDirectionObj);
+            }
+            else
+            {
+                ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR] = SortDirection.Ascending;
+                ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR] = CarServiceConstants.AUTOMOBILE_ID_SORT_EXPRESSION;
+                sortedAutomobiles = automobiles;
+            }
+            BindAutomobilesGrid(sortedAutomobiles);
+        }
+
+        private void BindAutomobilesGrid(IQueryable<Automobile> automobiles)
+        {
             this.automobilesGrid.DataSource = automobiles;
             this.automobilesGrid.DataBind();
         }

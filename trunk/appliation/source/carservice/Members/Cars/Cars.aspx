@@ -10,19 +10,16 @@
         <asp:HyperLink ID="addCar" NavigateUrl="~/Members/Cars/AddCar.aspx" runat="server">Add car</asp:HyperLink>	 	
     </p>
     <p>
-        <asp:GridView ID="automobilesGrid" AllowPaging="true" AutoGenerateColumns="false"
+        <asp:GridView ID="automobilesGrid" AllowPaging="true" AllowSorting="true" AutoGenerateColumns="false"
             CssClass="nicetable" runat="server" OnRowEditing="EditAutomobileEventHandler_RowEditing"
-            OnPageIndexChanging="AutomobilesGridView_PageIndexChanging">
+            OnPageIndexChanging="AutomobilesGridView_PageIndexChanging" OnSorting="CarsGridView_Sorting">
             <Columns>
-                <asp:BoundField HeaderText="Id" DataField="AutomobileId" />
-                <asp:BoundField HeaderText="Vin" DataField="Vin" />
-                <asp:BoundField HeaderText="Chassis" DataField="ChassisNumber" />
-                <asp:TemplateField HeaderText="Make/Model">
-                    <ItemTemplate>
-                        <%# Eval("Make")%>&nbsp;/&nbsp;<%# Eval("Model")%>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:BoundField HeaderText="Owner" DataField="Owner" />
+                <asp:BoundField HeaderText="Id" DataField="AutomobileId" SortExpression="AutomobileId" />
+                <asp:BoundField HeaderText="Vin" DataField="Vin" SortExpression="Vin" />
+                <asp:BoundField HeaderText="Chassis" DataField="ChassisNumber" SortExpression="ChassisNumber" />
+                <asp:BoundField HeaderText="Make" DataField="Make" SortExpression="Make" />
+                <asp:BoundField HeaderText="Model" DataField="Model" SortExpression="Model" />
+                <asp:BoundField HeaderText="Owner" DataField="Owner" SortExpression="Owner" />
                 <asp:CommandField ShowEditButton="true" />
             </Columns>
         </asp:GridView>				        

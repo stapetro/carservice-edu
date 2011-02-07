@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using constants;
 using persistence;
 using System.Globalization;
+using businesslogic.utils;
 
 namespace presentation
 {
@@ -22,6 +23,8 @@ namespace presentation
             }
             if (IsPostBack == false)
             {
+                Session[CarServiceConstants.REPAIR_CARD_ID_PARAM_NAME] = null;
+                Session[CarServiceConstants.REPAIR_CARDS_FILTER_SESSION_ATTR_NAME] = null;
                 LoadAutomobilePage();
             }
             this.notificationMsg.Visible = false;
@@ -29,6 +32,7 @@ namespace presentation
 
         protected void CancelAuto_OnClick(object sender, EventArgs e)
         {
+            CarServiceUtility.ClearSessionAttributes(Session);
             string continueUrl = "~/Members/Cars/Cars.aspx";
             Response.Redirect(continueUrl);
         }

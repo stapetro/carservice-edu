@@ -8,16 +8,16 @@
 	    <asp:HyperLink NavigateUrl="~/Admin/Users/AddUser.aspx" runat="server">Add user</asp:HyperLink>			
     </p>
     <p>
-        <asp:GridView ID="carServiceUsers" AllowPaging="true" AutoGenerateColumns="false" 
+        <asp:GridView ID="carServiceUsers" AllowPaging="true" AllowSorting="true" AutoGenerateColumns="false" 
             CssClass="nicetable" runat="server" OnRowCreated="CarServiceUsersGridView_RowCreated" 
             OnRowEditing="EditUserEventHandler_RowEditing" OnRowDeleting="DeactivateUserEventHandler_RowDeliting"
-            OnPageIndexChanging="UsersGridView_PageIndexChanging">
+            OnPageIndexChanging="UsersGridView_PageIndexChanging" OnSorting="UsersGridView_Sorting">
             <Columns>
-                <asp:BoundField HeaderText="User Name" DataField="UserName" />
-                <asp:BoundField HeaderText="Email" DataField="Email" />
-                <asp:BoundField HeaderText="First Name" DataField="FirstName" />
-                <asp:BoundField HeaderText="Last Name" DataField="LastName" />
-                <asp:BoundField HeaderText="Active" DataField="IsActive" />
+                <asp:BoundField HeaderText="User Name" DataField="UserName" SortExpression="UserName" />
+                <asp:BoundField HeaderText="Email" DataField="Email" SortExpression="Email" />
+                <asp:BoundField HeaderText="First Name" DataField="FirstName" SortExpression="FirstName" />
+                <asp:BoundField HeaderText="Last Name" DataField="LastName" SortExpression="LastName" />
+                <asp:BoundField HeaderText="Active" DataField="IsActive" SortExpression="IsActive" />
                 <asp:CommandField ShowEditButton="true" />
                 <asp:CommandField ShowDeleteButton="true" />
             </Columns>

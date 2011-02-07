@@ -25,11 +25,11 @@
             <div class="loginDisplay">                
                 <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
                     <AnonymousTemplate>
-                        [ <a href="~/Login.aspx" ID="HeadLoginStatus" runat="server">Log In</a> ]                        
+                        [ <a href="~/Login.aspx" ID="HeadLoginStatus" runat="server">Log On</a> ]                        
                     </AnonymousTemplate>
                     <LoggedInTemplate>
                         Welcome <span class="bold"><asp:LoginName ID="HeadLoginName" runat="server" /></span>!
-                        [ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Log Out" LogoutPageUrl="~/"/> ]                        
+                        [ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Log Off" LogoutPageUrl="~/"/> ]                        
                     </LoggedInTemplate>
                 </asp:LoginView>                                          
             </div>       

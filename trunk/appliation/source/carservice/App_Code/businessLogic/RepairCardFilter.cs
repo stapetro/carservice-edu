@@ -12,6 +12,12 @@ namespace businesslogic
     public class RepairCardFilter
     {
         private int filterType;
+
+        public int Type
+        {
+            get { return filterType; }
+            set { filterType = value; }
+        }
         private string vinChassis;
 
         public string VinChassis
