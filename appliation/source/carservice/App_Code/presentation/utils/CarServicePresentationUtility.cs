@@ -6,6 +6,8 @@ using System.Web.UI.WebControls;
 using persistence;
 using businesslogic.utils;
 using System.Data.Objects.DataClasses;
+using System.Web.UI;
+using constants;
 
 namespace presentation.utils
 {
@@ -64,6 +66,18 @@ namespace presentation.utils
                 ListItem item = new ListItem(notificationMsg);
                 notificationMsgList.Items.Add(item);
             }
+        }
+
+        public static SortDirection GetSortDirection(StateBag viewState)
+        {
+            SortDirection newSortDirection = SortDirection.Descending;
+            object currentSortDirectionObject = viewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR];
+            if (currentSortDirectionObject != null)
+            {
+                SortDirection currentSortDirection = (SortDirection)currentSortDirectionObject;
+                newSortDirection = (currentSortDirection.Equals(SortDirection.Ascending)) ? SortDirection.Descending : SortDirection.Ascending;
+            }
+            return newSortDirection;
         }
 
         #region Repair card specific

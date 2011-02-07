@@ -65,8 +65,9 @@ namespace presentation
                     this.finishRepairDate.Enabled = false;
                     this.operatorLbl.Text = this.User.Identity.Name;
                 }
-            }
+            }            
             CarServicePresentationUtility.HideNotificationMsgList(this.notificationMsgList);
+            Session[CarServiceConstants.AUTOMOBILE_ID_REQUEST_PARAM_NAME] = null;
         }        
 
         protected void SearchAutomobile_OnClick(object sender, EventArgs e)
@@ -105,6 +106,7 @@ namespace presentation
 
         protected void CancelRepairCard_OnClick(object sender, EventArgs e)
         {
+            CarServiceUtility.ClearSessionAttributes(Session);
             string continueUrl = "~/Members/RepairCards/RepairCards.aspx";
             Response.Redirect(continueUrl);
         }

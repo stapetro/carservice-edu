@@ -8,6 +8,7 @@ using presentation.utils;
 using constants;
 using persistence;
 using System.Data.Objects;
+using businesslogic.utils;
 
 namespace presentation
 {   
@@ -41,7 +42,7 @@ namespace presentation
                     }
                 }
             }
-        }        
+        }
 
         protected void EditSparePartventHandler_RowEditing(object sender, GridViewEditEventArgs e)
         {
@@ -81,9 +82,39 @@ namespace presentation
             BindSparePartsGrid();
         }
 
+        protected void SparePartsGridView_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            SortDirection sortDirection = CarServicePresentationUtility.GetSortDirection(ViewState);
+            ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR] = sortDirection;
+            ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR] = e.SortExpression;
+            IQueryable<SparePart> spareParts = this.persister.GetSpareParts();
+            IQueryable<SparePart> sortedSpareParts = CarServiceUtility.SortSpareParts(spareParts, e.SortExpression, sortDirection);
+            BindSparePartsGrid(sortedSpareParts);
+        }
+
         private void BindSparePartsGrid()
         {
-            ObjectSet<SparePart> spareParts = this.persister.GetSpareParts();
+
+            object sortDirectionObj = ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR];
+            object sortExpressionObj = ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR];
+            IQueryable<SparePart> spareParts = this.persister.GetSpareParts();
+            IQueryable<SparePart> sortedSpareParts;
+            if (sortDirectionObj != null && sortExpressionObj != null)
+            {
+                sortedSpareParts = CarServiceUtility.SortSpareParts(spareParts, sortExpressionObj.ToString(), 
+                    (SortDirection)sortDirectionObj);
+            }
+            else
+            {
+                ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR] = SortDirection.Ascending;
+                ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR] = CarServiceConstants.SPARE_PART_ID_SORT_EXPRESSION;
+                sortedSpareParts = spareParts;
+            }
+            BindSparePartsGrid(sortedSpareParts);
+        }
+
+        private void BindSparePartsGrid(IEnumerable<SparePart> spareParts)
+        {
             this.sparePartsGrid.DataSource = spareParts;
             this.sparePartsGrid.DataBind();
         }

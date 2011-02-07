@@ -8,6 +8,7 @@ using System.Web.Security;
 using businesslogic;
 using constants;
 using presentation.utils;
+using businesslogic.utils;
 
 namespace presentation
 {
@@ -44,8 +45,9 @@ namespace presentation
             string userName = CarServicePresentationUtility.GetGridCellContent(this.carServiceUsers, rowIndex, userNameCellIndex);
             if (string.IsNullOrEmpty(userName) == false)
             {
+                MembershipUser user =  Membership.GetUser(userName);
                 string editUserPageUrl = "~/Admin/Users/EditUser.aspx?"
-                    + CarServiceConstants.USER_NAME_REQUEST_PARAM_NAME + "=" + userName;
+                    + CarServiceConstants.USER_ID_REQUEST_PARAM_NAME + "=" + user.ProviderUserKey.ToString();
                 Response.Redirect(editUserPageUrl, false);
             }             
         }
@@ -73,10 +75,40 @@ namespace presentation
             BindUsersGrid();
         }
 
+        protected void UsersGridView_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            SortDirection sortDirection = CarServicePresentationUtility.GetSortDirection(ViewState);
+            ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR] = sortDirection;
+            ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR] = e.SortExpression;
+            List<CarServiceUser> users = GetUsers();
+            IEnumerable<CarServiceUser> sortedUsers = CarServiceUtility.SortUsers(users, e.SortExpression, sortDirection);
+            BindUsersGrid(sortedUsers);
+        }
+
         private void BindUsersGrid()
         {
-            List<CarServiceUser> carServiceUsers = GetUsers();
-            this.carServiceUsers.DataSource = carServiceUsers;
+            object sortDirectionObj = ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR];
+            object sortExpressionObj = ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR];
+            List<CarServiceUser> users = GetUsers();
+            IEnumerable<CarServiceUser> sortedUsers;
+            if (sortDirectionObj != null && sortExpressionObj != null)
+            {
+                sortedUsers = CarServiceUtility.SortUsers(users, sortExpressionObj.ToString(),
+                    (SortDirection)sortDirectionObj);
+            }
+            else
+            {
+                ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR] = SortDirection.Ascending;
+                ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR] = CarServiceConstants.USER_NAME_SORT_EXPRESSION;
+                sortedUsers = CarServiceUtility.SortUsers(users, CarServiceConstants.USER_NAME_SORT_EXPRESSION,
+                    SortDirection.Ascending);
+            }
+            BindUsersGrid(sortedUsers);
+        }
+
+        private void BindUsersGrid(IEnumerable<CarServiceUser> users)
+        {
+            this.carServiceUsers.DataSource = users.ToList<CarServiceUser>();
             this.carServiceUsers.DataBind();
         }
 

@@ -70,9 +70,9 @@
                 <asp:BoundField HeaderText="Vin" DataField="Vin" SortExpression="Vin" />
                 <asp:BoundField HeaderText="Chassis" DataField="ChassisNumber" SortExpression="ChassisNumber" />
                 
-                <asp:BoundField HeaderText="Start date" DataField="StartRepair" DataFormatString="{0:yyyy-MM-dd}" />
-                <asp:BoundField HeaderText="Finish date" DataField="FinishRepair" DataFormatString="{0:yyyy-MM-dd}" />
-                <asp:BoundField HeaderText="Repair price &#36;" DataField="CardPrice" />
+                <asp:BoundField HeaderText="Start date" DataField="StartRepair" SortExpression="StartRepair" DataFormatString="{0:yyyy-MM-dd}" />
+                <asp:BoundField HeaderText="Finish date" DataField="FinishRepair" SortExpression="FinishRepair" DataFormatString="{0:yyyy-MM-dd}" />
+                <asp:BoundField HeaderText="Repair price &#36;" DataField="CardPrice" SortExpression="CardPrice" />
                 <asp:CommandField ShowEditButton="true" />
             </Columns>
         </asp:GridView>				        

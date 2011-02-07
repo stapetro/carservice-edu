@@ -27,8 +27,10 @@ namespace presentation
             }
             if (IsPostBack == false)
             {
-                CarServiceUtility.ClearSessionAttributes(Session);
                 BindRepairCardsGrid();
+                ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR] = SortDirection.Ascending;
+                ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR] = CarServiceConstants.REPAIR_CARD_ID_SORT_EXPRESSION;
+                CarServiceUtility.ClearSessionAttributes(Session);
             }
             this.notificationMsg.Visible = false;
         }
@@ -44,45 +46,113 @@ namespace presentation
                 string editAutomobilePageUrl = "~/Members/RepairCards/AddRepairCard.aspx";
                 Response.Redirect(editAutomobilePageUrl);
             }
-
         }
 
         protected void RepairCardsGridView_PageIndexChanging(Object sender, GridViewPageEventArgs e)
         {
             this.repairCardsGrid.PageIndex = e.NewPageIndex;
-            object customRepairCards = Session[CarServiceConstants.REPAIR_CARDS_FILTERED_SESSION_ATTR_NAME];
-            if (customRepairCards != null)
+            object repairCardsFilterObject = Session[CarServiceConstants.REPAIR_CARDS_FILTER_SESSION_ATTR_NAME];
+            IQueryable<RepairCard> repairCards;
+            if (repairCardsFilterObject != null)
             {
-                BindRepairCardsGrid(customRepairCards);
+                RepairCardFilter filter = (RepairCardFilter)repairCardsFilterObject;
+                repairCards = FilterRepairCards(filter);
             }
             else
             {
-                BindRepairCardsGrid();
+                repairCards = this.persister.GetRepairCards();
             }
+            object sortDirectionObj = ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR];
+            object sortExpressionObj = ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR];
+            if (sortDirectionObj != null && sortExpressionObj != null)
+            {
+                repairCards = CarServiceUtility.SortRepairCards(repairCards, 
+                    sortExpressionObj.ToString(), (SortDirection)sortDirectionObj);
+            }
+            BindRepairCardsGrid(repairCards);
         }
 
         protected void FilterRepairCards_OnClick(object sender, EventArgs e)
         {
-            object customRepairCards = null;
+            IQueryable<RepairCard> customRepairCards = null;
             int filterType = this.repairCardsFilterType.SelectedIndex;
-            // TODO To be implemented with filter object.
-            /*            
-            string vinChassis = this.VinChassisAllRepairCardsTxt.Text;
             RepairCardFilter filter = new RepairCardFilter(filterType);
-            */
             if (filterType == CarServiceConstants.ALL_REPAIR_CARDS_FILTER_TYPE)
             {
-                customRepairCards = FilterRepairCards(customRepairCards);
+                filter.VinChassis = this.VinChassisAllRepairCardsTxt.Text;
             }
             else if (filterType == CarServiceConstants.FINISHED_REPAIR_CARDS_FILTER_TYPE)
             {
-                customRepairCards = FilterFinishedRepairCards(customRepairCards);
+                DateTime? fromFinishRepairDate = null;
+                bool validFromFinishRepairDate = false;
+                string fromFinishDateTxt = this.fromFinishRepairDate.SelectedDate;
+                if (string.IsNullOrEmpty(fromFinishDateTxt) == false)
+                {
+                    DateTime fromFinishRepairDateValue = DateTime.Now;
+                    validFromFinishRepairDate = CarServiceUtility.IsValidDate(fromFinishDateTxt, out fromFinishRepairDateValue);
+                    if (validFromFinishRepairDate == true)
+                    {
+                        fromFinishRepairDate = fromFinishRepairDateValue;
+                    }
+                }
+                DateTime? toFinishRepairDate = null;
+                bool validToFinishRepairDate = false;
+                string toFinishRepairDateTxt = this.toFinishRepairDate.SelectedDate;
+                if (string.IsNullOrEmpty(toFinishRepairDateTxt) == false)
+                {
+                    DateTime toFinishRepairDateValue = DateTime.Now;
+                    validToFinishRepairDate = CarServiceUtility.IsValidDate(toFinishRepairDateTxt, out toFinishRepairDateValue);
+                    if (validToFinishRepairDate == true)
+                    {
+                        toFinishRepairDate = toFinishRepairDateValue;
+                    }
+                }
+                string notificationMsg = string.Empty;
+                if (validFromFinishRepairDate == false)
+                {
+                    notificationMsg += "From finish repair date is not valid format.<br/>";
+                }
+                if (validToFinishRepairDate == false)
+                {
+                    notificationMsg += "To finish repair date is not valid format.<br/>";
+                }
+                if (string.IsNullOrEmpty(notificationMsg) == false)
+                {
+                    this.notificationMsg.Text = notificationMsg;
+                    this.notificationMsg.Visible = true;
+                    return;
+                }
+                if (validFromFinishRepairDate && validToFinishRepairDate)
+                {
+                    filter.FromFinishRepair = fromFinishRepairDate.Value;
+                    filter.ToFinishRepair = toFinishRepairDate.Value;
+                }
             }
             else if (filterType == CarServiceConstants.UNFINISHED_REPAIR_CARDS_FILTER_TYPE)
             {
-                customRepairCards = FilterUnfinishedRepairCards(customRepairCards);
+                bool validDate = true;
+                string startRepairDateTxt = this.startRepairDate.SelectedDate;
+                if (string.IsNullOrEmpty(startRepairDateTxt) == false)
+                {
+                    DateTime startRepairDateValue = DateTime.Now;
+                    validDate = CarServiceUtility.IsValidDate(startRepairDateTxt, out startRepairDateValue);
+                    if (validDate == true)
+                    {
+                        filter.StartRepair = startRepairDateValue;
+                    }
+                    else
+                    {
+                        this.notificationMsg.Text = "Start repair date is not valid format<br/>";
+                        this.notificationMsg.Visible = true;
+                        return;
+                    }
+                }
+                filter.VinChassis = this.VinChassisTxt.Text;                   
             }
-            Session[CarServiceConstants.REPAIR_CARDS_FILTERED_SESSION_ATTR_NAME] = customRepairCards;
+            customRepairCards = FilterRepairCards(filter);
+            ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR] = SortDirection.Ascending;
+            ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR] = CarServiceConstants.REPAIR_CARD_ID_SORT_EXPRESSION;                        
+            Session[CarServiceConstants.REPAIR_CARDS_FILTER_SESSION_ATTR_NAME] = filter;
             BindRepairCardsGrid(customRepairCards);
         }
 
@@ -125,104 +195,71 @@ namespace presentation
                 newSortDirection = (currentSortDirection.Equals(SortDirection.Ascending)) ? SortDirection.Descending : SortDirection.Ascending;
             }
             ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR] = newSortDirection;
-            ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR] = e.SortExpression;            
-            ObjectSet<RepairCard> repairCards = this.persister.GetRepairCards();
-            IQueryable<RepairCard> sortedCards = 
-                CarServiceUtility.SortRepairCards(repairCards, e.SortExpression, newSortDirection);
-            this.repairCardsGrid.DataSource = GetRepairCardsFormatForGrid(sortedCards);            
-            this.repairCardsGrid.DataBind();
-        }
-
-        private object FilterRepairCards(object customRepairCards)
-        {
-            string vinChassis = this.VinChassisAllRepairCardsTxt.Text;
-            if (string.IsNullOrEmpty(vinChassis))
+            ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR] = e.SortExpression;
+            object repairCardsFilterObj = Session[CarServiceConstants.REPAIR_CARDS_FILTER_SESSION_ATTR_NAME];
+            IQueryable<RepairCard> repairCards;
+            if (repairCardsFilterObj != null)
             {
-                ObjectSet<RepairCard> allRepairCards = this.persister.GetRepairCards();
-                customRepairCards = GetRepairCardsFormatForGrid(allRepairCards);
+                RepairCardFilter filter = (RepairCardFilter)repairCardsFilterObj;
+                repairCards = FilterRepairCards(filter);
             }
             else
             {
-                IQueryable<RepairCard> filteredRepairCards = this.persister.GetRepairCards(vinChassis);
-                customRepairCards = GetRepairCardsFormatForGrid(filteredRepairCards);
+                repairCards = this.persister.GetRepairCards();
             }
-            return customRepairCards;
+            IQueryable<RepairCard> sortedCards = 
+                CarServiceUtility.SortRepairCards(repairCards, e.SortExpression, newSortDirection);
+            BindRepairCardsGrid(sortedCards);
         }
 
-        private object FilterUnfinishedRepairCards(object customRepairCards)
+        #region Private methods
+
+        private IQueryable<RepairCard> FilterRepairCards(RepairCardFilter filter)
         {
-            DateTime? startRepairDate = null;
-            bool validDate = true;
-            string startRepairDateTxt = this.startRepairDate.SelectedDate;
-            if (string.IsNullOrEmpty(startRepairDateTxt) == false)
+            IQueryable<RepairCard> repairCards = null;
+            int filterType = filter.Type;
+            switch (filterType)
             {
-                DateTime startRepairDateValue = DateTime.Now;
-                validDate = CarServiceUtility.IsValidDate(startRepairDateTxt, out startRepairDateValue);
-                if (validDate == true)
-                {
-                    startRepairDate = startRepairDateValue;
-                }
-                else
-                {
-                    this.notificationMsg.Text = "Start repair date is not valid format<br/>";
-                    this.notificationMsg.Visible = true;
-                }
+                case CarServiceConstants.ALL_REPAIR_CARDS_FILTER_TYPE:
+                    repairCards = FilterRepairCards(filter.VinChassis);
+                    break;
+                case CarServiceConstants.UNFINISHED_REPAIR_CARDS_FILTER_TYPE:
+                    repairCards = FilterUnfinishedRepairCards(filter.StartRepair, filter.VinChassis);
+                    break;
+                case CarServiceConstants.FINISHED_REPAIR_CARDS_FILTER_TYPE:
+                    repairCards = FilterFinishedRepairCards(filter.FromFinishRepair, filter.ToFinishRepair);
+                    break;
             }
-            if (validDate)
-            {
-                string vinChassis = this.VinChassisTxt.Text;
-                IQueryable<RepairCard> foundRepairCards = this.persister.GetUnfinishedRepairCards(startRepairDate, vinChassis);
-                customRepairCards = GetRepairCardsFormatForGrid(foundRepairCards);
-            }
-            return customRepairCards;
+            return repairCards;
         }
 
-        private object FilterFinishedRepairCards(object customRepairCards)
+
+        private IQueryable<RepairCard> FilterRepairCards(string vinChassis)
         {
-            DateTime? fromFinishRepairDate = null;
-            bool validFromFinishRepairDate = true;
-            bool validToFinishRepairDate = true;
-            string fromFinishDateTxt = this.fromFinishRepairDate.SelectedDate;
-            string notificationMsg = string.Empty;
-            if (string.IsNullOrEmpty(fromFinishDateTxt) == false)
+            IQueryable<RepairCard> repairCards;
+            if (string.IsNullOrEmpty(vinChassis))
             {
-                DateTime fromFinishRepairDateValue = DateTime.Now;
-                validFromFinishRepairDate = CarServiceUtility.IsValidDate(fromFinishDateTxt, out fromFinishRepairDateValue);
-                if (validFromFinishRepairDate == true)
-                {
-                    fromFinishRepairDate = fromFinishRepairDateValue;
-                }
-                else
-                {
-                    notificationMsg += "From finish repair date is not valid format.<br/>";
-                }
+                repairCards = this.persister.GetRepairCards();
             }
-            DateTime? toFinishRepairDate = null;
-            string toFinishRepairDateTxt = this.toFinishRepairDate.SelectedDate;
-            if (string.IsNullOrEmpty(toFinishRepairDateTxt) == false)
+            else
             {
-                DateTime toFinishRepairDateValue = DateTime.Now;
-                validToFinishRepairDate = CarServiceUtility.IsValidDate(toFinishRepairDateTxt, out toFinishRepairDateValue);
-                if (validToFinishRepairDate == true)
-                {
-                    toFinishRepairDate = toFinishRepairDateValue;
-                }
-                else
-                {
-                    notificationMsg += "To finish repair date is not valid format.<br/>";
-                }
+                repairCards = this.persister.GetRepairCards(vinChassis);
             }
-            if (string.IsNullOrEmpty(notificationMsg) == false)
-            {
-                this.notificationMsg.Text = notificationMsg;
-                this.notificationMsg.Visible = true;
-            }
-            if (validFromFinishRepairDate == true && validToFinishRepairDate == true)
-            {
-                IQueryable<RepairCard> foundRepairCards = this.persister.GetFinishedRepairCards(fromFinishRepairDate, toFinishRepairDate);
-                customRepairCards = GetRepairCardsFormatForGrid(foundRepairCards);
-            }
-            return customRepairCards;
+            return repairCards;
+        }
+
+        private IQueryable<RepairCard> FilterUnfinishedRepairCards(DateTime startRepairDate, string vinChassis)
+        {
+            IQueryable<RepairCard> foundRepairCards = 
+                this.persister.GetUnfinishedRepairCards(startRepairDate, vinChassis);
+            return foundRepairCards;
+        }
+
+        private IQueryable<RepairCard> FilterFinishedRepairCards(DateTime fromFinishRepairDate, DateTime toFinishRepairDate)
+        {
+            IQueryable<RepairCard> foundRepairCards = 
+                this.persister.GetFinishedRepairCards(fromFinishRepairDate, toFinishRepairDate);
+            return foundRepairCards;
         }
 
         //TODO To be moved to presentaiton utility
@@ -288,18 +325,15 @@ namespace presentation
         private void BindRepairCardsGrid()
         {
             ObjectSet<RepairCard> repairCards = this.persister.GetRepairCards();
-            var customRepairCards =
-                from repairCard in repairCards
-                select new { repairCard.CardId, repairCard.Automobile.Vin, 
-                    repairCard.Automobile.ChassisNumber, repairCard.StartRepair, repairCard.FinishRepair, 
-                    repairCard.CardPrice};
-            BindRepairCardsGrid(customRepairCards);            
+            BindRepairCardsGrid(repairCards);            
         }
 
-        private void BindRepairCardsGrid(object repairCardsDataSource)
+        private void BindRepairCardsGrid(IQueryable<RepairCard> repairCards)
         {
-            this.repairCardsGrid.DataSource = repairCardsDataSource;
+            this.repairCardsGrid.DataSource = GetRepairCardsFormatForGrid(repairCards); ;
             this.repairCardsGrid.DataBind();
         }
+
+        #endregion
     }
 }

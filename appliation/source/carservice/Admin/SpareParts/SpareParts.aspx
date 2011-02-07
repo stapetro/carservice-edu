@@ -10,15 +10,15 @@
 	    <asp:HyperLink ID="addSparePart" NavigateUrl="~/Admin/SpareParts/AddSparePart.aspx" runat="server">Add spare part</asp:HyperLink>			
     </p>
     <p>
-        <asp:GridView ID="sparePartsGrid" AllowPaging="true" AutoGenerateColumns="false" 
+        <asp:GridView ID="sparePartsGrid" AllowPaging="true" AllowSorting="true" AutoGenerateColumns="false" 
             CssClass="nicetable" runat="server" OnRowCreated="SparePartsGridView_RowCreated" 
             OnRowEditing="EditSparePartventHandler_RowEditing" OnRowDeleting="DeactivateSparePartEventHandler_RowDeliting"
-            OnPageIndexChanging="SparePartsGridView_PageIndexChanging">
+            OnPageIndexChanging="SparePartsGridView_PageIndexChanging" OnSorting="SparePartsGridView_Sorting">
             <Columns>
-                <asp:BoundField HeaderText="Id" DataField="PartId" />
-                <asp:BoundField HeaderText="Name" DataField="Name" />
-                <asp:BoundField HeaderText="Price" DataField="Price" />
-                <asp:BoundField HeaderText="Active" DataField="IsActive" />
+                <asp:BoundField HeaderText="Id" DataField="PartId" SortExpression="PartId" />
+                <asp:BoundField HeaderText="Name" DataField="Name" SortExpression="Name" />
+                <asp:BoundField HeaderText="Price" DataField="Price" SortExpression="Price" />
+                <asp:BoundField HeaderText="Active" DataField="IsActive" SortExpression="IsActive" />
                 <asp:CommandField ShowEditButton="true" />
                 <asp:CommandField ShowDeleteButton="true" />
             </Columns>
