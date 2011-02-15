@@ -8,6 +8,7 @@ using constants;
 using persistence;
 using System.Globalization;
 using businesslogic.utils;
+using presentation.utils;
 
 namespace presentation
 {
@@ -27,7 +28,6 @@ namespace presentation
                 Session[CarServiceConstants.REPAIR_CARDS_FILTER_SESSION_ATTR_NAME] = null;
                 LoadAutomobilePage();
             }
-            this.notificationMsg.Visible = false;
         }
 
         protected void CancelAuto_OnClick(object sender, EventArgs e)
@@ -51,12 +51,14 @@ namespace presentation
             string colour = this.AutoColour.Text;
             string description = this.AutoDescription.Text;
             HandleAutomobileInformation(vin, chassisNumber, engineNumberTxt,
-                    engineCubTxt, make, model, makeYearTxt, owner, phoneNumber, colour, description);           
+                    engineCubTxt, make, model, makeYearTxt, owner, phoneNumber, colour, description);
         }
 
-        private void HandleAutomobileInformation(string vin, string chassisNumber, string engineNumberTxt, 
-            string engineCubTxt, string make, string model, string makeYearTxt, string owner, 
-            string phoneNumber, string colour, string description)
+        #region private methods      
+  
+        private void HandleAutomobileInformation(string vin, string chassisNumber, string engineNumberTxt,
+                    string engineCubTxt, string make, string model, string makeYearTxt, string owner,
+                    string phoneNumber, string colour, string description)
         {
             bool validVin = false;
             bool validChassisNumber = false;
@@ -77,7 +79,7 @@ namespace presentation
                         validVin = IsVinValid(vin);
                     }
                     else
-                    {                     
+                    {
                         validVin = true;
                     }
                     string currentChassisNumber = auto.ChassisNumber;
@@ -98,15 +100,17 @@ namespace presentation
                 validVin = IsVinValid(vin);
                 validChassisNumber = IsChassisNumberValid(chassisNumber);
             }
+            bool isVinExists = this.persister.IsVinExists(vin);
+            bool isChassisExists = this.persister.IsChassisNumberExists(chassisNumber);
             int engineCubValue = -1;
             bool emptyEngineCub = string.IsNullOrEmpty(engineCubTxt);
             bool validEngineCub = emptyEngineCub || Int32.TryParse(engineCubTxt, out engineCubValue);
             DateTime makeYearValue = DateTime.Now;
             bool emptyMakeYear = string.IsNullOrEmpty(makeYearTxt);
-            bool validMakeYear = emptyMakeYear || 
+            bool validMakeYear = emptyMakeYear ||
                 DateTime.TryParseExact(makeYearTxt, CarServiceConstants.DATE_FORMAT,
                 new CultureInfo(CarServiceConstants.ENGLISH_CULTURE_INFO), DateTimeStyles.None, out makeYearValue);
-            string notificationMsg = GenerateNotificationErrorMsg(validVin, validChassisNumber, validEngineCub, validMakeYear);
+            GenerateNotificationErrorMsg(validVin, isVinExists, validChassisNumber, isChassisExists, validEngineCub, validMakeYear);
             if (validVin && validChassisNumber && validEngineCub && validMakeYear)
             {
                 DateTime? makeYear = null;
@@ -123,24 +127,16 @@ namespace presentation
                     engineCub, make, model, makeYear, owner, phoneNumber, colour, description);
                 if (successfullySaved)
                 {
-                    notificationMsg += "Car is saved successfully.<br/>";
+                    CarServicePresentationUtility.AppendNotificationMsg("Car is saved successfully", this.notificationMsgList);
+                    this.notificationMsgList.CssClass = CarServiceConstants.POSITIVE_CSS_CLASS_NAME;
                 }
-            }            
-            ShowNotificationMessage(notificationMsg);
+            }
+            CarServicePresentationUtility.ShowNotificationMsgList(this.notificationMsgList);
         }
 
-        private void ShowNotificationMessage(string notificationMsg)
-        {
-            if (string.IsNullOrEmpty(notificationMsg) == false)
-            {
-                this.notificationMsg.Text = notificationMsg;
-                this.notificationMsg.Visible = true;
-            }
-        }
-        
         private bool IsChassisNumberValid(string chassisNumber)
         {
-            if(string.IsNullOrEmpty(chassisNumber))
+            if (string.IsNullOrEmpty(chassisNumber))
             {
                 return false;
             }
@@ -156,8 +152,8 @@ namespace presentation
             return this.persister.IsVinExists(vin);
         }
 
-        private bool SaveAutomobile(Automobile auto, string vin, string chassisNumber, string engineNumber, 
-            int? engineCub, string make, string model, DateTime? makeYear, string owner, string phoneNumber, 
+        private bool SaveAutomobile(Automobile auto, string vin, string chassisNumber, string engineNumber,
+            int? engineCub, string make, string model, DateTime? makeYear, string owner, string phoneNumber,
             string colour, string description)
         {
             if (auto == null)
@@ -171,12 +167,11 @@ namespace presentation
                 auto = InitAutomobile(auto, vin, chassisNumber, engineNumber, engineCub, make, model, makeYear, owner, phoneNumber, colour, description);
             }
             this.persister.SaveChanges();
-            this.notificationMsg.CssClass = CarServiceConstants.POSITIVE_CSS_CLASS_NAME;
             return true;
         }
 
-        private Automobile InitAutomobile(Automobile auto, string vin, string chassisNumber, string engineNumber, 
-            int? engineCub, string make, string model, DateTime? makeYear, string owner, string phoneNumber, 
+        private Automobile InitAutomobile(Automobile auto, string vin, string chassisNumber, string engineNumber,
+            int? engineCub, string make, string model, DateTime? makeYear, string owner, string phoneNumber,
             string colour, string description)
         {
             auto.Vin = vin;
@@ -193,31 +188,35 @@ namespace presentation
             return auto;
         }
 
-        private string GenerateNotificationErrorMsg(bool validVin, bool validChassisNumber, 
+        private void GenerateNotificationErrorMsg(bool validVin, bool isVinExists, bool validChassisNumber, bool isChassisExists,
             bool validEngineCub, bool validMakeYear)
         {
             string notificationMsg = string.Empty;
             if (validVin == false)
             {
-                notificationMsg += "Vin is not valid or unique.<br/>";
+                CarServicePresentationUtility.AppendNotificationMsg("Vin is not valid", this.notificationMsgList);
+            }
+            else if (isVinExists)
+            {
+                CarServicePresentationUtility.AppendNotificationMsg("Vin is not unique", this.notificationMsgList);
             }
             if (validChassisNumber == false)
             {
-                notificationMsg += "Chassis number is not valid or unique.<br/>";
+                CarServicePresentationUtility.AppendNotificationMsg("Chassis number is not valid", this.notificationMsgList);
+            }
+            else if (isChassisExists)
+            {
+                CarServicePresentationUtility.AppendNotificationMsg("Chassis number is not unique", this.notificationMsgList);
             }
             if (validEngineCub == false)
             {
-                notificationMsg += "Engine cub is not valid number.<br/>";
+                CarServicePresentationUtility.AppendNotificationMsg("Engine cub is not valid number", this.notificationMsgList);
             }
             if (validMakeYear == false)
             {
-                notificationMsg += "Make year is not valid.<br/>";
+                CarServicePresentationUtility.AppendNotificationMsg("Make year is not valid", this.notificationMsgList);
             }
-            if (string.IsNullOrEmpty(notificationMsg) == false)
-            {
-                this.notificationMsg.CssClass = CarServiceConstants.NEGATIVE_CSS_CLASS_NAME;
-            }
-            return notificationMsg;
+            this.notificationMsgList.CssClass = CarServiceConstants.NEGATIVE_CSS_CLASS_NAME;
         }
 
         private void LoadAutomobileInformation(Automobile auto)
@@ -228,11 +227,11 @@ namespace presentation
             this.AutoEngineCub.Text = auto.EngineCub.ToString();
             this.AutoMake.Text = auto.Make;
             this.AutoModel.Text = auto.Model;
-            CultureInfo cultureInfo = new CultureInfo(CarServiceConstants.ENGLISH_CULTURE_INFO);
             DateTime? makeYear = auto.MakeYear;
             string makeYearTxt = string.Empty;
             if (makeYear.HasValue)
             {
+                CultureInfo cultureInfo = new CultureInfo(CarServiceConstants.ENGLISH_CULTURE_INFO);
                 makeYearTxt = makeYear.Value.ToString(CarServiceConstants.DATE_FORMAT, cultureInfo);
             }
             this.AutoMakeYearCalendar.SelectedDate = makeYearTxt;
@@ -263,4 +262,5 @@ namespace presentation
             }
         }
     }
+        #endregion
 }

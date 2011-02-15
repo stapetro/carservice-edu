@@ -30,7 +30,6 @@ namespace presentation
             if (IsPostBack == false)
             {
                 this.finishRepairDate.SelectedDateTxt.Enabled = false;
-
                 object repairCardIdObject = Session[CarServiceConstants.REPAIR_CARD_ID_PARAM_NAME];
                 if (repairCardIdObject != null)
                 {
@@ -58,17 +57,16 @@ namespace presentation
                     IQueryable<SparePart> spareParts = this.persister.GetSpareParts();
                     object customSpareParts = CarServicePresentationUtility.GetSparePartsFormatForListBox(spareParts);
                     CarServicePresentationUtility.BindListBox(this.unselectedSpareParts, customSpareParts);
-                    //int repairCardId = this.persister.GetRepairCardMaxId() + 1;
-                    //this.repairCardIdLbl.Text = repairCardId.ToString();
                     this.startRepairDate.SelectedDate =
                         DateTime.Now.ToString(CarServiceConstants.DATE_FORMAT, new CultureInfo(CarServiceConstants.ENGLISH_CULTURE_INFO));
                     this.finishRepairDate.Enabled = false;
                     this.operatorLbl.Text = this.User.Identity.Name;
-                }
-            }            
+                }            
+            }
+            CarServicePresentationUtility.ClearNotificationMsgList(this.notificationMsgList);
             CarServicePresentationUtility.HideNotificationMsgList(this.notificationMsgList);
             Session[CarServiceConstants.AUTOMOBILE_ID_REQUEST_PARAM_NAME] = null;
-        }        
+        }
 
         protected void SearchAutomobile_OnClick(object sender, EventArgs e)
         {
@@ -114,6 +112,8 @@ namespace presentation
         protected void SaveRepairCard_OnClick(object sender, EventArgs e)
         {
             CarServicePresentationUtility.ClearNotificationMsgList(this.notificationMsgList);
+            CarServicePresentationUtility.HideNotificationMsgList(this.notificationMsgList);
+            this.notificationMsgList.CssClass = CarServiceConstants.NEGATIVE_CSS_CLASS_NAME;
 
             DateTime? startRepairDate = null;
             string startRepairDateTxt = this.startRepairDate.SelectedDate;
@@ -129,7 +129,7 @@ namespace presentation
             
             string automobileIdTxt = this.automobileDropDown.SelectedValue;
             Automobile automobile = CarServiceUtility.GetAutomobile(automobileIdTxt, this.persister);
-            bool validAutomobileId = automobile != null;
+            bool validAutomobileId = (automobile != null);
 
             ListItemCollection selectedSparePartItems = this.selectedSpareParts.Items;
             bool validSpareParts = CarServicePresentationUtility.IsSparePartItemsValid(selectedSparePartItems, this.notificationMsgList);
@@ -138,7 +138,6 @@ namespace presentation
                 (validStartRepairDate && startRepairDate.HasValue))
             {
                 string description = this.repairCardDescription.Text;
-
                 object repairCardIdObject = Session[CarServiceConstants.REPAIR_CARD_ID_PARAM_NAME];
                 if (repairCardIdObject != null)
                 {
@@ -157,10 +156,6 @@ namespace presentation
                             CarServicePresentationUtility.AppendNotificationMsg("Repair card is updated successfully", this.notificationMsgList);
                             this.notificationMsgList.CssClass = CarServiceConstants.POSITIVE_CSS_CLASS_NAME;
                         }
-                        else
-                        {
-                            this.notificationMsgList.CssClass = CarServiceConstants.NEGATIVE_CSS_CLASS_NAME;
-                        }
                     }
                 }
                 else
@@ -170,10 +165,6 @@ namespace presentation
                     CarServicePresentationUtility.AppendNotificationMsg("Repair card is saved successfully", this.notificationMsgList);
                     this.notificationMsgList.CssClass = CarServiceConstants.POSITIVE_CSS_CLASS_NAME;
                 }
-            }
-            else
-            {
-                this.notificationMsgList.CssClass = CarServiceConstants.NEGATIVE_CSS_CLASS_NAME;
             }
             CarServicePresentationUtility.ShowNotificationMsgList(this.notificationMsgList);             
         }
@@ -214,7 +205,6 @@ namespace presentation
             this.repairPrice.Text = repairCard.CardPrice.ToString();
 
             CultureInfo englishCultureInfo = new CultureInfo(CarServiceConstants.ENGLISH_CULTURE_INFO);
-
             this.startRepairDate.SelectedDate = repairCard.StartRepair.ToString(CarServiceConstants.DATE_FORMAT, englishCultureInfo);
             DateTime? finishRepairDate = repairCard.FinishRepair;
             if (finishRepairDate.HasValue)
@@ -227,7 +217,7 @@ namespace presentation
             }
             EntityCollection<SparePart> selectedParts = repairCard.SpareParts;
             List<SparePart> unselectedParts = new List<SparePart>();
-            ObjectSet<SparePart> allSpareParts = this.persister.GetSpareParts();
+            IQueryable<SparePart> allSpareParts = this.persister.GetSpareParts();
             foreach (SparePart part in allSpareParts)
             {
                 if (selectedParts.Contains(part) == false)                

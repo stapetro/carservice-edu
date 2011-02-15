@@ -77,11 +77,11 @@ namespace presentation
 
         protected void UsersGridView_Sorting(object sender, GridViewSortEventArgs e)
         {
-            SortDirection sortDirection = CarServicePresentationUtility.GetSortDirection(ViewState);
+            SortDirection sortDirection = SortingUtility.GetSortDirection(ViewState);
             ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR] = sortDirection;
             ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR] = e.SortExpression;
             List<CarServiceUser> users = GetUsers();
-            IEnumerable<CarServiceUser> sortedUsers = CarServiceUtility.SortUsers(users, e.SortExpression, sortDirection);
+            IEnumerable<CarServiceUser> sortedUsers = SortingUtility.SortUsers(users, e.SortExpression, sortDirection);
             BindUsersGrid(sortedUsers);
         }
 
@@ -93,14 +93,14 @@ namespace presentation
             IEnumerable<CarServiceUser> sortedUsers;
             if (sortDirectionObj != null && sortExpressionObj != null)
             {
-                sortedUsers = CarServiceUtility.SortUsers(users, sortExpressionObj.ToString(),
+                sortedUsers = SortingUtility.SortUsers(users, sortExpressionObj.ToString(),
                     (SortDirection)sortDirectionObj);
             }
             else
             {
                 ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR] = SortDirection.Ascending;
                 ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR] = CarServiceConstants.USER_NAME_SORT_EXPRESSION;
-                sortedUsers = CarServiceUtility.SortUsers(users, CarServiceConstants.USER_NAME_SORT_EXPRESSION,
+                sortedUsers = SortingUtility.SortUsers(users, CarServiceConstants.USER_NAME_SORT_EXPRESSION,
                     SortDirection.Ascending);
             }
             BindUsersGrid(sortedUsers);

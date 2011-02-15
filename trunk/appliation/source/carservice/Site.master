@@ -25,11 +25,11 @@
             <div class="loginDisplay">                
                 <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
                     <AnonymousTemplate>
-                        [ <a href="~/Login.aspx" ID="HeadLoginStatus" runat="server">Log On</a> ]                        
+                        [ <a href="~/Login.aspx" ID="HeadLoginStatus" runat="server">Log In</a> ]                        
                     </AnonymousTemplate>
                     <LoggedInTemplate>
                         Welcome <span class="bold"><asp:LoginName ID="HeadLoginName" runat="server" /></span>!
-                        [ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Log Off" LogoutPageUrl="~/"/> ]                        
+                        [ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Log Out" LogoutPageUrl="~/"/> ]                        
                     </LoggedInTemplate>
                 </asp:LoginView>                                          
             </div>       
@@ -64,8 +64,8 @@
         <div class="clear"></div>
     </div>
     <div id="footer">
-        <span>&copy; 2010 - 2011 Copyright <a href="http://www.fmi.uni-sofia.bg/" target="_blank">SU "St. Kliment Ohridski"</a>. All rights reserved.</span>
-		<span><a href="#_self">Contact</a> | <a href="#_self">Site Map</a></span>
+        <span>&copy; 2010 - 2011 Copyright <a href="http://www.fmi.uni-sofia.bg/" target="_blank">SU "St. Kliment Ohridski"</a> All rights reserved.</span>
+		<span><asp:HyperLink runat="server" NavigateUrl="~/Contacts.aspx">Contact</asp:HyperLink> | <a href="#_self">Site Map</a></span>
     </div>
 
     </form>

@@ -18,9 +18,7 @@ namespace presentation.utils
     {
         public CarServicePresentationUtility()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+
         }
 
         public static string GetGridCellContent(GridView gridView, int rowIndex, int columnIndex)
@@ -66,18 +64,6 @@ namespace presentation.utils
                 ListItem item = new ListItem(notificationMsg);
                 notificationMsgList.Items.Add(item);
             }
-        }
-
-        public static SortDirection GetSortDirection(StateBag viewState)
-        {
-            SortDirection newSortDirection = SortDirection.Descending;
-            object currentSortDirectionObject = viewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR];
-            if (currentSortDirectionObject != null)
-            {
-                SortDirection currentSortDirection = (SortDirection)currentSortDirectionObject;
-                newSortDirection = (currentSortDirection.Equals(SortDirection.Ascending)) ? SortDirection.Descending : SortDirection.Ascending;
-            }
-            return newSortDirection;
         }
 
         #region Repair card specific
@@ -233,6 +219,14 @@ namespace presentation.utils
             listBox.DataBind();
         }
 
+        /// <summary>
+        /// Moves spare part items from source list box to destination list box.
+        /// </summary>
+        /// <param name="srcListBox">Source list box to be specified</param>
+        /// <param name="destListBox">Destination list box to be specified</param>
+        /// <param name="srcPriceCalculation">True - adds prices of selected spare parts, false - doesn't add prices of selected spare parts</param>
+        /// <param name="persister">Persister to be specified</param>
+        /// <param name="totalPrice">Stores total price of selected spare parts</param>
         public static void MoveListItems(ListBox srcListBox, ListBox destListBox, 
             bool srcPriceCalculation, ICarServicePersister persister, out decimal totalPrice)
         {

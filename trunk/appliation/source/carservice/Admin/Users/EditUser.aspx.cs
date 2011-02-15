@@ -25,7 +25,8 @@ namespace presentation
                     {
                         this.UserName.Text = user.UserName;
                         this.Email.Text = user.Email;
-                        this.UserActive.SelectedValue = (user.IsApproved ? 1.ToString() : 0.ToString());
+                        this.UserActive.SelectedValue = (user.IsApproved ? 
+                            CarServiceConstants.ACTIVE_STATUS.ToString() : CarServiceConstants.INACTIVE_STATUS.ToString());
                         ProfileCommon userProfile = Profile.GetProfile(user.UserName);
                         this.FirstName.Text = userProfile.FirstName;
                         this.LastName.Text = userProfile.LastName;
@@ -45,13 +46,19 @@ namespace presentation
                 string firstName = this.FirstName.Text;
                 string lastName = this.LastName.Text;
                 MembershipUser user = Membership.GetUser(userName);
-                user.Email = email;
-                user.IsApproved = isActive;
-                Membership.UpdateUser(user);
-                ProfileCommon userProfile = Profile.GetProfile(user.UserName);
-                userProfile.FirstName = firstName;
-                userProfile.LastName = lastName;
-                userProfile.Save();
+                if (user != null)
+                {
+                    user.Email = email;
+                    user.IsApproved = isActive;
+                    Membership.UpdateUser(user);
+                    ProfileCommon userProfile = Profile.GetProfile(userName);
+                    if (userProfile != null)
+                    {
+                        userProfile.FirstName = firstName;
+                        userProfile.LastName = lastName;
+                        userProfile.Save();
+                    }
+                }
             }
         }
 
@@ -60,8 +67,14 @@ namespace presentation
             string password = this.Password.Text;
             /**** Resetting user password without knowing old password ****/
             string userName = this.UserName.Text;
-            MembershipUser user = Membership.GetUser(userName);
-            user.ChangePassword(user.ResetPassword(), password);
+            if (string.IsNullOrEmpty(userName) == false && string.IsNullOrEmpty(password) == false)
+            {
+                MembershipUser user = Membership.GetUser(userName);
+                if (user != null)
+                {
+                    user.ChangePassword(user.ResetPassword(), password);
+                }
+            }
         }
 
         protected void CancelEventHandler_OnClick(Object sender, EventArgs e)

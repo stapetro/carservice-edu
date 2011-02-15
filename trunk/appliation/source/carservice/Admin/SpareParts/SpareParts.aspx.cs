@@ -50,9 +50,9 @@ namespace presentation
             string partId = CarServicePresentationUtility.GetGridCellContent(this.sparePartsGrid, rowIndex, 0);
             if (string.IsNullOrEmpty(partId) == false)
             {
-                string editUserPageUrl = "~/Admin/SpareParts/AddSparePart.aspx?"
+                string addSparePartPageUrl = "~/Admin/SpareParts/AddSparePart.aspx?"
                     + CarServiceConstants.SPARE_PART_ID_REQUEST_PARAM_NAME + "=" + partId;
-                Response.Redirect(editUserPageUrl, false);
+                Response.Redirect(addSparePartPageUrl, false);
             }
         }
 
@@ -84,11 +84,11 @@ namespace presentation
 
         protected void SparePartsGridView_Sorting(object sender, GridViewSortEventArgs e)
         {
-            SortDirection sortDirection = CarServicePresentationUtility.GetSortDirection(ViewState);
+            SortDirection sortDirection = SortingUtility.GetSortDirection(ViewState);
             ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR] = sortDirection;
             ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR] = e.SortExpression;
             IQueryable<SparePart> spareParts = this.persister.GetSpareParts();
-            IQueryable<SparePart> sortedSpareParts = CarServiceUtility.SortSpareParts(spareParts, e.SortExpression, sortDirection);
+            IQueryable<SparePart> sortedSpareParts = SortingUtility.SortSpareParts(spareParts, e.SortExpression, sortDirection);
             BindSparePartsGrid(sortedSpareParts);
         }
 
@@ -101,7 +101,7 @@ namespace presentation
             IQueryable<SparePart> sortedSpareParts;
             if (sortDirectionObj != null && sortExpressionObj != null)
             {
-                sortedSpareParts = CarServiceUtility.SortSpareParts(spareParts, sortExpressionObj.ToString(), 
+                sortedSpareParts = SortingUtility.SortSpareParts(spareParts, sortExpressionObj.ToString(), 
                     (SortDirection)sortDirectionObj);
             }
             else

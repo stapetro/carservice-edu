@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using persistence;
 using constants;
+using presentation.utils;
 
 namespace presentation
 {
@@ -28,11 +29,11 @@ namespace presentation
                     this.PartId.Text = (maxPartId + 1).ToString();
                 }
                 else
-                {
-                    this.PartId.Text = partIdTxt;
+                {                    
                     int partId;
                     if (Int32.TryParse(partIdTxt, out partId))
                     {
+                        this.PartId.Text = partIdTxt;
                         SparePart sparePart = this.persister.GetSparePartById(partId);
                         if (sparePart != null)
                         {
@@ -41,49 +42,42 @@ namespace presentation
                     }
                 }
             }
-            this.notificationMsg.Visible = false;
         }
 
         protected void CancelPart_OnClick(object sender, EventArgs e)
         {
             string continueUrl = "~/Admin/SpareParts/SpareParts.aspx";
             Response.Redirect(continueUrl);
-        }        
+        }
 
         protected void AddPart_OnClick(object sender, EventArgs e)
         {
             string partIdTxt = this.PartId.Text;
-            string partName = this.PartName.Text;
-            string partPriceTxt = this.PartPrice.Text;
             int partId;
-            decimal partPrice;
-            int isPartActiveNum;
-            bool isPartActive = false;
             bool validIdValue = Int32.TryParse(partIdTxt, out partId);
-            string notificationMsg = string.Empty;
-            this.notificationMsg.CssClass = "negativeMsg";
+            this.notificationMsgList.CssClass = CarServiceConstants.NEGATIVE_CSS_CLASS_NAME;
             if (validIdValue == false)
             {
-                notificationMsg += "ID is not valid.<br/>";
+                CarServicePresentationUtility.AppendNotificationMsg("ID is not valid", this.notificationMsgList);
             }
+            string partPriceTxt = this.PartPrice.Text;
+            decimal partPrice;
             bool validPriceValue = Decimal.TryParse(partPriceTxt, out partPrice);
             if (validPriceValue == false)
             {
-                notificationMsg += "Price is not valid.<br/>";
+                CarServicePresentationUtility.AppendNotificationMsg("Price is not valid", this.notificationMsgList);
             }
+            int isPartActiveNum;
             if (validIdValue && validPriceValue
                 && Int32.TryParse(this.PartActive.SelectedValue, out isPartActiveNum) == true)
             {                
-                isPartActive = (isPartActiveNum == 1);
+                bool isPartActive = (isPartActiveNum == 1);
+                string partName = this.PartName.Text;
                 SaveSparePart(partId, partName, partPrice, isPartActive);
-                notificationMsg += "Part is saved successfully.<br/>";
-                this.notificationMsg.CssClass = "positiveMsg";
+                CarServicePresentationUtility.AppendNotificationMsg("Part is saved successfully", this.notificationMsgList);
+                this.notificationMsgList.CssClass = CarServiceConstants.POSITIVE_CSS_CLASS_NAME;
             }
-            if (string.IsNullOrEmpty(notificationMsg) == false)
-            {
-                this.notificationMsg.Text = notificationMsg;
-                this.notificationMsg.Visible = true;
-            }
+            CarServicePresentationUtility.ShowNotificationMsgList(this.notificationMsgList);
         }
 
         private void LoadSparePartInformation(SparePart sparePart)

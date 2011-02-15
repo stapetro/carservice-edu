@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="AddSparePart.aspx.cs" Inherits="presentation.AdminAddSparePart" %>
 
-<asp:Content ID="sparePartsTitle" runat="server" ContentPlaceHolderID="pageTitle">Car Service - Add Spare Part</asp:Content>
+<asp:Content ID="sparePartsTitle" runat="server" ContentPlaceHolderID="pageTitle">Car Service - Spare Part Management</asp:Content>
 
 <asp:Content ID="sparePartsBody" runat="server" ContentPlaceHolderID="pageBody">
     <h2>
@@ -9,9 +9,9 @@
     <p>
 		Use the form below to create or edit a spare part.		
     </p>
-    <asp:Label ID="notificationMsg" runat="server" Visible="false" />
     <asp:ValidationSummary ID="AddSparePartValidationSummary" runat="server" CssClass="failureNotification" 
             ValidationGroup="AddSparePartValidationGroup"/>
+    <asp:BulletedList ID="notificationMsgList" runat="server" CssClass="failureNotification" Visible="false" />
 	<div class="accountInfo">
 		<fieldset class="register">
 			<legend>Spare part information</legend>
