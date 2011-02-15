@@ -7,7 +7,7 @@
 	    Welcome to CarService!
     </h2>
     <p>
-				
+	    This site is implemented for educational purposes only.	
     </p>
 </asp:Content>
 

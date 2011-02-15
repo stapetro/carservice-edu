@@ -13,9 +13,9 @@
         Use the form below to create or edit a car.						
     </p>
     <aspe:ToolkitScriptManager ID="toolScriptMgr" runat="server" />
-    <asp:Label ID="notificationMsg" runat="server" Visible="false" />
     <asp:ValidationSummary ID="AddAutomobileValidationSummary" runat="server" CssClass="failureNotification" 
             ValidationGroup="AddAutomobileValidationGroup"/>
+    <asp:BulletedList ID="notificationMsgList" runat="server" CssClass="failureNotification" Visible="false" />
 	<div class="accountInfo">
 		<fieldset class="register">
 			<legend>Car information</legend>

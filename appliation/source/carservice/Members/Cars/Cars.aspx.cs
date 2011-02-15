@@ -49,11 +49,11 @@ namespace presentation
 
         protected void CarsGridView_Sorting(object sender, GridViewSortEventArgs e)
         {
-            SortDirection sortDirection = CarServicePresentationUtility.GetSortDirection(ViewState);
+            SortDirection sortDirection = SortingUtility.GetSortDirection(ViewState);
             ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR] = sortDirection;
             ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR] = e.SortExpression;
             IQueryable<Automobile> automobiles = this.persister.GetAutomobiles();
-            IQueryable<Automobile> sortedAutomobiles = CarServiceUtility.SortAutomobiles(automobiles, e.SortExpression, sortDirection);
+            IQueryable<Automobile> sortedAutomobiles = SortingUtility.SortAutomobiles(automobiles, e.SortExpression, sortDirection);
             BindAutomobilesGrid(sortedAutomobiles);
         }
 
@@ -61,11 +61,11 @@ namespace presentation
         {
             object sortDirectionObj = ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR];
             object sortExpressionObj = ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR];
-            ObjectSet<Automobile> automobiles = this.persister.GetAutomobiles();
+            IQueryable<Automobile> automobiles = this.persister.GetAutomobiles();
             IQueryable<Automobile> sortedAutomobiles;
             if (sortDirectionObj != null && sortExpressionObj != null)
             {
-                sortedAutomobiles = CarServiceUtility.SortAutomobiles(automobiles, sortExpressionObj.ToString(),
+                sortedAutomobiles = SortingUtility.SortAutomobiles(automobiles, sortExpressionObj.ToString(),
                     (SortDirection)sortDirectionObj);
             }
             else

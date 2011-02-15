@@ -28,17 +28,20 @@ namespace presentation
             }
             Roles.AddUserToRole(RegisterUser.UserName, CarServiceConstants.OPERATOR_ROLE_NAME);
             ProfileCommon profileCommon = Profile.GetProfile(RegisterUser.UserName);
-            TextBox firstName = (TextBox)RegisterUserWizardStep.ContentTemplateContainer.FindControl("FirstName");
-            if (firstName != null)
+            if (profileCommon != null)
             {
-                profileCommon.FirstName = firstName.Text;
+                TextBox firstName = (TextBox)RegisterUserWizardStep.ContentTemplateContainer.FindControl("FirstName");
+                if (firstName != null)
+                {
+                    profileCommon.FirstName = firstName.Text;
+                }
+                TextBox lastName = (TextBox)RegisterUserWizardStep.ContentTemplateContainer.FindControl("LastName");
+                if (lastName != null)
+                {
+                    profileCommon.LastName = lastName.Text;
+                }
+                profileCommon.Save();
             }
-            TextBox lastName = (TextBox)RegisterUserWizardStep.ContentTemplateContainer.FindControl("LastName");
-            if (lastName != null)
-            {
-                profileCommon.LastName = lastName.Text;
-            }
-            profileCommon.Save();
             DropDownList userActive = (DropDownList)RegisterUserWizardStep.ContentTemplateContainer.FindControl("UserActive");
             if (userActive != null)
             {

@@ -36,7 +36,7 @@
                                      CssClass="failureNotification" ErrorMessage="User Name is required." ToolTip="User Name is required." 
                                      ValidationGroup="RegisterUserValidationGroup">*</asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator ID="UserNameRegEx" runat="server" ControlToValidate="UserName" ValidationExpression="^[a-zA-Z0-9]+$"
-                                    CssClass="failureNotification" ErrorMessage="User Name regex validation failed" ToolTip="User Name regex validation failed"
+                                    CssClass="failureNotification" ErrorMessage="User Name can contain only latin letters and digits" ToolTip="User Name can contain only latin letters and digits"
                                     ValidationGroup="RegisterUserValidationGroup" />
                             </p>
                             <p>
@@ -45,6 +45,9 @@
                                 <asp:RequiredFieldValidator ID="EmailRequired" runat="server" ControlToValidate="Email" 
                                      CssClass="failureNotification" ErrorMessage="E-mail is required." ToolTip="E-mail is required." 
                                      ValidationGroup="RegisterUserValidationGroup">*</asp:RequiredFieldValidator>
+                                <asp:RegularExpressionValidator ID="UserEmailRegEx" runat="server" ControlToValidate="Email" ValidationExpression="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
+                                    CssClass="failureNotification" ErrorMessage="Email is not in valid format" ToolTip="Email is not in valid format"
+                                    ValidationGroup="RegisterUserValidationGroup" />
                             </p>
                             <p>
                                 <asp:Label ID="PasswordLabel" runat="server" AssociatedControlID="Password">Password:</asp:Label>

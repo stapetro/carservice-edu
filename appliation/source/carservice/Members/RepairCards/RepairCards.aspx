@@ -20,46 +20,44 @@
             ValidationGroup="UnfinishedRepairCardsFilterValidationGroup"/>
     <asp:ValidationSummary ID="AllRepairCardsFilterValidationSummary" runat="server" CssClass="failureNotification" 
             ValidationGroup="AllRepairCardsFilterValidationGroup"/>
-    <asp:Label ID="notificationMsg" CssClass="negativeMsg" runat="server" Visible="false" />
-    <p>
-	    <div class="filterInfo">
-	    <fieldset class="register">			
-		    <legend>Filter</legend>				
-		    <p>
-                <asp:DropDownList ID="repairCardsFilterType" AutoPostBack="true" OnSelectedIndexChanged="ReportType_IndexChanged" runat="server">
-                    <asp:ListItem Value="0" Text="All" Selected="True" />                    
-                    <asp:ListItem Value="1" Text="Unfinished" />
-                    <asp:ListItem Value="2" Text="Finished"  />
-                </asp:DropDownList>		
-		    </p>
-            <asp:Panel ID="allRepairCardsFilter" runat="server">
-		    <p>                
-                <span>Vin / Chassis</span>
-                <asp:TextBox ID="VinChassisAllRepairCardsTxt" runat="server" CssClass="textEntry" />
-		    </p>
-            </asp:Panel>
-            <asp:Panel ID="unfinishedRepairCardsFilter" Visible="false" runat="server">
-		    <p>                
-			    <span>Start repair&nbsp;&nbsp;&nbsp;</span>
-                <ucCal:CalendarUserControl ID="startRepairDate" runat="server" />
+    <asp:BulletedList ID="notificationMsgList" runat="server" CssClass="failureNotification" Visible="false" />
+	<div class="filterInfo">
+	<fieldset class="register">			
+		<legend>Filter</legend>				
+		<p>
+            <asp:DropDownList ID="repairCardsFilterType" AutoPostBack="true" OnSelectedIndexChanged="ReportType_IndexChanged" runat="server">
+                <asp:ListItem Value="0" Text="All" Selected="True" />                    
+                <asp:ListItem Value="1" Text="Unfinished" />
+                <asp:ListItem Value="2" Text="Finished"  />
+            </asp:DropDownList>		
+		</p>
+        <asp:Panel ID="allRepairCardsFilter" runat="server">
+		<p>                
+            <span>Vin / Chassis</span>
+            <asp:TextBox ID="VinChassisAllRepairCardsTxt" runat="server" CssClass="textEntry" />
+		</p>
+        </asp:Panel>
+        <asp:Panel ID="unfinishedRepairCardsFilter" Visible="false" runat="server">
+		<p>                
+			<span>Start repair&nbsp;&nbsp;&nbsp;</span>
+            <ucCal:CalendarUserControl ID="startRepairDate" runat="server" />
                 
-                <span>Vin / Chassis</span>
-                <asp:TextBox ID="VinChassisTxt" runat="server" CssClass="textEntry" />
-		    </p>
-            </asp:Panel>
-            <asp:Panel ID="finishedRepairCardsFilter" Visible="false" runat="server">
-			    <span>From&nbsp;&nbsp;&nbsp;</span>
-                <ucCal:CalendarUserControl ID="fromFinishRepairDate" runat="server" />
-			    <span>&nbsp;To&nbsp;&nbsp;&nbsp;</span>
-                <ucCal:CalendarUserControl ID="toFinishRepairDate" runat="server" />
-            </asp:Panel>
-	    </fieldset>
-        <p class="submitButton">
-            <asp:Button ID="filterButton" runat="server" Text="Filter" OnClick="FilterRepairCards_OnClick" 
-                ValidationGroup="AllRepairCardsFilterValidationGroup" />
-        </p>
-	    </div>							    
+            <span>Vin / Chassis</span>
+            <asp:TextBox ID="VinChassisTxt" runat="server" CssClass="textEntry" />
+		</p>
+        </asp:Panel>
+        <asp:Panel ID="finishedRepairCardsFilter" Visible="false" runat="server">
+			<span>From&nbsp;&nbsp;&nbsp;</span>
+            <ucCal:CalendarUserControl ID="fromFinishRepairDate" runat="server" />
+			<span>&nbsp;To&nbsp;&nbsp;&nbsp;</span>
+            <ucCal:CalendarUserControl ID="toFinishRepairDate" runat="server" />
+        </asp:Panel>
+	</fieldset>
+    <p class="submitButton">
+        <asp:Button ID="filterButton" runat="server" Text="Filter" OnClick="FilterRepairCards_OnClick" 
+            ValidationGroup="AllRepairCardsFilterValidationGroup" />
     </p>
+	</div>							    
     <p>
         <asp:GridView ID="repairCardsGrid" AllowPaging="true" AutoGenerateColumns="false"
             CssClass="nicetable" AlternatingRowStyle-CssClass="alternaterow" runat="server" 

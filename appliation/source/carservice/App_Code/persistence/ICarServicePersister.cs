@@ -13,7 +13,7 @@ namespace persistence
     {
         void CreateAutomobile(Automobile automobile);
         Automobile GetAutomobilById(int automobileId);
-        ObjectSet<Automobile> GetAutomobiles();
+        IQueryable<Automobile> GetAutomobiles();
         IQueryable<Automobile> GetAutomobilesByVinChassis(string vinChassis);
         void DeleteAutomobile(Automobile automobile);
         bool IsChassisNumberExists(string chasshisNumber);
@@ -22,19 +22,19 @@ namespace persistence
         void CreateSparePart(SparePart sparePart);
         SparePart GetSparePartById(int sparePartId);
         int GetSparePartMaxId();
-        ObjectSet<SparePart> GetSpareParts();
+        IQueryable<SparePart> GetSpareParts();
         void DeleteSparePart(SparePart sparePart);
 
         void CreateRepairCard(RepairCard repairCard);
         void DeleteRepairCard(RepairCard repairCard);
         RepairCard GetRepairCardById(int cardId);
         int GetRepairCardMaxId();
-        ObjectSet<RepairCard> GetRepairCards();
+        IQueryable<RepairCard> GetRepairCards();
         /// <summary>
-        /// 
+        /// Gets repair cards by vin or chassis number.
         /// </summary>
         /// <param name="vinChassis">Vin or Chassis number to be specified</param>
-        /// <returns></returns>
+        /// <returns>Found repair cards</returns>
         IQueryable<RepairCard> GetRepairCards(string vinChassis);
         IQueryable<RepairCard> GetUnfinishedRepairCards(DateTime? startRepair, string vinChassis);
         IQueryable<RepairCard> GetFinishedRepairCards(DateTime? fromFinishRepair, DateTime? toFinishRepair);

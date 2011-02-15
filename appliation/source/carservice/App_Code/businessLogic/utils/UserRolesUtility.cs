@@ -14,9 +14,7 @@ namespace businesslogic.utils
     {
         public UserRolesUtility()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+
         }
 
         public static bool IsOperatorRoleExists()

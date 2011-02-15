@@ -16,7 +16,6 @@ namespace constants
         public const string SPARE_PART_ID_REQUEST_PARAM_NAME = "sparePartId";
         public const string AUTOMOBILE_ID_REQUEST_PARAM_NAME = "automobileId";
         public const string REPAIR_CARD_ID_PARAM_NAME = "repairCardId";
-        //public const string REPAIR_CARDS_FILTERED_SESSION_ATTR_NAME = "filteredRepairCards";
         public const string REPAIR_CARDS_FILTER_SESSION_ATTR_NAME = "repairCardsFilter";
 
         public const string INACTIVE_CSS_CLASS_NAME = "inactive";
@@ -30,6 +29,9 @@ namespace constants
         public const int ALL_REPAIR_CARDS_FILTER_TYPE = 0;
         public const int UNFINISHED_REPAIR_CARDS_FILTER_TYPE = 1;
         public const int FINISHED_REPAIR_CARDS_FILTER_TYPE = 2;
+
+        public const int INACTIVE_STATUS = 0;
+        public const int ACTIVE_STATUS = 1;
 
         public const string SORT_DIRECTION_VIEW_STATE_ATTR = "SortDirection";
         public const string SORT_EXPRESSION_VIEW_STATE_ATTR = "SortExpression";
@@ -58,9 +60,7 @@ namespace constants
 
         public CarServiceConstants()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+
         }
     }
 }

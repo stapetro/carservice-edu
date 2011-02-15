@@ -7,7 +7,7 @@
         Edit User Account
     </h2>
     <p>
-        Use the form below to create a new account.
+        Use the form below to edit account.
     </p>
     <p>
         Passwords are required to be a minimum of <%= Membership.MinRequiredPasswordLength %> characters in length.
