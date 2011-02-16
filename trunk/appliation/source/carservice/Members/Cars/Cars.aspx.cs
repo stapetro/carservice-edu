@@ -29,6 +29,20 @@ namespace presentation
             }
         }
 
+        protected void CarsGridView_RowCreated(Object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                object sortExpressionObj = ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR];
+                object sortDirectionObj = ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR];
+                if (sortExpressionObj != null && sortDirectionObj != null)
+                {
+                    SortingUtility.SetSortDirectionImage(this.automobilesGrid, e.Row, sortExpressionObj.ToString(),
+                        ((SortDirection)sortDirectionObj));
+                }
+            }
+        }
+
         protected void EditAutomobileEventHandler_RowEditing(object sender, GridViewEditEventArgs e)
         {
             int rowIndex = e.NewEditIndex;

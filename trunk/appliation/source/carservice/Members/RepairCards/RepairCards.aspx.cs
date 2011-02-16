@@ -12,6 +12,7 @@ using System.Globalization;
 using businesslogic.utils;
 using System.Data;
 using businesslogic;
+using System.Web.Security;
 
 namespace presentation
 {
@@ -28,10 +29,37 @@ namespace presentation
             if (IsPostBack == false)
             {
                 BindRepairCardsGrid();
-                ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR] = SortDirection.Ascending;
-                ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR] = CarServiceConstants.REPAIR_CARD_ID_SORT_EXPRESSION;
                 CarServiceUtility.ClearSessionAttributes(Session);
                 this.notificationMsgList.CssClass = CarServiceConstants.NEGATIVE_CSS_CLASS_NAME;
+            }
+        }
+
+        protected void RepairCardsGridView_RowCreated(Object sender, GridViewRowEventArgs e)
+        {
+            DataControlRowType rowType = e.Row.RowType;
+            if (rowType == DataControlRowType.Header)
+            {
+                object sortExpressionObj = ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR];
+                object sortDirectionObj = ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR];
+                if (sortExpressionObj != null && sortDirectionObj != null)
+                {
+                    SortingUtility.SetSortDirectionImage(this.repairCardsGrid, e.Row, sortExpressionObj.ToString(),
+                        ((SortDirection)sortDirectionObj));
+                }
+            }
+            else if (rowType == DataControlRowType.DataRow)
+            {
+                object userIdObject = DataBinder.Eval(e.Row.DataItem, CarServiceConstants.USER_ID_SORT_EXPRESSION);
+                if (userIdObject != null)
+                {
+                    MembershipUser currentUser = Membership.GetUser();
+                    string userId = userIdObject.ToString();
+                    if (string.IsNullOrEmpty(userId) == false && 
+                        userId.Equals(currentUser.ProviderUserKey.ToString()))
+                    {
+                        e.Row.CssClass = CarServiceConstants.ACTIVE_CSS_CLASS_NAME;
+                    }                        
+                }
             }
         }
 
@@ -271,6 +299,7 @@ namespace presentation
                 select new
                 {
                     repairCard.CardId,
+                    repairCard.UserId,
                     repairCard.Automobile.Vin,
                     repairCard.Automobile.ChassisNumber,
                     repairCard.StartRepair,
@@ -282,8 +311,20 @@ namespace presentation
 
         private void BindRepairCardsGrid()
         {
-            IQueryable<RepairCard> repairCards = this.persister.GetRepairCards();
-            BindRepairCardsGrid(repairCards);            
+            object sortDirectionObj = ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR];
+            object sortExpressionObj = ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR];
+            IQueryable<RepairCard> repairCards = this.persister.GetRepairCards();            
+            if (sortDirectionObj != null && sortExpressionObj != null)
+            {
+                repairCards = SortingUtility.SortRepairCards(repairCards, sortExpressionObj.ToString(),
+                    (SortDirection)sortDirectionObj);
+            }
+            else
+            {
+                ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR] = SortDirection.Ascending;
+                ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR] = CarServiceConstants.REPAIR_CARD_ID_SORT_EXPRESSION;
+            }
+            BindRepairCardsGrid(repairCards);
         }
 
         private void BindRepairCardsGrid(IQueryable<RepairCard> repairCards)

@@ -301,6 +301,47 @@ public class SortingUtility
         return newSortDirection;
     }
 
+    public static void SetSortDirectionImage(GridView gridView, GridViewRow headerRow,
+    string sortExpression, SortDirection sortDirection)
+    {
+        int sortColumnIndex = GetSortColumnIndex(gridView, sortExpression);
+        if (sortColumnIndex != -1)
+        {
+            AddSortImage(headerRow, sortColumnIndex, sortDirection);
+        }
+    }
+
+    private static int GetSortColumnIndex(GridView gridView, string sortExpression)
+    {
+        if (string.IsNullOrEmpty(sortExpression) == false)
+        {
+            DataControlFieldCollection columns = gridView.Columns;
+            foreach (DataControlField field in columns)
+            {
+                if (field.SortExpression.Equals(sortExpression))
+                {
+                    return gridView.Columns.IndexOf(field);
+                }
+            }
+        }
+        return -1;
+    }
+
+    private static void AddSortImage(GridViewRow headerRow, int columnIndex, SortDirection sortDirection)
+    {
+        Image sortImage = new Image();
+        if (sortDirection == SortDirection.Ascending)
+        {
+            sortImage.ImageUrl = "~/Resources/Images/up_arrow.gif";
+            sortImage.AlternateText = "Ascending Order";
+        }
+        else
+        {
+            sortImage.ImageUrl = "~/Resources/Images/down_arrow.gif";
+            sortImage.AlternateText = "Descending Order";
+        }
+        headerRow.Cells[columnIndex].Controls.Add(sortImage);
+    }
 
     #endregion
 }

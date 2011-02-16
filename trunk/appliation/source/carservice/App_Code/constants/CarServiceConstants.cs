@@ -18,6 +18,7 @@ namespace constants
         public const string REPAIR_CARD_ID_PARAM_NAME = "repairCardId";
         public const string REPAIR_CARDS_FILTER_SESSION_ATTR_NAME = "repairCardsFilter";
 
+        public const string ACTIVE_CSS_CLASS_NAME = "active";
         public const string INACTIVE_CSS_CLASS_NAME = "inactive";
         public const string POSITIVE_CSS_CLASS_NAME = "positiveMsg";
         public const string NEGATIVE_CSS_CLASS_NAME = "negativeMsg";
@@ -35,6 +36,8 @@ namespace constants
 
         public const string SORT_DIRECTION_VIEW_STATE_ATTR = "SortDirection";
         public const string SORT_EXPRESSION_VIEW_STATE_ATTR = "SortExpression";
+
+        public const string USER_ID_SORT_EXPRESSION = "UserId";       
 
         public const string REPAIR_CARD_ID_SORT_EXPRESSION = "CardId";
         public const string REPAIR_CARD_CHASSIS_SORT_EXPRESSION = "ChassisNumber";
