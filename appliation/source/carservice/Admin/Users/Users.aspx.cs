@@ -24,7 +24,17 @@ namespace presentation
 
         protected void CarServiceUsersGridView_RowCreated(Object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                object sortExpressionObj = ViewState[CarServiceConstants.SORT_EXPRESSION_VIEW_STATE_ATTR];
+                object sortDirectionObj = ViewState[CarServiceConstants.SORT_DIRECTION_VIEW_STATE_ATTR];
+                if (sortExpressionObj != null && sortDirectionObj != null)
+                {
+                    SortingUtility.SetSortDirectionImage(this.carServiceUsers, e.Row, sortExpressionObj.ToString(), 
+                        ((SortDirection)sortDirectionObj));
+                }
+            }
+            else if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 object isApprovedObject = DataBinder.Eval(e.Row.DataItem, "IsActive");
                 if (isApprovedObject != null)

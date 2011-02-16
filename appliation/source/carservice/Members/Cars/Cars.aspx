@@ -11,7 +11,7 @@
     </p>
     <p>
         <asp:GridView ID="automobilesGrid" AllowPaging="true" AllowSorting="true" AutoGenerateColumns="false"
-            CssClass="nicetable" runat="server" OnRowEditing="EditAutomobileEventHandler_RowEditing"
+            CssClass="nicetable" runat="server" OnRowCreated="CarsGridView_RowCreated" OnRowEditing="EditAutomobileEventHandler_RowEditing"
             OnPageIndexChanging="AutomobilesGridView_PageIndexChanging" OnSorting="CarsGridView_Sorting">
             <Columns>
                 <asp:BoundField HeaderText="Id" DataField="AutomobileId" SortExpression="AutomobileId" />
