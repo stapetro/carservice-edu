@@ -85,6 +85,12 @@ namespace persistence
             return this.carServiceEntities.SpareParts;
         }
 
+        public IQueryable<SparePart> GetActiveSpareParts()
+        {
+            IQueryable<SparePart> activeSpareParts = this.carServiceEntities.SpareParts.Where(part => part.IsActive == true);
+            return activeSpareParts;
+        }
+
         public int GetSparePartMaxId()
         {
             int partId = this.carServiceEntities.SpareParts.Max(sp => sp.PartId);

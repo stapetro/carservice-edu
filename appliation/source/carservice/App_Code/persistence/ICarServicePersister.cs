@@ -23,6 +23,7 @@ namespace persistence
         SparePart GetSparePartById(int sparePartId);
         int GetSparePartMaxId();
         IQueryable<SparePart> GetSpareParts();
+        IQueryable<SparePart> GetActiveSpareParts();
         void DeleteSparePart(SparePart sparePart);
 
         void CreateRepairCard(RepairCard repairCard);

@@ -35,8 +35,8 @@
                                 <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName" 
                                      CssClass="failureNotification" ErrorMessage="User Name is required." ToolTip="User Name is required." 
                                      ValidationGroup="RegisterUserValidationGroup">*</asp:RequiredFieldValidator>
-                                <asp:RegularExpressionValidator ID="UserNameRegEx" runat="server" ControlToValidate="UserName" ValidationExpression="^[a-zA-Z0-9]+$"
-                                    CssClass="failureNotification" ErrorMessage="User Name can contain only latin letters and digits" ToolTip="User Name can contain only latin letters and digits"
+                                <asp:RegularExpressionValidator ID="UserNameRegEx" runat="server" ControlToValidate="UserName" ValidationExpression="^[a-zA-Z0-9]{3,}$"
+                                    CssClass="failureNotification" ErrorMessage="User Name should be at least 3 characters long and can contain only latin letters and digits" ToolTip="User Name should be at least 3 characters long and can contain only latin letters and digits"
                                     ValidationGroup="RegisterUserValidationGroup" />
                             </p>
                             <p>

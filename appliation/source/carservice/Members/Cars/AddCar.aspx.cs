@@ -60,6 +60,8 @@ namespace presentation
                     string engineCubTxt, string make, string model, string makeYearTxt, string owner,
                     string phoneNumber, string colour, string description)
         {
+            CarServicePresentationUtility.ClearNotificationMsgList(this.notificationMsgList);
+            CarServicePresentationUtility.HideNotificationMsgList(this.notificationMsgList);
             bool validVin = false;
             bool validChassisNumber = false;
             Automobile auto = null;
@@ -111,7 +113,8 @@ namespace presentation
                 DateTime.TryParseExact(makeYearTxt, CarServiceConstants.DATE_FORMAT,
                 new CultureInfo(CarServiceConstants.ENGLISH_CULTURE_INFO), DateTimeStyles.None, out makeYearValue);
             GenerateNotificationErrorMsg(validVin, isVinExists, validChassisNumber, isChassisExists, validEngineCub, validMakeYear);
-            if (validVin && validChassisNumber && validEngineCub && validMakeYear)
+            if (validVin && validChassisNumber && validEngineCub && validMakeYear &&
+                (isVinExists == false) && (isChassisExists == false))
             {
                 DateTime? makeYear = null;
                 if (emptyMakeYear == false)
@@ -140,7 +143,9 @@ namespace presentation
             {
                 return false;
             }
-            return this.persister.IsChassisNumberExists(chassisNumber);
+            //TODO TO be deleted
+            //return this.persister.IsChassisNumberExists(chassisNumber);
+            return true;
         }
 
         private bool IsVinValid(string vin)
@@ -149,7 +154,9 @@ namespace presentation
             {
                 return false;
             }
-            return this.persister.IsVinExists(vin);
+            //TODO TO be deleted
+            //return this.persister.IsVinExists(vin);
+            return true;
         }
 
         private bool SaveAutomobile(Automobile auto, string vin, string chassisNumber, string engineNumber,
