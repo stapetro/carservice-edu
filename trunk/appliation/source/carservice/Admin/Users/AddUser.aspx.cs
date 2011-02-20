@@ -21,7 +21,6 @@ namespace presentation
 
         protected void RegisterUser_CreatedUser(object sender, EventArgs e)
         {
-            FormsAuthentication.SetAuthCookie(RegisterUser.UserName, false /* createPersistentCookie */);
             if(UserRolesUtility.IsOperatorRoleExists() == false)
             {
                 Roles.CreateRole(CarServiceConstants.OPERATOR_ROLE_NAME);

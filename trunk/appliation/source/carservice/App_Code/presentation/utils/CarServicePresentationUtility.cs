@@ -251,10 +251,10 @@ namespace presentation.utils
             ListBox destListBox, bool srcPriceCalculation, ICarServicePersister persister, out decimal totalPrice)
         {
             totalPrice = 0M;
-            IQueryable<SparePart> spareParts = persister.GetSpareParts();
+            IQueryable<SparePart> activeSpareParts = persister.GetActiveSpareParts();
             List<SparePart> srcSpareParts = new List<SparePart>();
             List<SparePart> destSpareParts = new List<SparePart>();
-            foreach (SparePart currSP in spareParts)
+            foreach (SparePart currSP in activeSpareParts)
             {
                 if (destItemSparePartIds.Contains(currSP.PartId))
                 {

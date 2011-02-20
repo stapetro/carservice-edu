@@ -29,7 +29,7 @@ namespace presentation
             }
             if (IsPostBack == false)
             {
-                this.finishRepairDate.SelectedDateTxt.Enabled = false;
+                this.finishRepairDate.Enabled = false;
                 object repairCardIdObject = Session[CarServiceConstants.REPAIR_CARD_ID_PARAM_NAME];
                 if (repairCardIdObject != null)
                 {
@@ -49,12 +49,12 @@ namespace presentation
                         else
                         {                            
                             this.startRepairDate.Enabled = false;
-                        }
+                        }                        
                     }
                 }
                 else
                 {
-                    IQueryable<SparePart> spareParts = this.persister.GetSpareParts();
+                    IQueryable<SparePart> spareParts = this.persister.GetActiveSpareParts();
                     object customSpareParts = CarServicePresentationUtility.GetSparePartsFormatForListBox(spareParts);
                     CarServicePresentationUtility.BindListBox(this.unselectedSpareParts, customSpareParts);
                     this.startRepairDate.SelectedDate =
@@ -210,15 +210,16 @@ namespace presentation
             if (finishRepairDate.HasValue)
             {
                 this.finishRepairDate.SelectedDate = finishRepairDate.Value.ToString(CarServiceConstants.DATE_FORMAT, englishCultureInfo);
+                DisableAllInputControls();
             }
             else
             {
-                this.finishRepairDate.SelectedDateTxt.Enabled = true;
+                this.finishRepairDate.Enabled = true;
             }
             EntityCollection<SparePart> selectedParts = repairCard.SpareParts;
             List<SparePart> unselectedParts = new List<SparePart>();
-            IQueryable<SparePart> allSpareParts = this.persister.GetSpareParts();
-            foreach (SparePart part in allSpareParts)
+            IQueryable<SparePart> activeSpareParts = this.persister.GetActiveSpareParts();
+            foreach (SparePart part in activeSpareParts)
             {
                 if (selectedParts.Contains(part) == false)                
                 {
