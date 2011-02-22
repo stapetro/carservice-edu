@@ -17,7 +17,7 @@
                 <asp:BoundField HeaderText="Email" DataField="Email" SortExpression="Email" />
                 <asp:BoundField HeaderText="First Name" DataField="FirstName" SortExpression="FirstName" />
                 <asp:BoundField HeaderText="Last Name" DataField="LastName" SortExpression="LastName" />
-                <asp:BoundField HeaderText="Active" DataField="IsActive" SortExpression="IsActive" />
+                <asp:CheckBoxField HeaderText="Active" DataField="IsActive" SortExpression="IsActive" />
                 <asp:CommandField ShowEditButton="true" />
                 <asp:CommandField ShowDeleteButton="true" />
             </Columns>

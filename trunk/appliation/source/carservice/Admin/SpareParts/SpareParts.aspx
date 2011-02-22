@@ -18,7 +18,7 @@
                 <asp:BoundField HeaderText="Id" DataField="PartId" SortExpression="PartId" />
                 <asp:BoundField HeaderText="Name" DataField="Name" SortExpression="Name" />
                 <asp:BoundField HeaderText="Price" DataField="Price" SortExpression="Price" />
-                <asp:BoundField HeaderText="Active" DataField="IsActive" SortExpression="IsActive" />
+                <asp:CheckBoxField HeaderText="Active" DataField="IsActive" SortExpression="IsActive" />
                 <asp:CommandField ShowEditButton="true" />
                 <asp:CommandField ShowDeleteButton="true" />
             </Columns>
