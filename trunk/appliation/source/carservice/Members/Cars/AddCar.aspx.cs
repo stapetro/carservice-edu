@@ -66,6 +66,8 @@ namespace presentation
             bool validChassisNumber = false;
             Automobile auto = null;
             object autoIdObject = Session[CarServiceConstants.AUTOMOBILE_ID_REQUEST_PARAM_NAME];
+            bool isVinExists = false;
+            bool isChassisExists = false;
             // Updating existing automobile
             if (autoIdObject != null)
             {
@@ -101,9 +103,9 @@ namespace presentation
             {
                 validVin = IsVinValid(vin);
                 validChassisNumber = IsChassisNumberValid(chassisNumber);
+                isVinExists = this.persister.IsVinExists(vin);
+                isChassisExists = this.persister.IsChassisNumberExists(chassisNumber);
             }
-            bool isVinExists = this.persister.IsVinExists(vin);
-            bool isChassisExists = this.persister.IsChassisNumberExists(chassisNumber);
             int engineCubValue = -1;
             bool emptyEngineCub = string.IsNullOrEmpty(engineCubTxt);
             bool validEngineCub = emptyEngineCub || Int32.TryParse(engineCubTxt, out engineCubValue);
