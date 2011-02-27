@@ -74,7 +74,7 @@
 		<div class="table-row">
 			<div class="left-container2"><p class="text"> 
 				<label>Spare parts:</label>						
-                <asp:ListBox Enabled="false" ID="unselectedSpareParts" Rows="5" SelectionMode="Multiple" runat="server" DataValueField="PartId" DataTextField="PartName">
+                <asp:ListBox ID="unselectedSpareParts" Rows="5" SelectionMode="Multiple" runat="server" DataValueField="PartId" DataTextField="PartName">
                 </asp:ListBox>
                 <asp:Button ID="selectSparePartsBtn" Text="Select" runat="server" OnClick="SelectSpareParts_OnClick" />
 			</p></div> 
